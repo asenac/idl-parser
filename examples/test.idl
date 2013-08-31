@@ -1,0 +1,45 @@
+typedef long H;
+
+module A 
+{
+    // Esto es una mierda
+};
+
+module B
+{
+    interface C
+    {
+        typedef/*******/long H;
+        struct F{
+            long a;
+            long b;
+            long c;
+        };
+
+        void prueba();
+    };
+
+    struct D
+    {
+        C::H /*
+                
+                */fi;
+    };
+};
+
+module C
+{
+    typedef long ssss;
+    interface A
+    {
+        readonly attribute long at1;
+        attribute long at2;
+        B::C::H operation(in ssss h1);
+        B::C::H operation2(in B::C::H h1, inout long caca );
+    };
+
+    struct J {
+        //caca x;
+    };
+};
+

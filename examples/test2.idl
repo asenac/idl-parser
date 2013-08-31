@@ -1,0 +1,7 @@
+    interface A
+    {
+        void operation(in  B::C::H h1 );
+    };
+
+
+
