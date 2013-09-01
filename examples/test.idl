@@ -43,3 +43,18 @@ module C
     };
 };
 
+enum EE
+{
+};
+
+enum EE1
+{
+    A
+};
+
+enum EE2
+{
+    A , B 
+};
+
+

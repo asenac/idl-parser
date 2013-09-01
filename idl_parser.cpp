@@ -78,12 +78,21 @@ struct SemanticState
     typedef std::deque< Context > contexts_t; 
     contexts_t contexts;
 
+    typedef std::vector< std::string > literals_t;
+    literals_t literals;
+
     SemanticState() : result (NULL) {}
 
     void push_identifier(const std::string& id)
     {
         //std::cout << id << std::endl;
         contexts.back().identifier = id;
+    }
+
+    void push_literal(const std::string& l)
+    {
+        std::cout << __FUNCTION__ << " " << l << std::endl;
+        literals.push_back(l);
     }
 
     void push_type(const std::string& type)
@@ -342,6 +351,16 @@ struct SemanticState
                 obj = o;
             }
             break;
+        case CONTEXT_ENUM:
+            {
+                EnumDef_ptr o = f->createEnumDef();
+                o->setIdentifier(c.identifier);
+                // BUG in EMF4CPP o->setMembers(literals);
+                literals.clear();
+
+                obj = o;
+            }
+            break;
         default:
             assert(false);
             break;
@@ -364,6 +383,7 @@ struct SemanticState
     {
         //std::cout << "rollback " << contexts.back().context_type << std::endl;
         contexts.pop_back();
+        literals.clear();
     }
 };
 

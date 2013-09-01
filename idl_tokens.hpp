@@ -22,7 +22,8 @@ typedef seq_<
                 or_ < 
                     cirange_ < 'A', 'Z' >,
                     cirange_ < 'a', 'z' >,
-                    cirange_ < '0', '9' >
+                    cirange_ < '0', '9' >,
+                    char_ < '_' >
                     >
                 >
             > identifier_rule;
@@ -154,6 +155,7 @@ typedef tok_ < t_, y_, p_, e_, d_, e_, f_ > typedef_t;
 typedef tok_ < s_, t_, r_, i_, n_, g_ > string_t;
 typedef tok_ < w_, s_, t_, r_, i_, n_, g_ > wstring_t;
 typedef tok_ < v_, o_, i_, d_ > void_t;
+typedef tok_ < e_, n_, u_, m_ > enum_t;
 
 
 } // namespace tokens

@@ -97,7 +97,8 @@ enum semantic_context_type
     CONTEXT_ARRAY,
     CONTEXT_ATTRIBUTE,
     CONTEXT_OPERATION,
-    CONTEXT_PARAMETER
+    CONTEXT_PARAMETER,
+    CONTEXT_ENUM
 };
 
 template < typename C0, semantic_context_type type >
@@ -136,6 +137,20 @@ struct identifier_ :
     {
         const std::string s (state.to_string(mp.first, mp.second));
         state.semantic_state().push_identifier(s);
+    }
+};
+
+struct literal_ :
+    semantic_rule < 
+        literal_,
+        identifier_rule
+    >
+{
+    template <typename S, typename match_pair>
+    static inline void process_match (S& state, match_pair const& mp)
+    {
+        const std::string s (state.to_string(mp.first, mp.second));
+        state.semantic_state().push_literal(s);
     }
 };
 
@@ -257,22 +272,25 @@ struct array_ :
 
 // contexts
 
-template < typename Statements >
+template < typename Statements, typename Sep = semicol >
 struct context_: 
     seq_< 
             char_ < '{' >, 
-            star_< seq_ < spaces_, Statements, spaces_, semicol >  >,
+            star_< seq_ < spaces_, Statements, spaces_, Sep >  >,
             spaces_,
             char_ < '}' > 
         >
 {};
 
-template < typename Name, typename Body, semantic_context_type type >
+template < typename Name, 
+           typename Body, 
+           semantic_context_type type,
+           typename Sep = semicol >
 struct context_rule : 
     seq_< 
         Name, space_, 
         semantic_context < 
-            seq_ <identifier_, spaces_, context_ < Body > >, 
+            seq_ <identifier_, spaces_, context_ < Body, Sep > >, 
             type 
         >
     >
@@ -288,7 +306,40 @@ typedef
 typedef struct_field struct_body; 
 typedef context_rule< struct_t, struct_body, CONTEXT_STRUCT > struct_;
 
-typedef or_< alias_, struct_, attribute_, operation_ > interface_body;
+template < typename Items, typename Sep = comma >
+struct list_: 
+    seq_< 
+            char_ < '{' >, 
+            opt_< seq_ < spaces_, Items, 
+                star_ < seq_ < spaces_, Sep, spaces_, Items > > > >,
+            spaces_,
+            char_ < '}' > 
+        >
+{};
+
+template < typename Name, 
+           typename Body, 
+           semantic_context_type type,
+           typename Sep = comma >
+struct list_context : 
+    seq_< 
+        Name, space_, 
+        semantic_context < 
+            seq_ < identifier_, spaces_, list_ < Body, Sep > >, 
+            type 
+        >
+    >
+{};
+
+typedef 
+    list_context < 
+            enum_t, 
+            literal_, 
+            CONTEXT_ENUM
+        > 
+    enum_;
+
+typedef or_< alias_, struct_, enum_, attribute_, operation_ > interface_body;
 typedef 
     context_rule< 
             interface_t, 
@@ -297,13 +348,15 @@ typedef
         > 
     interface_;
 
-typedef or_< interface_, struct_, alias_ > module_body;
-typedef context_rule < module_t, module_body, CONTEXT_MODULE > module_;
+struct module_;
+typedef or_< module_, interface_, struct_, enum_, alias_ > module_body;
+struct module_ : context_rule < module_t, module_body, CONTEXT_MODULE >
+{};
 
 typedef 
     seq_ < 
             spaces_, 
-            or_ < interface_, module_, struct_, alias_ >, 
+            or_ < interface_, module_, struct_, enum_, alias_ >, 
             spaces_, 
             semicol 
         > 

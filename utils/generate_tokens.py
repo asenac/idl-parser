@@ -36,6 +36,7 @@ tokens = [
     "interface",
     "abstract",
     "typedef",
+    "enum",
     ]
 tokens.extend(types)
 
