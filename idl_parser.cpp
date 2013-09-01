@@ -43,6 +43,7 @@ idlmm::ParameterMode get_direction(const Set& s)
 struct SemanticState
 {
     typedef semantic_context_type context_type_t;
+    typedef std::vector< ecore::EObject * > objects_t;
 
     struct Context
     {
@@ -50,26 +51,33 @@ struct SemanticState
         std::string identifier;
         std::string type;
         std::bitset< sizeof(void *) * 8 > flags; 
-        std::vector< ecore::EObject * > objects;
+        objects_t& objects;
+        std::size_t prev_size;
         primitive_types primitive_type;
 
-        Context(context_type_t context_type_) : 
+        Context(objects_t& objects_,
+                context_type_t context_type_) : 
             context_type(context_type_),
+            objects(objects_),
+            prev_size(objects_.size()),
             primitive_type(PT_NULL)
         {}
+
+        // restores previous size, discards current objects
+        void clear()
+        {
+            objects.resize(prev_size);
+        }
 
         ~Context()
         {
             // No memory leaks due to rollback
-            for (std::size_t i = 0; i < objects.size(); i++) 
+            for (std::size_t i = prev_size; i < objects.size(); i++) 
             {
                 delete objects[i];
             }
-        }
 
-        void clear()
-        {
-            objects.clear();
+            clear();
         }
     };
 
@@ -77,6 +85,8 @@ struct SemanticState
 
     typedef std::deque< Context > contexts_t; 
     contexts_t contexts;
+
+    objects_t objects;
 
     typedef std::vector< std::string > literals_t;
     literals_t literals;
@@ -91,7 +101,7 @@ struct SemanticState
 
     void push_literal(const std::string& l)
     {
-        std::cout << __FUNCTION__ << " " << l << std::endl;
+        //std::cout << __FUNCTION__ << " " << l << std::endl;
         literals.push_back(l);
     }
 
@@ -104,7 +114,7 @@ struct SemanticState
     void new_context(context_type_t type)
     {
         //std::cout << "context " << type << std::endl;
-        contexts.push_back(Context(type));
+        contexts.push_back(Context(objects, type));
     }
 
     void set_flag(flags flag)
@@ -122,7 +132,7 @@ struct SemanticState
     template < class Contained, class Obj, typename Fn >
     void populate(Context& c, Obj * o, Fn f)
     {
-        for (std::size_t i = 0; i < c.objects.size(); i++) 
+        for (std::size_t i = c.prev_size; i < c.objects.size(); i++) 
         {
             (o->*f)().push_back(c.objects[i]->as< Contained >());
         }
@@ -138,6 +148,7 @@ struct SemanticState
     idlmm::TypedefDef_ptr lookup(const std::string& f)
     {
         scope_t scope;
+        std::size_t size = objects.size();
 
         for (contexts_t::reverse_iterator it = contexts.rbegin(); 
                 it != contexts.rend(); it++) 
@@ -160,20 +171,22 @@ struct SemanticState
             containers_t containers;
 
             // current objects
-            for (std::size_t i = 0; i < it->objects.size(); i++) 
+            for (std::size_t i = it->prev_size; i < size; i++) 
             {
                 idlmm::TypedefDef_ptr t = 
-                    it->objects[i]->as< idlmm::TypedefDef  >(); 
+                    objects[i]->as< idlmm::TypedefDef  >(); 
 
                 if (t)
                     scope[t->getIdentifier()] = t;
 
                 idlmm::Container_ptr c =
-                    it->objects[i]->as< idlmm::Container >();
+                    objects[i]->as< idlmm::Container >();
 
                 if (c)
                     containers.push_back(std::make_pair(c->getIdentifier(), c));
             }
+            // next iteration
+            size = it->prev_size;
 
             // Recurse into the containers
             for (std::size_t i = 0; i < containers.size(); i++) 
@@ -384,7 +397,7 @@ struct SemanticState
         if (!contexts.empty())
         {
             assert (obj); 
-            if (obj) contexts.back().objects.push_back(obj);
+            if (obj) objects.push_back(obj);
         }
         else
         {
