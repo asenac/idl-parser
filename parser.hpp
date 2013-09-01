@@ -144,9 +144,11 @@ struct IStreamState
     // State stack, for backtracking
     std::deque< std::streampos > pos_stack_;
 
+    std::streampos max_pos_;
+
     // ctor
     IStreamState (SemanticState& ss, std::istream& in)
-        : in_ (in), ss_ (ss)
+        : in_ (in), ss_ (ss), max_pos_(0)
     {
     }
 
@@ -225,8 +227,17 @@ struct IStreamState
     }
 
     inline void
+    check_max()
+    {
+        std::streampos cur = in_.tellg();
+        if (max_pos_ < cur)
+            max_pos_ = cur;
+    }
+
+    inline void
     rollback()
     {
+        check_max();
         in_.seekg(pos_stack_.front());
         pos_stack_.pop_front();
     }
@@ -234,6 +245,7 @@ struct IStreamState
     inline void
     commit()
     {
+        check_max();
         pos_stack_.pop_front();
     }
 
@@ -248,6 +260,47 @@ struct IStreamState
         in_.seekg(old);
 
         return std::string(buffer, size);
+    }
+
+    template < typename Stream >
+    void get_error(Stream& ss)
+    {
+        if (max_pos_ > -1)
+        {
+            std::streampos init =  max_pos_;
+
+            if (init > 0)
+            {
+                do 
+                {
+                    in_.seekg(init);
+                    in_.seekg(-1, in_.cur);
+                    init = in_.tellg();
+                }
+                while (in_.good() && in_.peek() != '\n');
+
+                if (in_.peek() == '\n')
+                {
+                    in_.seekg(1, in_.cur);
+                    init = in_.tellg();
+                }
+            }
+
+            in_.seekg(max_pos_);
+
+            while (!at_end() && in_.peek() != '\n')
+                in_.get();
+
+            // error line
+            const std::size_t size = in_.tellg() - init;
+            ss << to_string(init, size) << std::endl;
+
+            // marker
+            const std::size_t diff = max_pos_ - init;
+            for (std::size_t i = 0; i < diff; i++) 
+                ss << ' ';
+            ss << '^' << std::endl;
+        }
     }
 };
 

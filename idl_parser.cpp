@@ -410,6 +410,10 @@ idlmm::TranslationUnit_ptr parse(const char * file)
             // emf4cpp stuff
             res->_initialize();
         }
+        else
+        {
+            iss.get_error(std::cerr);
+        }
     }
 
     return res;

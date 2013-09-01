@@ -1,0 +1,7 @@
+module A
+{
+    interface A
+    {
+        caca;
+    };
+};
