@@ -211,20 +211,29 @@ typedef
     parameter_rule;
 typedef semantic_context< parameter_rule, CONTEXT_PARAMETER > parameter_;
 
-typedef 
+
+template < typename Item >
+struct item_ :
     seq_ <
             spaces_,
-            parameter_,
+            Item,
             spaces_
          >
-    parameter_item;
+{};
 
-typedef
-    seq_ <
-            parameter_item,
-            star_ < seq_ < comma, parameter_item > >
-         >
-    parameter_list;
+// useful for comma-separated lists
+template < typename Item, typename Sep = comma >
+struct list_ :
+    or_ <
+        seq_ <
+                item_ < Item >,
+                star_ < seq_ < Sep, item_ < Item > > >
+             >, 
+        spaces_ 
+    >
+{};
+
+typedef list_ < parameter_ > parameter_list;
 
 typedef
     seq_ < 
@@ -233,7 +242,7 @@ typedef
             space_,
             identifier_,
             char_ < '(' >,
-            or_ < parameter_list, spaces_ >,
+            parameter_list, 
             char_ < ')' >
         > 
     operation_rule;
@@ -306,17 +315,6 @@ typedef
 typedef struct_field struct_body; 
 typedef context_rule< struct_t, struct_body, CONTEXT_STRUCT > struct_;
 
-template < typename Items, typename Sep = comma >
-struct list_: 
-    seq_< 
-            char_ < '{' >, 
-            opt_< seq_ < spaces_, Items, 
-                star_ < seq_ < spaces_, Sep, spaces_, Items > > > >,
-            spaces_,
-            char_ < '}' > 
-        >
-{};
-
 template < typename Name, 
            typename Body, 
            semantic_context_type type,
@@ -325,7 +323,13 @@ struct list_context :
     seq_< 
         Name, space_, 
         semantic_context < 
-            seq_ < identifier_, spaces_, list_ < Body, Sep > >, 
+            seq_ < 
+                identifier_, 
+                spaces_, 
+                char_ < '{' >, 
+                list_ < Body, Sep >, 
+                char_ < '}' > 
+                >, 
             type 
         >
     >
