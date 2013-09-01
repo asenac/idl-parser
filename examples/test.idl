@@ -8,6 +8,7 @@ module A
 module B
 {
     typedef sequence < long > seque;
+    typedef sequence< seque > seque2;
     interface C
     {
         typedef/*******/long H;

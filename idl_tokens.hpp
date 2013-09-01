@@ -54,7 +54,7 @@ typedef
         > 
     space;
 
-typedef or_ < req_ < ' ' >, req_< '/' > > rspace;
+typedef or_ < req_ < ' ' >, req_< '/' >, req_ < '<' > > rspace;
 
 // token: requires an space at the end 
 template <typename C0,
