@@ -351,6 +351,20 @@ struct SemanticState
                 obj = o;
             }
             break;
+        case CONTEXT_ARRAY:
+            {
+                AliasDef_ptr o = f->createAliasDef();
+                o->setIdentifier(c.identifier);
+
+                ArrayDef_ptr a = f->createArrayDef();
+                try_to_set_type(a);
+                o->setContainedType(a);
+
+                // TODO bounds
+
+                obj = o;
+            }
+            break;
         case CONTEXT_ENUM:
             {
                 EnumDef_ptr o = f->createEnumDef();

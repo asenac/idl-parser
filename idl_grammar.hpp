@@ -268,7 +268,7 @@ struct alias_ :
 
 typedef seq_ < 
             typedef_t, space_, type_rule, space_, identifier_, spaces_,
-            plus_ < seq_<  char_<'['>, notchar_< ']'>, char_< ']' > > >
+            plus_ < seq_<  char_<'['>, plus_< notchar_< ']'> >, char_< ']' > > >
         > array_rule;
 
 struct array_ :
@@ -343,7 +343,10 @@ typedef
         > 
     enum_;
 
-typedef or_< alias_, struct_, enum_, attribute_, operation_ > interface_body;
+// Can it be an interface within an interface?
+typedef or_< array_, alias_, struct_, enum_ > contained_;
+
+typedef or_< contained_, attribute_, operation_ > interface_body;
 typedef 
     context_rule< 
             interface_t, 
@@ -353,7 +356,7 @@ typedef
     interface_;
 
 struct module_;
-typedef or_< module_, interface_, struct_, enum_, alias_ > module_body;
+typedef or_< module_, interface_, contained_ > module_body;
 struct module_ : context_rule < module_t, module_body, CONTEXT_MODULE >
 {};
 

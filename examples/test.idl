@@ -32,6 +32,9 @@ module C
     typedef long ssss;
     interface A
     {
+        typedef long ssss[100];
+        typedef long ssss2[100];
+
         readonly attribute long at1;
         attribute long at2;
         B::C::H operation(in ssss h1);
