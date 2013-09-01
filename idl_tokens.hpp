@@ -12,6 +12,25 @@ using namespace ::parser;
 
 typedef char_ < ';' > semicol;
 typedef char_ < ',' > comma;
+typedef char_ < '.' > point;
+
+typedef cirange_ < '0', '9'> digit_;
+typedef seq_ < plus_< digit_ >, opt_ < seq_ < point, plus_ < digit_ > > > > 
+    number_;
+
+typedef or_<
+        char_ < '+' >,
+        char_ < '-' >,
+        char_ < '*' >,
+        char_ < '/' >,
+        char_ < '%' >,
+        seq_ < char_ < '>' >, char_ < '>' > >,
+        seq_ < char_ < '<' >, char_ < '<' > >,
+        or_ <
+            seq_ < char_ < '&' >, char_ < '&' > >,
+            seq_ < char_ < '|' >, char_ < '|' > >
+        >
+    > operator_;
 
 typedef seq_< 
             or_ < 
@@ -22,16 +41,28 @@ typedef seq_<
                 or_ < 
                     cirange_ < 'A', 'Z' >,
                     cirange_ < 'a', 'z' >,
-                    cirange_ < '0', '9' >,
+                    digit_,
                     char_ < '_' >
                     >
                 >
             > identifier_rule;
 
+// strings
+typedef 
+    seq_< char_< '"' >,
+          star_ < or_ <
+                     seq_< char_ <'\\'>, anychar_ >, // escape
+                     notchar_<'"'> // normal chars
+                     > >,
+          char_<'"'> >
+    string_rule;
+
+typedef seq_< char_ < ':' >, char_ < ':' > > scope_sep;
+
 typedef seq_ < 
-            opt_< seq_< char_ < ':' >, char_ < ':' > > >,
+            opt_< scope_sep >,
             identifier_rule, 
-            star_< seq_ < char_ < ':' >, char_ < ':' >, identifier_rule > > 
+            star_< seq_ < scope_sep, identifier_rule > > 
         > fqn_rule;
 
 // spaces
