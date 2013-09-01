@@ -5,6 +5,8 @@ module A
     // Esto es una mierda
 };
 
+const long longA = 1;
+
 module B
 {
     typedef sequence < long > seque;

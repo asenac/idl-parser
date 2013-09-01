@@ -38,6 +38,7 @@ tokens = [
     "typedef",
     "enum",
     "sequence",
+    "const",
     ]
 tokens.extend(types)
 

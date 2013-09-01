@@ -417,6 +417,18 @@ struct SemanticState
                 obj = o;
             }
             break;
+        case CONTEXT_CONST:
+            {
+                ConstantDef_ptr o = f->createConstantDef();
+                o->setIdentifier(c.identifier);
+
+                try_to_set_type(o);
+
+                // TODO constant value
+
+                obj = o;
+            }
+            break;
         default:
             assert(false);
             break;

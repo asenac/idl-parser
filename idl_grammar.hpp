@@ -99,7 +99,8 @@ enum semantic_context_type
     CONTEXT_OPERATION,
     CONTEXT_PARAMETER,
     CONTEXT_ENUM,
-    CONTEXT_SEQUENCE
+    CONTEXT_SEQUENCE,
+    CONTEXT_CONST
 };
 
 template < typename C0, semantic_context_type type >
@@ -212,7 +213,6 @@ typedef
     parameter_rule;
 typedef semantic_context< parameter_rule, CONTEXT_PARAMETER > parameter_;
 
-
 template < typename Item >
 struct item_ :
     seq_ <
@@ -255,6 +255,25 @@ struct operation_ :
     >
 {
 };
+
+// constant
+
+typedef seq_ < 
+                const_t, 
+                space_, 
+                type_rule, 
+                space_, 
+                identifier_, 
+                spaces_,
+                seq_ < 
+                        char_ < '=' >, 
+                        space_, 
+                        plus_ < notchar_ < ';' > > 
+                > 
+        > 
+        const_rule;
+
+typedef semantic_context< const_rule, CONTEXT_CONST > const_;
 
 // sequence
 
@@ -370,7 +389,7 @@ typedef
     enum_;
 
 // Can it be an interface within an interface?
-typedef or_< array_, alias_, struct_, enum_ > contained_;
+typedef or_< const_, array_, alias_, struct_, enum_ > contained_;
 
 typedef or_< contained_, attribute_, operation_ > interface_body;
 typedef 
@@ -389,7 +408,7 @@ struct module_ : context_rule < module_t, module_body, CONTEXT_MODULE >
 typedef 
     seq_ < 
             spaces_, 
-            or_ < interface_, module_, struct_, enum_, alias_ >, 
+            or_ < module_, interface_, contained_ >, 
             spaces_, 
             semicol 
         > 
