@@ -253,6 +253,25 @@ struct SemanticState
         return res;
     }
 
+    bool try_to_set_type_to_alias(idlmm::AliasDef_ptr typed)
+    {
+        Context& c = contexts.back();
+        if (c.prev_size != objects.size())
+        {
+            assert(objects.size() == c.prev_size + 1);
+
+            idlmm::IDLType_ptr t = 
+                objects[c.prev_size]->as< idlmm::IDLType >();
+            assert(t);
+            typed->setContainedType(t);
+
+            c.clear();
+
+            return true;
+        }
+        return try_to_set_type(typed);
+    }
+
     void commit()
     {
         using namespace idlmm;
@@ -359,7 +378,7 @@ struct SemanticState
                 AliasDef_ptr o = f->createAliasDef();
                 o->setIdentifier(c.identifier);
 
-                try_to_set_type(o);
+                try_to_set_type_to_alias(o);
 
                 obj = o;
             }
@@ -384,6 +403,16 @@ struct SemanticState
                 o->setIdentifier(c.identifier);
                 // BUG in EMF4CPP o->setMembers(literals);
                 literals.clear();
+
+                obj = o;
+            }
+            break;
+        case CONTEXT_SEQUENCE:
+            {
+                SequenceDef_ptr o = f->createSequenceDef();
+                try_to_set_type(o);
+
+                // TODO bounds
 
                 obj = o;
             }

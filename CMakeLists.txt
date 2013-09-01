@@ -1,13 +1,15 @@
 cmake_minimum_required(VERSION 2.6)
 project(idl_parser)
 
+set(EMF4CPP_DIR $ENV{HOME}/local/emf4cpp)
+
 include_directories(
-    $ENV{HOME}/local/emf4cpp/include/emf4cpp
+    ${EMF4CPP_DIR}/include/emf4cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model
 )
 
 link_directories(
-    $ENV{HOME}/local/emf4cpp/lib
+    ${EMF4CPP_DIR}/lib
 )
 
 add_subdirectory(model)

@@ -156,6 +156,7 @@ typedef tok_ < s_, t_, r_, i_, n_, g_ > string_t;
 typedef tok_ < w_, s_, t_, r_, i_, n_, g_ > wstring_t;
 typedef tok_ < v_, o_, i_, d_ > void_t;
 typedef tok_ < e_, n_, u_, m_ > enum_t;
+typedef tok_ < s_, e_, q_, u_, e_, n_, c_, e_ > sequence_t;
 
 
 } // namespace tokens

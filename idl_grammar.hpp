@@ -98,7 +98,8 @@ enum semantic_context_type
     CONTEXT_ATTRIBUTE,
     CONTEXT_OPERATION,
     CONTEXT_PARAMETER,
-    CONTEXT_ENUM
+    CONTEXT_ENUM,
+    CONTEXT_SEQUENCE
 };
 
 template < typename C0, semantic_context_type type >
@@ -255,8 +256,33 @@ struct operation_ :
 {
 };
 
+// sequence
+
+typedef 
+    seq_< 
+        sequence_t, 
+        spaces_, 
+        char_ < '<' >, 
+        spaces_, 
+        type_rule, 
+        spaces_, 
+        char_ < '>' > 
+    > 
+    sequence_rule;
+
+typedef
+    semantic_context < 
+        sequence_rule,
+        CONTEXT_SEQUENCE
+    >
+    sequence_;
+
 // typedefs
-typedef seq_ < typedef_t, space_, type_rule, space_, identifier_ > alias_rule;
+
+struct typedef_type_rule : or_ < sequence_, type_rule > 
+{};
+
+typedef seq_ < typedef_t, space_, typedef_type_rule, space_, identifier_ > alias_rule;
 
 struct alias_ :
     semantic_context < 
