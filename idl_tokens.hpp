@@ -18,19 +18,19 @@ typedef cirange_ < '0', '9'> digit_;
 typedef seq_ < plus_< digit_ >, opt_ < seq_ < point, plus_ < digit_ > > > > 
     number_;
 
-typedef or_<
-        char_ < '+' >,
-        char_ < '-' >,
-        char_ < '*' >,
-        char_ < '/' >,
-        char_ < '%' >,
-        seq_ < char_ < '>' >, char_ < '>' > >,
-        seq_ < char_ < '<' >, char_ < '<' > >,
-        or_ <
-            seq_ < char_ < '&' >, char_ < '&' > >,
-            seq_ < char_ < '|' >, char_ < '|' > >
-        >
-    > operator_;
+typedef or_ <
+            char_ < '+' >,
+            char_ < '-' >,
+            char_ < '*' >,
+            char_ < '/' >,
+            char_ < '%' >,
+            seq_ < char_ < '>' >, char_ < '>' > >,
+            seq_ < char_ < '<' >, char_ < '<' > >,
+            or_ <
+                seq_ < char_ < '&' >, char_ < '&' > >,
+                seq_ < char_ < '|' >, char_ < '|' > >
+                >
+            > operator_;
 
 typedef seq_< 
             or_ < 
@@ -107,6 +107,24 @@ typedef star_ < space > spaces_;
 typedef plus_ < space > space_;
 
 typedef space __;
+
+// expressions
+struct exp_item;
+
+struct exp_item : 
+    or_ < 
+        number_, 
+        identifier_rule,  
+        seq_ < char_ < '(' >, spaces_, exp_item, spaces_, char_ < ')' > >
+        >
+{};
+
+typedef seq_< 
+            spaces_,
+            exp_item, 
+            spaces_,
+            opt_ < seq_ < operator_, exp_item, spaces_ > > 
+            > expression_rule;
 
 typedef char_< 'a' > a_;
 typedef char_< 'b' > b_;
