@@ -19,6 +19,7 @@
 
 #include "FixedDef.hpp"
 #include <idlmm/IDLType.hpp>
+#include <idlmm/Expression.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include "idlmm/IdlmmPackage.hpp"
@@ -31,7 +32,8 @@
 using namespace ::idlmm;
 
 // Default constructor
-FixedDef::FixedDef()
+FixedDef::FixedDef() :
+    m_digits(0), m_scale(0)
 {
 
     /*PROTECTED REGION ID(FixedDefImpl__FixedDefImpl) START*/
@@ -46,6 +48,14 @@ FixedDef::FixedDef()
 
 FixedDef::~FixedDef()
 {
+    if (m_digits)
+    {
+        delete m_digits;
+    }
+    if (m_scale)
+    {
+        delete m_scale;
+    }
 }
 
 /*PROTECTED REGION ID(FixedDef.cpp) START*/
@@ -55,17 +65,18 @@ FixedDef::~FixedDef()
 
 // Attributes
 
-::ecore::EString const& FixedDef::getDigits() const
+// References
+::idlmm::Expression_ptr FixedDef::getDigits()
 {
     return m_digits;
 }
 
-void FixedDef::setDigits(::ecore::EString const& _digits)
+void FixedDef::setDigits(::idlmm::Expression_ptr _digits)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_digits = m_digits;
-#endif
+    ::idlmm::Expression_ptr _old_digits = m_digits;
+
     m_digits = _digits;
+
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
@@ -79,19 +90,21 @@ void FixedDef::setDigits(::ecore::EString const& _digits)
         eNotify(&notification);
     }
 #endif
+
+    delete _old_digits;
 }
 
-::ecore::EString const& FixedDef::getScale() const
+::idlmm::Expression_ptr FixedDef::getScale()
 {
     return m_scale;
 }
 
-void FixedDef::setScale(::ecore::EString const& _scale)
+void FixedDef::setScale(::idlmm::Expression_ptr _scale)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_scale = m_scale;
-#endif
+    ::idlmm::Expression_ptr _old_scale = m_scale;
+
     m_scale = _scale;
+
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
@@ -105,7 +118,7 @@ void FixedDef::setScale(::ecore::EString const& _scale)
         eNotify(&notification);
     }
 #endif
-}
 
-// References
+    delete _old_scale;
+}
 

@@ -65,7 +65,7 @@ void ExceptionDef::_initialize()
     ::ecore::EJavaObject _any;
     switch (_featureID)
     {
-    case ::idlmm::IdlmmPackage::CONTAINED__IDENTIFIER:
+    case ::idlmm::IdlmmPackage::NAMEDELEMENT__IDENTIFIER:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
                 m_identifier);
@@ -115,7 +115,7 @@ void ExceptionDef::eSet(::ecore::EInt _featureID,
 {
     switch (_featureID)
     {
-    case ::idlmm::IdlmmPackage::CONTAINED__IDENTIFIER:
+    case ::idlmm::IdlmmPackage::NAMEDELEMENT__IDENTIFIER:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
                 m_identifier);
@@ -172,7 +172,7 @@ void ExceptionDef::eSet(::ecore::EInt _featureID,
 {
     switch (_featureID)
     {
-    case ::idlmm::IdlmmPackage::CONTAINED__IDENTIFIER:
+    case ::idlmm::IdlmmPackage::NAMEDELEMENT__IDENTIFIER:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_identifier);
     case ::idlmm::IdlmmPackage::CONTAINED__REPOSITORYID:

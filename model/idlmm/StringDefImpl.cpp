@@ -20,6 +20,7 @@
 #include "StringDef.hpp"
 #include <idlmm/IdlmmPackage.hpp>
 #include <idlmm/IDLType.hpp>
+#include <idlmm/Expression.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include <ecore/EStructuralFeature.hpp>
@@ -40,6 +41,12 @@ void StringDef::_initialize()
     ::idlmm::IDLType::_initialize();
 
     // Rerefences
+    if (m_bound)
+    {
+        m_bound->_initialize();
+        m_bound->_setEContainer(this,
+                ::idlmm::IdlmmPackage::_instance()->getStringDef__bound());
+    }
 
     /*PROTECTED REGION ID(StringDefImpl__initialize) START*/
     // Please, enable the protected region if you add manually written code.
@@ -65,8 +72,7 @@ void StringDef::_initialize()
         return _any;
     case ::idlmm::IdlmmPackage::STRINGDEF__BOUND:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_bound);
+        _any = static_cast< ::ecore::EObject* > (m_bound);
     }
         return _any;
 
@@ -87,8 +93,11 @@ void StringDef::eSet(::ecore::EInt _featureID,
         return;
     case ::idlmm::IdlmmPackage::STRINGDEF__BOUND:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_bound);
+        ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast<
+                ::ecore::EObject_ptr >(_newValue);
+        ::idlmm::Expression_ptr _t1 =
+                dynamic_cast< ::idlmm::Expression_ptr > (_t0);
+        ::idlmm::StringDef::setBound(_t1);
     }
         return;
 
@@ -104,8 +113,7 @@ void StringDef::eSet(::ecore::EInt _featureID,
         return ::ecorecpp::mapping::set_traits< ::idlmm::ETypeCode >::is_set(
                 m_typeCode);
     case ::idlmm::IdlmmPackage::STRINGDEF__BOUND:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_bound);
+        return m_bound;
 
     }
     throw "Error";

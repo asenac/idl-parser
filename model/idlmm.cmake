@@ -79,6 +79,26 @@ set(idlmm_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/TranslationUnitImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/Include.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/IncludeImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/Expression.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/ExpressionImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/BinaryExpression.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/BinaryExpressionImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/UnaryExpression.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/UnaryExpressionImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/LiteralExpression.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/LiteralExpressionImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/ConstantDefRef.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/ConstantDefRefImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/ValueExpression.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/ValueExpressionImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/ForwardDef.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/ForwardDefImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/EnumMember.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/EnumMemberImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/Constant.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/ConstantImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/NamedElement.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/NamedElementImpl.cpp
    )
    
 set(idlmm_HEADERS
@@ -112,6 +132,16 @@ set(idlmm_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/StructDef.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/TranslationUnit.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/Include.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/Expression.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/BinaryExpression.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/UnaryExpression.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/LiteralExpression.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/ConstantDefRef.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/ValueExpression.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/ForwardDef.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/EnumMember.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/Constant.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/NamedElement.hpp
    )
 
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm.hpp DESTINATION include/emf4cpp/)
@@ -144,6 +174,16 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/EnumDef.hpp DESTINATION include/
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/StructDef.hpp DESTINATION include/emf4cpp/idlmm)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/TranslationUnit.hpp DESTINATION include/emf4cpp/idlmm)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/Include.hpp DESTINATION include/emf4cpp/idlmm)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/Expression.hpp DESTINATION include/emf4cpp/idlmm)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/BinaryExpression.hpp DESTINATION include/emf4cpp/idlmm)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/UnaryExpression.hpp DESTINATION include/emf4cpp/idlmm)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/LiteralExpression.hpp DESTINATION include/emf4cpp/idlmm)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/ConstantDefRef.hpp DESTINATION include/emf4cpp/idlmm)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/ValueExpression.hpp DESTINATION include/emf4cpp/idlmm)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/ForwardDef.hpp DESTINATION include/emf4cpp/idlmm)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/EnumMember.hpp DESTINATION include/emf4cpp/idlmm)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/Constant.hpp DESTINATION include/emf4cpp/idlmm)
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/NamedElement.hpp DESTINATION include/emf4cpp/idlmm)
    
 include_directories(${CMAKE_CURRENT_SOURCE_DIR} /home/asenac/local/emf4cpp/bin/../include/emf4cpp /home/asenac/local/emf4cpp/bin/../include/emf4cpp)
 

@@ -22,6 +22,7 @@
 #include <idlmm/Typed.hpp>
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
+#include <idlmm/Expression.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include <ecore/EStructuralFeature.hpp>
@@ -42,6 +43,12 @@ void UnionField::_initialize()
     ::idlmm::Typed::_initialize();
 
     // Rerefences
+    for (size_t i = 0; i < m_label->size(); i++)
+    {
+        (*m_label)[i]->_initialize();
+        (*m_label)[i]->_setEContainer(this,
+                ::idlmm::IdlmmPackage::_instance()->getUnionField__label());
+    }
 
     /*PROTECTED REGION ID(UnionFieldImpl__initialize) START*/
     // Please, enable the protected region if you add manually written code.
@@ -77,11 +84,7 @@ void UnionField::_initialize()
         return _any;
     case ::idlmm::IdlmmPackage::UNIONFIELD__LABEL:
     {
-        std::vector < ::ecorecpp::mapping::any > _anys(m_label.size());
-        for (size_t _i = 0; _i < m_label.size(); _i++)
-            ::ecorecpp::mapping::any_traits< ::idlmm::EAny >::toAny(_anys[_i],
-                    m_label[_i]);
-        _any = _anys;
+        _any = m_label->asEListOf< ::ecore::EObject > ();
     }
         return _any;
 
@@ -119,10 +122,11 @@ void UnionField::eSet(::ecore::EInt _featureID,
         return;
     case ::idlmm::IdlmmPackage::UNIONFIELD__LABEL:
     {
-        ::idlmm::EAny _t0;
-        ::ecorecpp::mapping::any_traits< ::idlmm::EAny >::fromAny(_newValue,
-                _t0);
-        ::idlmm::UnionField::addLabel(_t0);
+        ::ecorecpp::mapping::EList_ptr _t0 =
+                ::ecorecpp::mapping::any::any_cast<
+                        ::ecorecpp::mapping::EList_ptr >(_newValue);
+        ::idlmm::UnionField::getLabel().clear();
+        ::idlmm::UnionField::getLabel().insert_all(*_t0);
     }
         return;
 
@@ -142,7 +146,7 @@ void UnionField::eSet(::ecore::EInt _featureID,
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_identifier);
     case ::idlmm::IdlmmPackage::UNIONFIELD__LABEL:
-        return m_label.size();
+        return m_label && m_label->size();
 
     }
     throw "Error";

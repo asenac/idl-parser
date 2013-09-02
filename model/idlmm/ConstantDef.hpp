@@ -26,6 +26,7 @@
 #include <ecore_forward.hpp>
 #include <idlmm/Contained.hpp>
 #include <idlmm/Typed.hpp>
+#include <idlmm/Constant.hpp>
 
 /*PROTECTED REGION ID(ConstantDef_pre) START*/
 // Please, enable the protected region if you add manually written code.
@@ -36,7 +37,8 @@ namespace idlmm
 {
 
     class ConstantDef: public virtual ::idlmm::Contained,
-            public virtual ::idlmm::Typed
+            public virtual ::idlmm::Typed,
+            public virtual ::idlmm::Constant
     {
     public:
         ConstantDef();
@@ -49,11 +51,10 @@ namespace idlmm
 
 
         // Attributes
-        ::idlmm::EAny getConstValue() const;
-        void setConstValue(::idlmm::EAny _constValue);
 
         // References
-
+        ::idlmm::Expression_ptr getConstValue();
+        void setConstValue(::idlmm::Expression_ptr _constValue);
 
         /*PROTECTED REGION ID(ConstantDef) START*/
         // Please, enable the protected region if you add manually written code.
@@ -77,9 +78,10 @@ namespace idlmm
     protected:
         // Attributes
 
-        ::idlmm::EAny m_constValue;
 
         // References
+
+        ::idlmm::Expression_ptr m_constValue;
 
     };
 

@@ -21,9 +21,11 @@
 #include <idlmm/IdlmmPackage.hpp>
 #include <idlmm/Contained.hpp>
 #include <idlmm/Typed.hpp>
+#include <idlmm/Constant.hpp>
 #include <idlmm/Container.hpp>
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
+#include <idlmm/Expression.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include <ecore/EStructuralFeature.hpp>
@@ -43,8 +45,16 @@ void ConstantDef::_initialize()
     // Supertypes
     ::idlmm::Contained::_initialize();
     ::idlmm::Typed::_initialize();
+    ::idlmm::Constant::_initialize();
 
     // Rerefences
+    if (m_constValue)
+    {
+        m_constValue->_initialize();
+        m_constValue->_setEContainer(
+                this,
+                ::idlmm::IdlmmPackage::_instance()->getConstantDef__constValue());
+    }
 
     /*PROTECTED REGION ID(ConstantDefImpl__initialize) START*/
     // Please, enable the protected region if you add manually written code.
@@ -62,7 +72,7 @@ void ConstantDef::_initialize()
     ::ecore::EJavaObject _any;
     switch (_featureID)
     {
-    case ::idlmm::IdlmmPackage::CONTAINED__IDENTIFIER:
+    case ::idlmm::IdlmmPackage::NAMEDELEMENT__IDENTIFIER:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
                 m_identifier);
@@ -103,8 +113,7 @@ void ConstantDef::_initialize()
         return _any;
     case ::idlmm::IdlmmPackage::CONSTANTDEF__CONSTVALUE:
     {
-        ::ecorecpp::mapping::any_traits< ::idlmm::EAny >::toAny(_any,
-                m_constValue);
+        _any = static_cast< ::ecore::EObject* > (m_constValue);
     }
         return _any;
 
@@ -117,7 +126,7 @@ void ConstantDef::eSet(::ecore::EInt _featureID,
 {
     switch (_featureID)
     {
-    case ::idlmm::IdlmmPackage::CONTAINED__IDENTIFIER:
+    case ::idlmm::IdlmmPackage::NAMEDELEMENT__IDENTIFIER:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
                 m_identifier);
@@ -169,8 +178,11 @@ void ConstantDef::eSet(::ecore::EInt _featureID,
         return;
     case ::idlmm::IdlmmPackage::CONSTANTDEF__CONSTVALUE:
     {
-        ::ecorecpp::mapping::any_traits< ::idlmm::EAny >::fromAny(_newValue,
-                m_constValue);
+        ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast<
+                ::ecore::EObject_ptr >(_newValue);
+        ::idlmm::Expression_ptr _t1 =
+                dynamic_cast< ::idlmm::Expression_ptr > (_t0);
+        ::idlmm::ConstantDef::setConstValue(_t1);
     }
         return;
 
@@ -182,7 +194,7 @@ void ConstantDef::eSet(::ecore::EInt _featureID,
 {
     switch (_featureID)
     {
-    case ::idlmm::IdlmmPackage::CONTAINED__IDENTIFIER:
+    case ::idlmm::IdlmmPackage::NAMEDELEMENT__IDENTIFIER:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_identifier);
     case ::idlmm::IdlmmPackage::CONTAINED__REPOSITORYID:
@@ -201,8 +213,7 @@ void ConstantDef::eSet(::ecore::EInt _featureID,
     case ::idlmm::IdlmmPackage::TYPED__SHAREDTYPE:
         return m_sharedType;
     case ::idlmm::IdlmmPackage::CONSTANTDEF__CONSTVALUE:
-        return ::ecorecpp::mapping::set_traits< ::idlmm::EAny >::is_set(
-                m_constValue);
+        return m_constValue;
 
     }
     throw "Error";

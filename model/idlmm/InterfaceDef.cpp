@@ -22,6 +22,7 @@
 #include <idlmm/TypedefDef.hpp>
 #include <idlmm/Contained.hpp>
 #include <idlmm/InterfaceDef.hpp>
+#include <idlmm/ForwardDef.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include "idlmm/IdlmmPackage.hpp"
@@ -34,7 +35,8 @@
 using namespace ::idlmm;
 
 // Default constructor
-InterfaceDef::InterfaceDef()
+InterfaceDef::InterfaceDef() :
+    m_forward(0)
 {
 
     m_derivesFrom.reset(
@@ -144,5 +146,32 @@ void InterfaceDef::setIsTruncatable(::ecore::EBoolean _isTruncatable)
 ::ecorecpp::mapping::EList< ::idlmm::InterfaceDef >& InterfaceDef::getDerivesFrom()
 {
     return *m_derivesFrom;
+}
+
+::idlmm::ForwardDef_ptr InterfaceDef::getForward()
+{
+    return m_forward;
+}
+
+void InterfaceDef::setForward(::idlmm::ForwardDef_ptr _forward)
+{
+    ::idlmm::ForwardDef_ptr _old_forward = m_forward;
+
+    m_forward = _forward;
+
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getInterfaceDef__forward(),
+                _old_forward,
+                m_forward
+        );
+        eNotify(&notification);
+    }
+#endif
+
 }
 

@@ -18,6 +18,7 @@
  */
 
 #include "Contained.hpp"
+#include <idlmm/NamedElement.hpp>
 #include <idlmm/Container.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
@@ -55,32 +56,6 @@ Contained::~Contained()
 /*PROTECTED REGION END*/
 
 // Attributes
-
-::ecore::EString const& Contained::getIdentifier() const
-{
-    return m_identifier;
-}
-
-void Contained::setIdentifier(::ecore::EString const& _identifier)
-{
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_identifier = m_identifier;
-#endif
-    m_identifier = _identifier;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getContained__identifier(),
-                _old_identifier,
-                m_identifier
-        );
-        eNotify(&notification);
-    }
-#endif
-}
 
 ::ecore::EString const& Contained::getRepositoryId() const
 {

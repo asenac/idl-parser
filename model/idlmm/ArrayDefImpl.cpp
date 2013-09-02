@@ -22,6 +22,7 @@
 #include <idlmm/Typed.hpp>
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
+#include <idlmm/Expression.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include <ecore/EStructuralFeature.hpp>
@@ -43,6 +44,12 @@ void ArrayDef::_initialize()
     ::idlmm::IDLType::_initialize();
 
     // Rerefences
+    for (size_t i = 0; i < m_bounds->size(); i++)
+    {
+        (*m_bounds)[i]->_initialize();
+        (*m_bounds)[i]->_setEContainer(this,
+                ::idlmm::IdlmmPackage::_instance()->getArrayDef__bounds());
+    }
 
     /*PROTECTED REGION ID(ArrayDefImpl__initialize) START*/
     // Please, enable the protected region if you add manually written code.
@@ -76,10 +83,14 @@ void ArrayDef::_initialize()
                 m_typeCode);
     }
         return _any;
-    case ::idlmm::IdlmmPackage::ARRAYDEF__BOUND:
+    case ::idlmm::IdlmmPackage::ARRAYDEF__NAME:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_bound);
+        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any, m_name);
+    }
+        return _any;
+    case ::idlmm::IdlmmPackage::ARRAYDEF__BOUNDS:
+    {
+        _any = m_bounds->asEListOf< ::ecore::EObject > ();
     }
         return _any;
 
@@ -115,10 +126,19 @@ void ArrayDef::eSet(::ecore::EInt _featureID,
                 _newValue, m_typeCode);
     }
         return;
-    case ::idlmm::IdlmmPackage::ARRAYDEF__BOUND:
+    case ::idlmm::IdlmmPackage::ARRAYDEF__NAME:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_bound);
+                m_name);
+    }
+        return;
+    case ::idlmm::IdlmmPackage::ARRAYDEF__BOUNDS:
+    {
+        ::ecorecpp::mapping::EList_ptr _t0 =
+                ::ecorecpp::mapping::any::any_cast<
+                        ::ecorecpp::mapping::EList_ptr >(_newValue);
+        ::idlmm::ArrayDef::getBounds().clear();
+        ::idlmm::ArrayDef::getBounds().insert_all(*_t0);
     }
         return;
 
@@ -137,9 +157,11 @@ void ArrayDef::eSet(::ecore::EInt _featureID,
     case ::idlmm::IdlmmPackage::IDLTYPE__TYPECODE:
         return ::ecorecpp::mapping::set_traits< ::idlmm::ETypeCode >::is_set(
                 m_typeCode);
-    case ::idlmm::IdlmmPackage::ARRAYDEF__BOUND:
+    case ::idlmm::IdlmmPackage::ARRAYDEF__NAME:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_bound);
+                m_name);
+    case ::idlmm::IdlmmPackage::ARRAYDEF__BOUNDS:
+        return m_bounds && m_bounds->size();
 
     }
     throw "Error";

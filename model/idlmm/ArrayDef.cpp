@@ -21,6 +21,7 @@
 #include <idlmm/Typed.hpp>
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
+#include <idlmm/Expression.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include "idlmm/IdlmmPackage.hpp"
@@ -35,6 +36,10 @@ using namespace ::idlmm;
 // Default constructor
 ArrayDef::ArrayDef()
 {
+
+    m_bounds.reset(
+            new ::ecorecpp::mapping::ReferenceEListImpl< ::idlmm::Expression,
+                    -1, true, false >(this, NULL));
 
     /*PROTECTED REGION ID(ArrayDefImpl__ArrayDefImpl) START*/
     // Please, enable the protected region if you add manually written code.
@@ -57,26 +62,26 @@ ArrayDef::~ArrayDef()
 
 // Attributes
 
-::ecore::EString const& ArrayDef::getBound() const
+::ecore::EString const& ArrayDef::getName() const
 {
-    return m_bound;
+    return m_name;
 }
 
-void ArrayDef::setBound(::ecore::EString const& _bound)
+void ArrayDef::setName(::ecore::EString const& _name)
 {
 #ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_bound = m_bound;
+    ::ecore::EString _old_name = m_name;
 #endif
-    m_bound = _bound;
+    m_name = _name;
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
         ::ecorecpp::notify::Notification notification(
                 ::ecorecpp::notify::Notification::SET,
                 (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getArrayDef__bound(),
-                _old_bound,
-                m_bound
+                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getArrayDef__name(),
+                _old_name,
+                m_name
         );
         eNotify(&notification);
     }
@@ -84,4 +89,8 @@ void ArrayDef::setBound(::ecore::EString const& _bound)
 }
 
 // References
+::ecorecpp::mapping::EList< ::idlmm::Expression >& ArrayDef::getBounds()
+{
+    return *m_bounds;
+}
 

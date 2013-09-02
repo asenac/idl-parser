@@ -20,6 +20,7 @@
 #include "EnumDef.hpp"
 #include <idlmm/TypedefDef.hpp>
 #include <idlmm/Container.hpp>
+#include <idlmm/EnumMember.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include "idlmm/IdlmmPackage.hpp"
@@ -34,6 +35,10 @@ using namespace ::idlmm;
 // Default constructor
 EnumDef::EnumDef()
 {
+
+    m_members.reset(
+            new ::ecorecpp::mapping::ReferenceEListImpl< ::idlmm::EnumMember,
+                    -1, true, true >(this, NULL));
 
     /*PROTECTED REGION ID(EnumDefImpl__EnumDefImpl) START*/
     // Please, enable the protected region if you add manually written code.
@@ -56,55 +61,9 @@ EnumDef::~EnumDef()
 
 // Attributes
 
-std::vector< ::ecore::EString > const& EnumDef::getMembers() const
-{
-    return m_members;
-}
-
-void EnumDef::setMembers(std::vector< ::ecore::EString > const& _members)
-{
-#ifdef ECORECPP_NOTIFICATION_API
-    std::vector< ::ecore::EString > _old_members = m_members;
-#endif
-    m_members = _members;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getEnumDef__members(),
-                _old_members,
-                m_members
-        );
-        eNotify(&notification);
-    }
-#endif
-}
-
-void EnumDef::addMembers(::ecore::EString const& _new_element_in_members)
-{
-    m_members.push_back(_new_element_in_members);
-}
-
-void EnumDef::setMembersAt(size_t _position,
-        ::ecore::EString const& _new_element_in_members)
-{
-    if (_position >= m_members.size())
-        m_members.resize(_position + 1, 0);
-
-    m_members[_position] = _new_element_in_members;
-}
-
-void EnumDef::deleteMembersAt(size_t _position)
-{
-    if (_position >= m_members.size())
-        throw "Attribute counter out of bounds!";
-
-    // TODO: This is not actually quite true
-    if (_position == m_members.size() - 1)
-        m_members.resize(_position);
-}
-
 // References
+::ecorecpp::mapping::EList< ::idlmm::EnumMember >& EnumDef::getMembers()
+{
+    return *m_members;
+}
 

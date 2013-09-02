@@ -49,11 +49,11 @@ namespace idlmm
 
 
         // Attributes
-        ::ecore::EString const& getBound() const;
-        void setBound(::ecore::EString const& _bound);
+        ::ecore::EString const& getName() const;
+        void setName(::ecore::EString const& _name);
 
         // References
-
+        ::ecorecpp::mapping::EList< ::idlmm::Expression >& getBounds();
 
         /*PROTECTED REGION ID(ArrayDef) START*/
         // Please, enable the protected region if you add manually written code.
@@ -77,9 +77,12 @@ namespace idlmm
     protected:
         // Attributes
 
-        ::ecore::EString m_bound;
+        ::ecore::EString m_name;
 
         // References
+
+        ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
+                ::idlmm::Expression > > m_bounds;
 
     };
 

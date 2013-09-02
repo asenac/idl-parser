@@ -23,6 +23,7 @@
 #include <idlmm/TypedefDef.hpp>
 #include <idlmm/Contained.hpp>
 #include <idlmm/InterfaceDef.hpp>
+#include <idlmm/ForwardDef.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include <ecore/EStructuralFeature.hpp>
@@ -61,7 +62,7 @@ void InterfaceDef::_initialize()
     ::ecore::EJavaObject _any;
     switch (_featureID)
     {
-    case ::idlmm::IdlmmPackage::CONTAINED__IDENTIFIER:
+    case ::idlmm::IdlmmPackage::NAMEDELEMENT__IDENTIFIER:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
                 m_identifier);
@@ -124,6 +125,11 @@ void InterfaceDef::_initialize()
         _any = m_derivesFrom->asEListOf< ::ecore::EObject > ();
     }
         return _any;
+    case ::idlmm::IdlmmPackage::INTERFACEDEF__FORWARD:
+    {
+        _any = static_cast< ::ecore::EObject* > (m_forward);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -134,7 +140,7 @@ void InterfaceDef::eSet(::ecore::EInt _featureID,
 {
     switch (_featureID)
     {
-    case ::idlmm::IdlmmPackage::CONTAINED__IDENTIFIER:
+    case ::idlmm::IdlmmPackage::NAMEDELEMENT__IDENTIFIER:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
                 m_identifier);
@@ -209,6 +215,15 @@ void InterfaceDef::eSet(::ecore::EInt _featureID,
         ::idlmm::InterfaceDef::getDerivesFrom().insert_all(*_t0);
     }
         return;
+    case ::idlmm::IdlmmPackage::INTERFACEDEF__FORWARD:
+    {
+        ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast<
+                ::ecore::EObject_ptr >(_newValue);
+        ::idlmm::ForwardDef_ptr _t1 =
+                dynamic_cast< ::idlmm::ForwardDef_ptr > (_t0);
+        ::idlmm::InterfaceDef::setForward(_t1);
+    }
+        return;
 
     }
     throw "Error";
@@ -218,7 +233,7 @@ void InterfaceDef::eSet(::ecore::EInt _featureID,
 {
     switch (_featureID)
     {
-    case ::idlmm::IdlmmPackage::CONTAINED__IDENTIFIER:
+    case ::idlmm::IdlmmPackage::NAMEDELEMENT__IDENTIFIER:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_identifier);
     case ::idlmm::IdlmmPackage::CONTAINED__REPOSITORYID:
@@ -248,6 +263,8 @@ void InterfaceDef::eSet(::ecore::EInt _featureID,
                 m_isTruncatable);
     case ::idlmm::IdlmmPackage::INTERFACEDEF__DERIVESFROM:
         return m_derivesFrom && m_derivesFrom->size();
+    case ::idlmm::IdlmmPackage::INTERFACEDEF__FORWARD:
+        return m_forward;
 
     }
     throw "Error";

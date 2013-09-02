@@ -21,6 +21,7 @@
 #include <idlmm/Typed.hpp>
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
+#include <idlmm/Expression.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include "idlmm/IdlmmPackage.hpp"
@@ -33,7 +34,8 @@
 using namespace ::idlmm;
 
 // Default constructor
-SequenceDef::SequenceDef()
+SequenceDef::SequenceDef() :
+    m_bound(0)
 {
 
     /*PROTECTED REGION ID(SequenceDefImpl__SequenceDefImpl) START*/
@@ -48,6 +50,10 @@ SequenceDef::SequenceDef()
 
 SequenceDef::~SequenceDef()
 {
+    if (m_bound)
+    {
+        delete m_bound;
+    }
 }
 
 /*PROTECTED REGION ID(SequenceDef.cpp) START*/
@@ -57,17 +63,18 @@ SequenceDef::~SequenceDef()
 
 // Attributes
 
-::ecore::EString const& SequenceDef::getBound() const
+// References
+::idlmm::Expression_ptr SequenceDef::getBound()
 {
     return m_bound;
 }
 
-void SequenceDef::setBound(::ecore::EString const& _bound)
+void SequenceDef::setBound(::idlmm::Expression_ptr _bound)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_bound = m_bound;
-#endif
+    ::idlmm::Expression_ptr _old_bound = m_bound;
+
     m_bound = _bound;
+
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
@@ -81,7 +88,7 @@ void SequenceDef::setBound(::ecore::EString const& _bound)
         eNotify(&notification);
     }
 #endif
-}
 
-// References
+    delete _old_bound;
+}
 

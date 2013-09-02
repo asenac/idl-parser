@@ -18,6 +18,7 @@
  */
 
 #include "Include.hpp"
+#include <idlmm/TranslationUnit.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include "idlmm/IdlmmPackage.hpp"
@@ -30,7 +31,8 @@
 using namespace ::idlmm;
 
 // Default constructor
-Include::Include()
+Include::Include() :
+    m_translationUnit(0)
 {
 
     /*PROTECTED REGION ID(IncludeImpl__IncludeImpl) START*/
@@ -81,4 +83,30 @@ void Include::setImportURI(::ecore::EString const& _importURI)
 }
 
 // References
+::idlmm::TranslationUnit_ptr Include::getTranslationUnit()
+{
+    return m_translationUnit;
+}
+
+void Include::setTranslationUnit(::idlmm::TranslationUnit_ptr _translationUnit)
+{
+    ::idlmm::TranslationUnit_ptr _old_translationUnit = m_translationUnit;
+
+    m_translationUnit = _translationUnit;
+
+#ifdef ECORECPP_NOTIFICATION_API
+    if (eNotificationRequired())
+    {
+        ::ecorecpp::notify::Notification notification(
+                ::ecorecpp::notify::Notification::SET,
+                (::ecore::EObject_ptr) this,
+                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getInclude__translationUnit(),
+                _old_translationUnit,
+                m_translationUnit
+        );
+        eNotify(&notification);
+    }
+#endif
+
+}
 

@@ -19,6 +19,7 @@
 
 #include "Include.hpp"
 #include <idlmm/IdlmmPackage.hpp>
+#include <idlmm/TranslationUnit.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include <ecore/EStructuralFeature.hpp>
@@ -61,6 +62,11 @@ void Include::_initialize()
                 m_importURI);
     }
         return _any;
+    case ::idlmm::IdlmmPackage::INCLUDE__TRANSLATIONUNIT:
+    {
+        _any = static_cast< ::ecore::EObject* > (m_translationUnit);
+    }
+        return _any;
 
     }
     throw "Error";
@@ -77,6 +83,15 @@ void Include::eSet(::ecore::EInt _featureID,
                 m_importURI);
     }
         return;
+    case ::idlmm::IdlmmPackage::INCLUDE__TRANSLATIONUNIT:
+    {
+        ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast<
+                ::ecore::EObject_ptr >(_newValue);
+        ::idlmm::TranslationUnit_ptr _t1 =
+                dynamic_cast< ::idlmm::TranslationUnit_ptr > (_t0);
+        ::idlmm::Include::setTranslationUnit(_t1);
+    }
+        return;
 
     }
     throw "Error";
@@ -89,6 +104,8 @@ void Include::eSet(::ecore::EInt _featureID,
     case ::idlmm::IdlmmPackage::INCLUDE__IMPORTURI:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_importURI);
+    case ::idlmm::IdlmmPackage::INCLUDE__TRANSLATIONUNIT:
+        return m_translationUnit;
 
     }
     throw "Error";

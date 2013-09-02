@@ -163,6 +163,46 @@ namespace idlmm
     class Include;
     typedef Include* Include_ptr;
 
+    // Expression
+    class Expression;
+    typedef Expression* Expression_ptr;
+
+    // BinaryExpression
+    class BinaryExpression;
+    typedef BinaryExpression* BinaryExpression_ptr;
+
+    // UnaryExpression
+    class UnaryExpression;
+    typedef UnaryExpression* UnaryExpression_ptr;
+
+    // LiteralExpression
+    class LiteralExpression;
+    typedef LiteralExpression* LiteralExpression_ptr;
+
+    // ConstantDefRef
+    class ConstantDefRef;
+    typedef ConstantDefRef* ConstantDefRef_ptr;
+
+    // ValueExpression
+    class ValueExpression;
+    typedef ValueExpression* ValueExpression_ptr;
+
+    // ForwardDef
+    class ForwardDef;
+    typedef ForwardDef* ForwardDef_ptr;
+
+    // EnumMember
+    class EnumMember;
+    typedef EnumMember* EnumMember_ptr;
+
+    // Constant
+    class Constant;
+    typedef Constant* Constant_ptr;
+
+    // NamedElement
+    class NamedElement;
+    typedef NamedElement* NamedElement_ptr;
+
     // Package & Factory
     class IdlmmFactory;
     typedef IdlmmFactory * IdlmmFactory_ptr;

@@ -15,6 +15,7 @@ typedef char_ < ',' > comma;
 typedef char_ < '.' > point;
 
 typedef cirange_ < '0', '9'> digit_;
+// TODO allow scientific notation
 typedef seq_ < plus_< digit_ >, opt_ < seq_ < point, plus_ < digit_ > > > > 
     number_;
 
@@ -28,6 +29,7 @@ typedef or_ <
             seq_ < char_ < '<' >, char_ < '<' > >,
             or_ <
                 seq_ < char_ < '&' >, char_ < '&' > >,
+                seq_ < char_ < '=' >, char_ < '=' > >,
                 seq_ < char_ < '|' >, char_ < '|' > >
                 >
             > operator_;
@@ -85,7 +87,25 @@ typedef
         > 
     space;
 
-typedef or_ < req_ < ' ' >, req_< '/' >, req_ < '<' > > rspace;
+// chars not allowed to be in tokens
+// TODO maybe we could use ranges
+typedef or_ < 
+            req_ < ' ' >, 
+            req_ < '\r' >, 
+            req_ < '\n' >, 
+            req_ < '/' >, 
+            req_ < '&' >, 
+            req_ < '|' >, 
+            req_ < '>' >, 
+            or_ <
+                req_ < '<' >,
+                req_ < '+' >,
+                req_ < '*' >,
+                req_ < '-' >,
+                req_ < '=' >,
+                req_ < '%' >
+                >
+            > rspace;
 
 // token: requires an space at the end 
 template <typename C0,
@@ -107,24 +127,6 @@ typedef star_ < space > spaces_;
 typedef plus_ < space > space_;
 
 typedef space __;
-
-// expressions
-struct exp_item;
-
-struct exp_item : 
-    or_ < 
-        number_, 
-        identifier_rule,  
-        seq_ < char_ < '(' >, spaces_, exp_item, spaces_, char_ < ')' > >
-        >
-{};
-
-typedef seq_< 
-            spaces_,
-            exp_item, 
-            spaces_,
-            opt_ < seq_ < operator_, exp_item, spaces_ > > 
-            > expression_rule;
 
 typedef char_< 'a' > a_;
 typedef char_< 'b' > b_;
@@ -207,7 +209,29 @@ typedef tok_ < v_, o_, i_, d_ > void_t;
 typedef tok_ < e_, n_, u_, m_ > enum_t;
 typedef tok_ < s_, e_, q_, u_, e_, n_, c_, e_ > sequence_t;
 typedef tok_ < c_, o_, n_, s_, t_ > const_t;
+typedef tok_ < t_, r_, u_, e_ > true_t;
+typedef tok_ < f_, a_, l_, s_, e_ > false_t;
 
+
+// expressions
+struct exp_item;
+
+struct exp_item : 
+    or_ < 
+        number_, 
+        identifier_rule,  
+        true_t,
+        false_t,
+        seq_ < char_ < '(' >, spaces_, exp_item, spaces_, char_ < ')' > >
+        >
+{};
+
+typedef seq_< 
+            spaces_,
+            exp_item, 
+            spaces_,
+            star_ < seq_ < operator_, spaces_, exp_item, spaces_ > > 
+            > expression_rule;
 
 } // namespace tokens
 } // namespace idl

@@ -50,16 +50,8 @@ namespace idlmm
         ::ecore::EString const& getIdentifier() const;
         void setIdentifier(::ecore::EString const& _identifier);
 
-        std::vector< ::idlmm::EAny > const& getLabel() const;
-        void setLabel(std::vector< ::idlmm::EAny > _label);
-
-        void addLabel(::idlmm::EAny const& _new_element_in_label);
-        void setLabelAt(size_t _position,
-                ::idlmm::EAny const& _new_element_in_label);
-        void deleteLabelAt(size_t _position);
-
         // References
-
+        ::ecorecpp::mapping::EList< ::idlmm::Expression >& getLabel();
 
         /*PROTECTED REGION ID(UnionField) START*/
         // Please, enable the protected region if you add manually written code.
@@ -85,9 +77,10 @@ namespace idlmm
 
         ::ecore::EString m_identifier;
 
-        std::vector< ::idlmm::EAny > m_label;
-
         // References
+
+        ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
+                ::idlmm::Expression > > m_label;
 
     };
 

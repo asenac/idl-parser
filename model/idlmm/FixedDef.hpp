@@ -23,7 +23,6 @@
 #include <idlmm_forward.hpp>
 #include <ecorecpp/mapping_forward.hpp>
 
-#include <ecore_forward.hpp>
 #include <idlmm/IDLType.hpp>
 
 /*PROTECTED REGION ID(FixedDef_pre) START*/
@@ -47,14 +46,13 @@ namespace idlmm
 
 
         // Attributes
-        ::ecore::EString const& getDigits() const;
-        void setDigits(::ecore::EString const& _digits);
-
-        ::ecore::EString const& getScale() const;
-        void setScale(::ecore::EString const& _scale);
 
         // References
+        ::idlmm::Expression_ptr getDigits();
+        void setDigits(::idlmm::Expression_ptr _digits);
 
+        ::idlmm::Expression_ptr getScale();
+        void setScale(::idlmm::Expression_ptr _scale);
 
         /*PROTECTED REGION ID(FixedDef) START*/
         // Please, enable the protected region if you add manually written code.
@@ -78,11 +76,12 @@ namespace idlmm
     protected:
         // Attributes
 
-        ::ecore::EString m_digits;
-
-        ::ecore::EString m_scale;
 
         // References
+
+        ::idlmm::Expression_ptr m_digits;
+
+        ::idlmm::Expression_ptr m_scale;
 
     };
 

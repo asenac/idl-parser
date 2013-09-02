@@ -20,6 +20,7 @@
 #include "FixedDef.hpp"
 #include <idlmm/IdlmmPackage.hpp>
 #include <idlmm/IDLType.hpp>
+#include <idlmm/Expression.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include <ecore/EStructuralFeature.hpp>
@@ -40,6 +41,18 @@ void FixedDef::_initialize()
     ::idlmm::IDLType::_initialize();
 
     // Rerefences
+    if (m_digits)
+    {
+        m_digits->_initialize();
+        m_digits->_setEContainer(this,
+                ::idlmm::IdlmmPackage::_instance()->getFixedDef__digits());
+    }
+    if (m_scale)
+    {
+        m_scale->_initialize();
+        m_scale->_setEContainer(this,
+                ::idlmm::IdlmmPackage::_instance()->getFixedDef__scale());
+    }
 
     /*PROTECTED REGION ID(FixedDefImpl__initialize) START*/
     // Please, enable the protected region if you add manually written code.
@@ -65,14 +78,12 @@ void FixedDef::_initialize()
         return _any;
     case ::idlmm::IdlmmPackage::FIXEDDEF__DIGITS:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_digits);
+        _any = static_cast< ::ecore::EObject* > (m_digits);
     }
         return _any;
     case ::idlmm::IdlmmPackage::FIXEDDEF__SCALE:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
-                m_scale);
+        _any = static_cast< ::ecore::EObject* > (m_scale);
     }
         return _any;
 
@@ -93,14 +104,20 @@ void FixedDef::eSet(::ecore::EInt _featureID,
         return;
     case ::idlmm::IdlmmPackage::FIXEDDEF__DIGITS:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_digits);
+        ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast<
+                ::ecore::EObject_ptr >(_newValue);
+        ::idlmm::Expression_ptr _t1 =
+                dynamic_cast< ::idlmm::Expression_ptr > (_t0);
+        ::idlmm::FixedDef::setDigits(_t1);
     }
         return;
     case ::idlmm::IdlmmPackage::FIXEDDEF__SCALE:
     {
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                m_scale);
+        ::ecore::EObject_ptr _t0 = ::ecorecpp::mapping::any::any_cast<
+                ::ecore::EObject_ptr >(_newValue);
+        ::idlmm::Expression_ptr _t1 =
+                dynamic_cast< ::idlmm::Expression_ptr > (_t0);
+        ::idlmm::FixedDef::setScale(_t1);
     }
         return;
 
@@ -116,11 +133,9 @@ void FixedDef::eSet(::ecore::EInt _featureID,
         return ::ecorecpp::mapping::set_traits< ::idlmm::ETypeCode >::is_set(
                 m_typeCode);
     case ::idlmm::IdlmmPackage::FIXEDDEF__DIGITS:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_digits);
+        return m_digits;
     case ::idlmm::IdlmmPackage::FIXEDDEF__SCALE:
-        return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
-                m_scale);
+        return m_scale;
 
     }
     throw "Error";

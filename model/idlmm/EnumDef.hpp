@@ -47,16 +47,9 @@ namespace idlmm
 
 
         // Attributes
-        std::vector< ::ecore::EString > const& getMembers() const;
-        void setMembers(std::vector< ::ecore::EString > const& _members);
-
-        void addMembers(::ecore::EString const& _new_element_in_members);
-        void setMembersAt(size_t _position,
-                ::ecore::EString const& _new_element_in_members);
-        void deleteMembersAt(size_t _position);
 
         // References
-
+        ::ecorecpp::mapping::EList< ::idlmm::EnumMember >& getMembers();
 
         /*PROTECTED REGION ID(EnumDef) START*/
         // Please, enable the protected region if you add manually written code.
@@ -80,9 +73,11 @@ namespace idlmm
     protected:
         // Attributes
 
-        std::vector< ::ecore::EString > m_members;
 
         // References
+
+        ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
+                ::idlmm::EnumMember > > m_members;
 
     };
 

@@ -21,6 +21,7 @@
 #include <idlmm/IdlmmPackage.hpp>
 #include <idlmm/TypedefDef.hpp>
 #include <idlmm/Container.hpp>
+#include <idlmm/EnumMember.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include <ecore/EStructuralFeature.hpp>
@@ -41,6 +42,12 @@ void EnumDef::_initialize()
     ::idlmm::TypedefDef::_initialize();
 
     // Rerefences
+    for (size_t i = 0; i < m_members->size(); i++)
+    {
+        (*m_members)[i]->_initialize();
+        (*m_members)[i]->_setEContainer(this,
+                ::idlmm::IdlmmPackage::_instance()->getEnumDef__members());
+    }
 
     /*PROTECTED REGION ID(EnumDefImpl__initialize) START*/
     // Please, enable the protected region if you add manually written code.
@@ -64,7 +71,7 @@ void EnumDef::_initialize()
                 m_typeCode);
     }
         return _any;
-    case ::idlmm::IdlmmPackage::CONTAINED__IDENTIFIER:
+    case ::idlmm::IdlmmPackage::NAMEDELEMENT__IDENTIFIER:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
                 m_identifier);
@@ -95,11 +102,7 @@ void EnumDef::_initialize()
         return _any;
     case ::idlmm::IdlmmPackage::ENUMDEF__MEMBERS:
     {
-        std::vector < ::ecorecpp::mapping::any > _anys(m_members.size());
-        for (size_t _i = 0; _i < m_members.size(); _i++)
-            ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(
-                    _anys[_i], m_members[_i]);
-        _any = _anys;
+        _any = m_members->asEListOf< ::ecore::EObject > ();
     }
         return _any;
 
@@ -118,7 +121,7 @@ void EnumDef::eSet(::ecore::EInt _featureID,
                 _newValue, m_typeCode);
     }
         return;
-    case ::idlmm::IdlmmPackage::CONTAINED__IDENTIFIER:
+    case ::idlmm::IdlmmPackage::NAMEDELEMENT__IDENTIFIER:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
                 m_identifier);
@@ -153,10 +156,11 @@ void EnumDef::eSet(::ecore::EInt _featureID,
         return;
     case ::idlmm::IdlmmPackage::ENUMDEF__MEMBERS:
     {
-        ::ecore::EString _t0;
-        ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
-                _t0);
-        ::idlmm::EnumDef::addMembers(_t0);
+        ::ecorecpp::mapping::EList_ptr _t0 =
+                ::ecorecpp::mapping::any::any_cast<
+                        ::ecorecpp::mapping::EList_ptr >(_newValue);
+        ::idlmm::EnumDef::getMembers().clear();
+        ::idlmm::EnumDef::getMembers().insert_all(*_t0);
     }
         return;
 
@@ -171,7 +175,7 @@ void EnumDef::eSet(::ecore::EInt _featureID,
     case ::idlmm::IdlmmPackage::IDLTYPE__TYPECODE:
         return ::ecorecpp::mapping::set_traits< ::idlmm::ETypeCode >::is_set(
                 m_typeCode);
-    case ::idlmm::IdlmmPackage::CONTAINED__IDENTIFIER:
+    case ::idlmm::IdlmmPackage::NAMEDELEMENT__IDENTIFIER:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_identifier);
     case ::idlmm::IdlmmPackage::CONTAINED__REPOSITORYID:
@@ -186,7 +190,7 @@ void EnumDef::eSet(::ecore::EInt _featureID,
     case ::idlmm::IdlmmPackage::CONTAINED__DEFINEDIN:
         return m_definedIn;
     case ::idlmm::IdlmmPackage::ENUMDEF__MEMBERS:
-        return m_members.size();
+        return m_members && m_members->size();
 
     }
     throw "Error";

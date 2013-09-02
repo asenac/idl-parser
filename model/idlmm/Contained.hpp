@@ -24,8 +24,7 @@
 #include <ecorecpp/mapping_forward.hpp>
 
 #include <ecore_forward.hpp>
-
-#include <ecore/EObject.hpp>
+#include <idlmm/NamedElement.hpp>
 
 /*PROTECTED REGION ID(Contained_pre) START*/
 // Please, enable the protected region if you add manually written code.
@@ -35,8 +34,7 @@
 namespace idlmm
 {
 
-    class Contained: public virtual ::ecore::EObject
-
+    class Contained: public virtual ::idlmm::NamedElement
     {
     public:
         Contained();
@@ -49,9 +47,6 @@ namespace idlmm
 
 
         // Attributes
-        ::ecore::EString const& getIdentifier() const;
-        void setIdentifier(::ecore::EString const& _identifier);
-
         ::ecore::EString const& getRepositoryId() const;
         void setRepositoryId(::ecore::EString const& _repositoryId);
 
@@ -86,8 +81,6 @@ namespace idlmm
 
     protected:
         // Attributes
-
-        ::ecore::EString m_identifier;
 
         ::ecore::EString m_repositoryId;
 

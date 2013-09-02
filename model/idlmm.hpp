@@ -53,6 +53,16 @@
 #include "idlmm/StructDef.hpp"
 #include "idlmm/TranslationUnit.hpp"
 #include "idlmm/Include.hpp"
+#include "idlmm/Expression.hpp"
+#include "idlmm/BinaryExpression.hpp"
+#include "idlmm/UnaryExpression.hpp"
+#include "idlmm/LiteralExpression.hpp"
+#include "idlmm/ConstantDefRef.hpp"
+#include "idlmm/ValueExpression.hpp"
+#include "idlmm/ForwardDef.hpp"
+#include "idlmm/EnumMember.hpp"
+#include "idlmm/Constant.hpp"
+#include "idlmm/NamedElement.hpp"
 
 // Package & Factory
 #include "idlmm/IdlmmPackage.hpp"

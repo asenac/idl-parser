@@ -23,7 +23,6 @@
 #include <idlmm_forward.hpp>
 #include <ecorecpp/mapping_forward.hpp>
 
-#include <ecore_forward.hpp>
 #include <idlmm/IDLType.hpp>
 
 /*PROTECTED REGION ID(WstringDef_pre) START*/
@@ -47,11 +46,10 @@ namespace idlmm
 
 
         // Attributes
-        ::ecore::EString const& getBound() const;
-        void setBound(::ecore::EString const& _bound);
 
         // References
-
+        ::idlmm::Expression_ptr getBound();
+        void setBound(::idlmm::Expression_ptr _bound);
 
         /*PROTECTED REGION ID(WstringDef) START*/
         // Please, enable the protected region if you add manually written code.
@@ -75,9 +73,10 @@ namespace idlmm
     protected:
         // Attributes
 
-        ::ecore::EString m_bound;
 
         // References
+
+        ::idlmm::Expression_ptr m_bound;
 
     };
 

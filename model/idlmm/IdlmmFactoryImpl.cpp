@@ -45,6 +45,16 @@
 #include <idlmm/StructDef.hpp>
 #include <idlmm/TranslationUnit.hpp>
 #include <idlmm/Include.hpp>
+#include <idlmm/Expression.hpp>
+#include <idlmm/BinaryExpression.hpp>
+#include <idlmm/UnaryExpression.hpp>
+#include <idlmm/LiteralExpression.hpp>
+#include <idlmm/ConstantDefRef.hpp>
+#include <idlmm/ValueExpression.hpp>
+#include <idlmm/ForwardDef.hpp>
+#include <idlmm/EnumMember.hpp>
+#include <idlmm/Constant.hpp>
+#include <idlmm/NamedElement.hpp>
 
 #include <ecore.hpp>
 #include <ecorecpp/mapping.hpp>
@@ -112,6 +122,26 @@ IdlmmFactory::IdlmmFactory()
         return createTranslationUnit();
     case IdlmmPackage::INCLUDE:
         return createInclude();
+    case IdlmmPackage::EXPRESSION:
+        return createExpression();
+    case IdlmmPackage::BINARYEXPRESSION:
+        return createBinaryExpression();
+    case IdlmmPackage::UNARYEXPRESSION:
+        return createUnaryExpression();
+    case IdlmmPackage::LITERALEXPRESSION:
+        return createLiteralExpression();
+    case IdlmmPackage::CONSTANTDEFREF:
+        return createConstantDefRef();
+    case IdlmmPackage::VALUEEXPRESSION:
+        return createValueExpression();
+    case IdlmmPackage::FORWARDDEF:
+        return createForwardDef();
+    case IdlmmPackage::ENUMMEMBER:
+        return createEnumMember();
+    case IdlmmPackage::CONSTANT:
+        return createConstant();
+    case IdlmmPackage::NAMEDELEMENT:
+        return createNamedElement();
     default:
         throw "IllegalArgumentException";
     }
@@ -286,5 +316,45 @@ TranslationUnit_ptr IdlmmFactory::createTranslationUnit()
 Include_ptr IdlmmFactory::createInclude()
 {
     return new Include();
+}
+Expression_ptr IdlmmFactory::createExpression()
+{
+    return new Expression();
+}
+BinaryExpression_ptr IdlmmFactory::createBinaryExpression()
+{
+    return new BinaryExpression();
+}
+UnaryExpression_ptr IdlmmFactory::createUnaryExpression()
+{
+    return new UnaryExpression();
+}
+LiteralExpression_ptr IdlmmFactory::createLiteralExpression()
+{
+    return new LiteralExpression();
+}
+ConstantDefRef_ptr IdlmmFactory::createConstantDefRef()
+{
+    return new ConstantDefRef();
+}
+ValueExpression_ptr IdlmmFactory::createValueExpression()
+{
+    return new ValueExpression();
+}
+ForwardDef_ptr IdlmmFactory::createForwardDef()
+{
+    return new ForwardDef();
+}
+EnumMember_ptr IdlmmFactory::createEnumMember()
+{
+    return new EnumMember();
+}
+Constant_ptr IdlmmFactory::createConstant()
+{
+    return new Constant();
+}
+NamedElement_ptr IdlmmFactory::createNamedElement()
+{
+    return new NamedElement();
 }
 

@@ -39,6 +39,8 @@ tokens = [
     "enum",
     "sequence",
     "const",
+    "true",
+    "false",
     ]
 tokens.extend(types)
 

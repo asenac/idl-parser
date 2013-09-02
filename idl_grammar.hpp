@@ -258,6 +258,17 @@ struct operation_ :
 
 // constant
 
+struct const_value : 
+    semantic_rule < const_value, or_ < string_rule, expression_rule > >
+{
+    template <typename S, typename match_pair>
+    static inline void process_match (S& state, match_pair const& mp)
+    {
+        //const std::string s (state.to_string(mp.first, mp.second));
+        // TODO put it in the model
+    }
+};
+
 typedef seq_ < 
                 const_t, 
                 space_, 
@@ -267,8 +278,8 @@ typedef seq_ <
                 spaces_,
                 seq_ < 
                         char_ < '=' >, 
-                        space_, 
-                        plus_ < notchar_ < ';' > > 
+                        spaces_, 
+                        const_value
                 > 
         > 
         const_rule;

@@ -20,9 +20,11 @@
 #include "ConstantDef.hpp"
 #include <idlmm/Contained.hpp>
 #include <idlmm/Typed.hpp>
+#include <idlmm/Constant.hpp>
 #include <idlmm/Container.hpp>
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
+#include <idlmm/Expression.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include "idlmm/IdlmmPackage.hpp"
@@ -35,7 +37,8 @@
 using namespace ::idlmm;
 
 // Default constructor
-ConstantDef::ConstantDef()
+ConstantDef::ConstantDef() :
+    m_constValue(0)
 {
 
     /*PROTECTED REGION ID(ConstantDefImpl__ConstantDefImpl) START*/
@@ -50,6 +53,10 @@ ConstantDef::ConstantDef()
 
 ConstantDef::~ConstantDef()
 {
+    if (m_constValue)
+    {
+        delete m_constValue;
+    }
 }
 
 /*PROTECTED REGION ID(ConstantDef.cpp) START*/
@@ -59,17 +66,18 @@ ConstantDef::~ConstantDef()
 
 // Attributes
 
-::idlmm::EAny ConstantDef::getConstValue() const
+// References
+::idlmm::Expression_ptr ConstantDef::getConstValue()
 {
     return m_constValue;
 }
 
-void ConstantDef::setConstValue(::idlmm::EAny _constValue)
+void ConstantDef::setConstValue(::idlmm::Expression_ptr _constValue)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::idlmm::EAny _old_constValue = m_constValue;
-#endif
+    ::idlmm::Expression_ptr _old_constValue = m_constValue;
+
     m_constValue = _constValue;
+
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
@@ -83,7 +91,7 @@ void ConstantDef::setConstValue(::idlmm::EAny _constValue)
         eNotify(&notification);
     }
 #endif
-}
 
-// References
+    delete _old_constValue;
+}
 

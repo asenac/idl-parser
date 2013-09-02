@@ -62,11 +62,6 @@ IdlmmPackage::IdlmmPackage()
     m_ContainedEClass->setClassifierID(CONTAINED);
     m_ContainedEClass->setEPackage(this);
     getEClassifiers().push_back(m_ContainedEClass);
-    m_Contained__identifier = new ::ecore::EAttribute();
-    m_Contained__identifier->setFeatureID(
-            ::idlmm::IdlmmPackage::CONTAINED__IDENTIFIER);
-    m_ContainedEClass->getEStructuralFeatures().push_back(
-            m_Contained__identifier);
     m_Contained__repositoryId = new ::ecore::EAttribute();
     m_Contained__repositoryId->setFeatureID(
             ::idlmm::IdlmmPackage::CONTAINED__REPOSITORYID);
@@ -112,6 +107,11 @@ IdlmmPackage::IdlmmPackage()
             ::idlmm::IdlmmPackage::INTERFACEDEF__DERIVESFROM);
     m_InterfaceDefEClass->getEStructuralFeatures().push_back(
             m_InterfaceDef__derivesFrom);
+    m_InterfaceDef__forward = new ::ecore::EReference();
+    m_InterfaceDef__forward->setFeatureID(
+            ::idlmm::IdlmmPackage::INTERFACEDEF__FORWARD);
+    m_InterfaceDefEClass->getEStructuralFeatures().push_back(
+            m_InterfaceDef__forward);
 
     // ModuleDef
     m_ModuleDefEClass = new ::ecore::EClass();
@@ -183,7 +183,7 @@ IdlmmPackage::IdlmmPackage()
     m_ConstantDefEClass->setClassifierID(CONSTANTDEF);
     m_ConstantDefEClass->setEPackage(this);
     getEClassifiers().push_back(m_ConstantDefEClass);
-    m_ConstantDef__constValue = new ::ecore::EAttribute();
+    m_ConstantDef__constValue = new ::ecore::EReference();
     m_ConstantDef__constValue->setFeatureID(
             ::idlmm::IdlmmPackage::CONSTANTDEF__CONSTVALUE);
     m_ConstantDefEClass->getEStructuralFeatures().push_back(
@@ -259,10 +259,10 @@ IdlmmPackage::IdlmmPackage()
     m_FixedDefEClass->setClassifierID(FIXEDDEF);
     m_FixedDefEClass->setEPackage(this);
     getEClassifiers().push_back(m_FixedDefEClass);
-    m_FixedDef__digits = new ::ecore::EAttribute();
+    m_FixedDef__digits = new ::ecore::EReference();
     m_FixedDef__digits->setFeatureID(::idlmm::IdlmmPackage::FIXEDDEF__DIGITS);
     m_FixedDefEClass->getEStructuralFeatures().push_back(m_FixedDef__digits);
-    m_FixedDef__scale = new ::ecore::EAttribute();
+    m_FixedDef__scale = new ::ecore::EReference();
     m_FixedDef__scale->setFeatureID(::idlmm::IdlmmPackage::FIXEDDEF__SCALE);
     m_FixedDefEClass->getEStructuralFeatures().push_back(m_FixedDef__scale);
 
@@ -271,7 +271,7 @@ IdlmmPackage::IdlmmPackage()
     m_WstringDefEClass->setClassifierID(WSTRINGDEF);
     m_WstringDefEClass->setEPackage(this);
     getEClassifiers().push_back(m_WstringDefEClass);
-    m_WstringDef__bound = new ::ecore::EAttribute();
+    m_WstringDef__bound = new ::ecore::EReference();
     m_WstringDef__bound->setFeatureID(::idlmm::IdlmmPackage::WSTRINGDEF__BOUND);
     m_WstringDefEClass->getEStructuralFeatures().push_back(m_WstringDef__bound);
 
@@ -280,7 +280,7 @@ IdlmmPackage::IdlmmPackage()
     m_StringDefEClass->setClassifierID(STRINGDEF);
     m_StringDefEClass->setEPackage(this);
     getEClassifiers().push_back(m_StringDefEClass);
-    m_StringDef__bound = new ::ecore::EAttribute();
+    m_StringDef__bound = new ::ecore::EReference();
     m_StringDef__bound->setFeatureID(::idlmm::IdlmmPackage::STRINGDEF__BOUND);
     m_StringDefEClass->getEStructuralFeatures().push_back(m_StringDef__bound);
 
@@ -295,16 +295,19 @@ IdlmmPackage::IdlmmPackage()
     m_ArrayDefEClass->setClassifierID(ARRAYDEF);
     m_ArrayDefEClass->setEPackage(this);
     getEClassifiers().push_back(m_ArrayDefEClass);
-    m_ArrayDef__bound = new ::ecore::EAttribute();
-    m_ArrayDef__bound->setFeatureID(::idlmm::IdlmmPackage::ARRAYDEF__BOUND);
-    m_ArrayDefEClass->getEStructuralFeatures().push_back(m_ArrayDef__bound);
+    m_ArrayDef__name = new ::ecore::EAttribute();
+    m_ArrayDef__name->setFeatureID(::idlmm::IdlmmPackage::ARRAYDEF__NAME);
+    m_ArrayDefEClass->getEStructuralFeatures().push_back(m_ArrayDef__name);
+    m_ArrayDef__bounds = new ::ecore::EReference();
+    m_ArrayDef__bounds->setFeatureID(::idlmm::IdlmmPackage::ARRAYDEF__BOUNDS);
+    m_ArrayDefEClass->getEStructuralFeatures().push_back(m_ArrayDef__bounds);
 
     // SequenceDef
     m_SequenceDefEClass = new ::ecore::EClass();
     m_SequenceDefEClass->setClassifierID(SEQUENCEDEF);
     m_SequenceDefEClass->setEPackage(this);
     getEClassifiers().push_back(m_SequenceDefEClass);
-    m_SequenceDef__bound = new ::ecore::EAttribute();
+    m_SequenceDef__bound = new ::ecore::EReference();
     m_SequenceDef__bound->setFeatureID(
             ::idlmm::IdlmmPackage::SEQUENCEDEF__BOUND);
     m_SequenceDefEClass->getEStructuralFeatures().push_back(
@@ -320,7 +323,7 @@ IdlmmPackage::IdlmmPackage()
             ::idlmm::IdlmmPackage::UNIONFIELD__IDENTIFIER);
     m_UnionFieldEClass->getEStructuralFeatures().push_back(
             m_UnionField__identifier);
-    m_UnionField__label = new ::ecore::EAttribute();
+    m_UnionField__label = new ::ecore::EReference();
     m_UnionField__label->setFeatureID(::idlmm::IdlmmPackage::UNIONFIELD__LABEL);
     m_UnionFieldEClass->getEStructuralFeatures().push_back(m_UnionField__label);
 
@@ -356,7 +359,7 @@ IdlmmPackage::IdlmmPackage()
     m_EnumDefEClass->setClassifierID(ENUMDEF);
     m_EnumDefEClass->setEPackage(this);
     getEClassifiers().push_back(m_EnumDefEClass);
-    m_EnumDef__members = new ::ecore::EAttribute();
+    m_EnumDef__members = new ::ecore::EReference();
     m_EnumDef__members->setFeatureID(::idlmm::IdlmmPackage::ENUMDEF__MEMBERS);
     m_EnumDefEClass->getEStructuralFeatures().push_back(m_EnumDef__members);
 
@@ -400,6 +403,119 @@ IdlmmPackage::IdlmmPackage()
     m_Include__importURI->setFeatureID(
             ::idlmm::IdlmmPackage::INCLUDE__IMPORTURI);
     m_IncludeEClass->getEStructuralFeatures().push_back(m_Include__importURI);
+    m_Include__translationUnit = new ::ecore::EReference();
+    m_Include__translationUnit->setFeatureID(
+            ::idlmm::IdlmmPackage::INCLUDE__TRANSLATIONUNIT);
+    m_IncludeEClass->getEStructuralFeatures().push_back(
+            m_Include__translationUnit);
+
+    // Expression
+    m_ExpressionEClass = new ::ecore::EClass();
+    m_ExpressionEClass->setClassifierID(EXPRESSION);
+    m_ExpressionEClass->setEPackage(this);
+    getEClassifiers().push_back(m_ExpressionEClass);
+
+    // BinaryExpression
+    m_BinaryExpressionEClass = new ::ecore::EClass();
+    m_BinaryExpressionEClass->setClassifierID(BINARYEXPRESSION);
+    m_BinaryExpressionEClass->setEPackage(this);
+    getEClassifiers().push_back(m_BinaryExpressionEClass);
+    m_BinaryExpression__operator = new ::ecore::EAttribute();
+    m_BinaryExpression__operator->setFeatureID(
+            ::idlmm::IdlmmPackage::BINARYEXPRESSION__OPERATOR);
+    m_BinaryExpressionEClass->getEStructuralFeatures().push_back(
+            m_BinaryExpression__operator);
+    m_BinaryExpression__left = new ::ecore::EReference();
+    m_BinaryExpression__left->setFeatureID(
+            ::idlmm::IdlmmPackage::BINARYEXPRESSION__LEFT);
+    m_BinaryExpressionEClass->getEStructuralFeatures().push_back(
+            m_BinaryExpression__left);
+    m_BinaryExpression__right = new ::ecore::EReference();
+    m_BinaryExpression__right->setFeatureID(
+            ::idlmm::IdlmmPackage::BINARYEXPRESSION__RIGHT);
+    m_BinaryExpressionEClass->getEStructuralFeatures().push_back(
+            m_BinaryExpression__right);
+
+    // UnaryExpression
+    m_UnaryExpressionEClass = new ::ecore::EClass();
+    m_UnaryExpressionEClass->setClassifierID(UNARYEXPRESSION);
+    m_UnaryExpressionEClass->setEPackage(this);
+    getEClassifiers().push_back(m_UnaryExpressionEClass);
+    m_UnaryExpression__operator = new ::ecore::EAttribute();
+    m_UnaryExpression__operator->setFeatureID(
+            ::idlmm::IdlmmPackage::UNARYEXPRESSION__OPERATOR);
+    m_UnaryExpressionEClass->getEStructuralFeatures().push_back(
+            m_UnaryExpression__operator);
+    m_UnaryExpression__expression = new ::ecore::EReference();
+    m_UnaryExpression__expression->setFeatureID(
+            ::idlmm::IdlmmPackage::UNARYEXPRESSION__EXPRESSION);
+    m_UnaryExpressionEClass->getEStructuralFeatures().push_back(
+            m_UnaryExpression__expression);
+
+    // LiteralExpression
+    m_LiteralExpressionEClass = new ::ecore::EClass();
+    m_LiteralExpressionEClass->setClassifierID(LITERALEXPRESSION);
+    m_LiteralExpressionEClass->setEPackage(this);
+    getEClassifiers().push_back(m_LiteralExpressionEClass);
+
+    // ConstantDefRef
+    m_ConstantDefRefEClass = new ::ecore::EClass();
+    m_ConstantDefRefEClass->setClassifierID(CONSTANTDEFREF);
+    m_ConstantDefRefEClass->setEPackage(this);
+    getEClassifiers().push_back(m_ConstantDefRefEClass);
+    m_ConstantDefRef__constant = new ::ecore::EReference();
+    m_ConstantDefRef__constant->setFeatureID(
+            ::idlmm::IdlmmPackage::CONSTANTDEFREF__CONSTANT);
+    m_ConstantDefRefEClass->getEStructuralFeatures().push_back(
+            m_ConstantDefRef__constant);
+
+    // ValueExpression
+    m_ValueExpressionEClass = new ::ecore::EClass();
+    m_ValueExpressionEClass->setClassifierID(VALUEEXPRESSION);
+    m_ValueExpressionEClass->setEPackage(this);
+    getEClassifiers().push_back(m_ValueExpressionEClass);
+    m_ValueExpression__value = new ::ecore::EAttribute();
+    m_ValueExpression__value->setFeatureID(
+            ::idlmm::IdlmmPackage::VALUEEXPRESSION__VALUE);
+    m_ValueExpressionEClass->getEStructuralFeatures().push_back(
+            m_ValueExpression__value);
+
+    // ForwardDef
+    m_ForwardDefEClass = new ::ecore::EClass();
+    m_ForwardDefEClass->setClassifierID(FORWARDDEF);
+    m_ForwardDefEClass->setEPackage(this);
+    getEClassifiers().push_back(m_ForwardDefEClass);
+    m_ForwardDef__definition = new ::ecore::EReference();
+    m_ForwardDef__definition->setFeatureID(
+            ::idlmm::IdlmmPackage::FORWARDDEF__DEFINITION);
+    m_ForwardDefEClass->getEStructuralFeatures().push_back(
+            m_ForwardDef__definition);
+
+    // EnumMember
+    m_EnumMemberEClass = new ::ecore::EClass();
+    m_EnumMemberEClass->setClassifierID(ENUMMEMBER);
+    m_EnumMemberEClass->setEPackage(this);
+    getEClassifiers().push_back(m_EnumMemberEClass);
+    m_EnumMember__enum = new ::ecore::EReference();
+    m_EnumMember__enum->setFeatureID(::idlmm::IdlmmPackage::ENUMMEMBER__ENUM);
+    m_EnumMemberEClass->getEStructuralFeatures().push_back(m_EnumMember__enum);
+
+    // Constant
+    m_ConstantEClass = new ::ecore::EClass();
+    m_ConstantEClass->setClassifierID(CONSTANT);
+    m_ConstantEClass->setEPackage(this);
+    getEClassifiers().push_back(m_ConstantEClass);
+
+    // NamedElement
+    m_NamedElementEClass = new ::ecore::EClass();
+    m_NamedElementEClass->setClassifierID(NAMEDELEMENT);
+    m_NamedElementEClass->setEPackage(this);
+    getEClassifiers().push_back(m_NamedElementEClass);
+    m_NamedElement__identifier = new ::ecore::EAttribute();
+    m_NamedElement__identifier->setFeatureID(
+            ::idlmm::IdlmmPackage::NAMEDELEMENT__IDENTIFIER);
+    m_NamedElementEClass->getEStructuralFeatures().push_back(
+            m_NamedElement__identifier);
 
     // Create enums
 
@@ -434,6 +550,7 @@ IdlmmPackage::IdlmmPackage()
 
     // Add supertypes to classes
     m_ContainerEClass->getESuperTypes().push_back(m_ContainedEClass);
+    m_ContainedEClass->getESuperTypes().push_back(m_NamedElementEClass);
     m_InterfaceDefEClass->getESuperTypes().push_back(m_ContainerEClass);
     m_InterfaceDefEClass->getESuperTypes().push_back(m_TypedefDefEClass);
     m_ModuleDefEClass->getESuperTypes().push_back(m_ContainerEClass);
@@ -443,6 +560,7 @@ IdlmmPackage::IdlmmPackage()
     m_AttributeDefEClass->getESuperTypes().push_back(m_TypedEClass);
     m_ConstantDefEClass->getESuperTypes().push_back(m_ContainedEClass);
     m_ConstantDefEClass->getESuperTypes().push_back(m_TypedEClass);
+    m_ConstantDefEClass->getESuperTypes().push_back(m_ConstantEClass);
     m_ParameterDefEClass->getESuperTypes().push_back(m_TypedEClass);
     m_PrimitiveDefEClass->getESuperTypes().push_back(m_IDLTypeEClass);
     m_ExceptionDefEClass->getESuperTypes().push_back(m_ContainedEClass);
@@ -462,6 +580,16 @@ IdlmmPackage::IdlmmPackage()
     m_UnionDefEClass->getESuperTypes().push_back(m_TypedefDefEClass);
     m_EnumDefEClass->getESuperTypes().push_back(m_TypedefDefEClass);
     m_StructDefEClass->getESuperTypes().push_back(m_TypedefDefEClass);
+    m_BinaryExpressionEClass->getESuperTypes().push_back(m_ExpressionEClass);
+    m_UnaryExpressionEClass->getESuperTypes().push_back(m_ExpressionEClass);
+    m_LiteralExpressionEClass->getESuperTypes().push_back(m_ExpressionEClass);
+    m_ConstantDefRefEClass->getESuperTypes().push_back(
+            m_LiteralExpressionEClass);
+    m_ValueExpressionEClass->getESuperTypes().push_back(
+            m_LiteralExpressionEClass);
+    m_ForwardDefEClass->getESuperTypes().push_back(m_ContainedEClass);
+    m_EnumMemberEClass->getESuperTypes().push_back(m_ConstantEClass);
+    m_ConstantEClass->getESuperTypes().push_back(m_ContainedEClass);
 
     // TODO: Initialize classes and features; add operations and parameters
     // TODO: GenericTypes
@@ -484,25 +612,11 @@ IdlmmPackage::IdlmmPackage()
     m_Container__contains->setOrdered(true);
     m_Container__contains->setEOpposite(
             ::ecore::instanceOf< ::ecore::EReference >(
-                    m_ContainedEClass->getEStructuralFeatures()[4]));
+                    m_ContainedEClass->getEStructuralFeatures()[3]));
     // Contained
     m_ContainedEClass->setName("Contained");
     m_ContainedEClass->setAbstract(true);
     m_ContainedEClass->setInterface(false);
-    m_Contained__identifier->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_Contained__identifier->setName("identifier");
-    m_Contained__identifier->setDefaultValueLiteral("");
-    m_Contained__identifier->setLowerBound(0);
-    m_Contained__identifier->setUpperBound(1);
-    m_Contained__identifier->setTransient(false);
-    m_Contained__identifier->setVolatile(false);
-    m_Contained__identifier->setChangeable(true);
-    m_Contained__identifier->setUnsettable(false);
-    m_Contained__identifier->setID(false);
-    m_Contained__identifier->setUnique(true);
-    m_Contained__identifier->setDerived(false);
-    m_Contained__identifier->setOrdered(true);
     m_Contained__repositoryId->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
     m_Contained__repositoryId->setName("repositoryId");
@@ -620,6 +734,19 @@ IdlmmPackage::IdlmmPackage()
     m_InterfaceDef__derivesFrom->setUnique(true);
     m_InterfaceDef__derivesFrom->setDerived(false);
     m_InterfaceDef__derivesFrom->setOrdered(true);
+    m_InterfaceDef__forward->setEType(m_ForwardDefEClass);
+    m_InterfaceDef__forward->setName("forward");
+    m_InterfaceDef__forward->setDefaultValueLiteral("");
+    m_InterfaceDef__forward->setLowerBound(0);
+    m_InterfaceDef__forward->setUpperBound(1);
+    m_InterfaceDef__forward->setTransient(false);
+    m_InterfaceDef__forward->setVolatile(false);
+    m_InterfaceDef__forward->setChangeable(true);
+    m_InterfaceDef__forward->setContainment(false);
+    m_InterfaceDef__forward->setResolveProxies(true);
+    m_InterfaceDef__forward->setUnique(true);
+    m_InterfaceDef__forward->setDerived(false);
+    m_InterfaceDef__forward->setOrdered(true);
     // ModuleDef
     m_ModuleDefEClass->setName("ModuleDef");
     m_ModuleDefEClass->setAbstract(false);
@@ -761,16 +888,16 @@ IdlmmPackage::IdlmmPackage()
     m_ConstantDefEClass->setName("ConstantDef");
     m_ConstantDefEClass->setAbstract(false);
     m_ConstantDefEClass->setInterface(false);
-    m_ConstantDef__constValue->setEType(m_EAnyEDataType);
+    m_ConstantDef__constValue->setEType(m_ExpressionEClass);
     m_ConstantDef__constValue->setName("constValue");
     m_ConstantDef__constValue->setDefaultValueLiteral("");
-    m_ConstantDef__constValue->setLowerBound(0);
+    m_ConstantDef__constValue->setLowerBound(1);
     m_ConstantDef__constValue->setUpperBound(1);
     m_ConstantDef__constValue->setTransient(false);
     m_ConstantDef__constValue->setVolatile(false);
     m_ConstantDef__constValue->setChangeable(true);
-    m_ConstantDef__constValue->setUnsettable(false);
-    m_ConstantDef__constValue->setID(false);
+    m_ConstantDef__constValue->setContainment(true);
+    m_ConstantDef__constValue->setResolveProxies(true);
     m_ConstantDef__constValue->setUnique(true);
     m_ConstantDef__constValue->setDerived(false);
     m_ConstantDef__constValue->setOrdered(true);
@@ -904,31 +1031,29 @@ IdlmmPackage::IdlmmPackage()
     m_FixedDefEClass->setName("FixedDef");
     m_FixedDefEClass->setAbstract(false);
     m_FixedDefEClass->setInterface(false);
-    m_FixedDef__digits->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_FixedDef__digits->setEType(m_ExpressionEClass);
     m_FixedDef__digits->setName("digits");
     m_FixedDef__digits->setDefaultValueLiteral("");
-    m_FixedDef__digits->setLowerBound(0);
+    m_FixedDef__digits->setLowerBound(1);
     m_FixedDef__digits->setUpperBound(1);
     m_FixedDef__digits->setTransient(false);
     m_FixedDef__digits->setVolatile(false);
     m_FixedDef__digits->setChangeable(true);
-    m_FixedDef__digits->setUnsettable(false);
-    m_FixedDef__digits->setID(false);
+    m_FixedDef__digits->setContainment(true);
+    m_FixedDef__digits->setResolveProxies(true);
     m_FixedDef__digits->setUnique(true);
     m_FixedDef__digits->setDerived(false);
     m_FixedDef__digits->setOrdered(true);
-    m_FixedDef__scale->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_FixedDef__scale->setEType(m_ExpressionEClass);
     m_FixedDef__scale->setName("scale");
     m_FixedDef__scale->setDefaultValueLiteral("");
-    m_FixedDef__scale->setLowerBound(0);
+    m_FixedDef__scale->setLowerBound(1);
     m_FixedDef__scale->setUpperBound(1);
     m_FixedDef__scale->setTransient(false);
     m_FixedDef__scale->setVolatile(false);
     m_FixedDef__scale->setChangeable(true);
-    m_FixedDef__scale->setUnsettable(false);
-    m_FixedDef__scale->setID(false);
+    m_FixedDef__scale->setContainment(true);
+    m_FixedDef__scale->setResolveProxies(true);
     m_FixedDef__scale->setUnique(true);
     m_FixedDef__scale->setDerived(false);
     m_FixedDef__scale->setOrdered(true);
@@ -936,8 +1061,7 @@ IdlmmPackage::IdlmmPackage()
     m_WstringDefEClass->setName("WstringDef");
     m_WstringDefEClass->setAbstract(false);
     m_WstringDefEClass->setInterface(false);
-    m_WstringDef__bound->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_WstringDef__bound->setEType(m_ExpressionEClass);
     m_WstringDef__bound->setName("bound");
     m_WstringDef__bound->setDefaultValueLiteral("");
     m_WstringDef__bound->setLowerBound(0);
@@ -945,8 +1069,8 @@ IdlmmPackage::IdlmmPackage()
     m_WstringDef__bound->setTransient(false);
     m_WstringDef__bound->setVolatile(false);
     m_WstringDef__bound->setChangeable(true);
-    m_WstringDef__bound->setUnsettable(false);
-    m_WstringDef__bound->setID(false);
+    m_WstringDef__bound->setContainment(true);
+    m_WstringDef__bound->setResolveProxies(true);
     m_WstringDef__bound->setUnique(true);
     m_WstringDef__bound->setDerived(false);
     m_WstringDef__bound->setOrdered(true);
@@ -954,8 +1078,7 @@ IdlmmPackage::IdlmmPackage()
     m_StringDefEClass->setName("StringDef");
     m_StringDefEClass->setAbstract(false);
     m_StringDefEClass->setInterface(false);
-    m_StringDef__bound->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_StringDef__bound->setEType(m_ExpressionEClass);
     m_StringDef__bound->setName("bound");
     m_StringDef__bound->setDefaultValueLiteral("");
     m_StringDef__bound->setLowerBound(0);
@@ -963,8 +1086,8 @@ IdlmmPackage::IdlmmPackage()
     m_StringDef__bound->setTransient(false);
     m_StringDef__bound->setVolatile(false);
     m_StringDef__bound->setChangeable(true);
-    m_StringDef__bound->setUnsettable(false);
-    m_StringDef__bound->setID(false);
+    m_StringDef__bound->setContainment(true);
+    m_StringDef__bound->setResolveProxies(true);
     m_StringDef__bound->setUnique(true);
     m_StringDef__bound->setDerived(false);
     m_StringDef__bound->setOrdered(true);
@@ -976,26 +1099,38 @@ IdlmmPackage::IdlmmPackage()
     m_ArrayDefEClass->setName("ArrayDef");
     m_ArrayDefEClass->setAbstract(false);
     m_ArrayDefEClass->setInterface(false);
-    m_ArrayDef__bound->setEType(
+    m_ArrayDef__name->setEType(
             dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
-    m_ArrayDef__bound->setName("bound");
-    m_ArrayDef__bound->setDefaultValueLiteral("");
-    m_ArrayDef__bound->setLowerBound(0);
-    m_ArrayDef__bound->setUpperBound(1);
-    m_ArrayDef__bound->setTransient(false);
-    m_ArrayDef__bound->setVolatile(false);
-    m_ArrayDef__bound->setChangeable(true);
-    m_ArrayDef__bound->setUnsettable(false);
-    m_ArrayDef__bound->setID(false);
-    m_ArrayDef__bound->setUnique(true);
-    m_ArrayDef__bound->setDerived(false);
-    m_ArrayDef__bound->setOrdered(true);
+    m_ArrayDef__name->setName("name");
+    m_ArrayDef__name->setDefaultValueLiteral("");
+    m_ArrayDef__name->setLowerBound(0);
+    m_ArrayDef__name->setUpperBound(1);
+    m_ArrayDef__name->setTransient(false);
+    m_ArrayDef__name->setVolatile(false);
+    m_ArrayDef__name->setChangeable(true);
+    m_ArrayDef__name->setUnsettable(false);
+    m_ArrayDef__name->setID(false);
+    m_ArrayDef__name->setUnique(true);
+    m_ArrayDef__name->setDerived(false);
+    m_ArrayDef__name->setOrdered(true);
+    m_ArrayDef__bounds->setEType(m_ExpressionEClass);
+    m_ArrayDef__bounds->setName("bounds");
+    m_ArrayDef__bounds->setDefaultValueLiteral("");
+    m_ArrayDef__bounds->setLowerBound(1);
+    m_ArrayDef__bounds->setUpperBound(-1);
+    m_ArrayDef__bounds->setTransient(false);
+    m_ArrayDef__bounds->setVolatile(false);
+    m_ArrayDef__bounds->setChangeable(true);
+    m_ArrayDef__bounds->setContainment(true);
+    m_ArrayDef__bounds->setResolveProxies(true);
+    m_ArrayDef__bounds->setUnique(true);
+    m_ArrayDef__bounds->setDerived(false);
+    m_ArrayDef__bounds->setOrdered(true);
     // SequenceDef
     m_SequenceDefEClass->setName("SequenceDef");
     m_SequenceDefEClass->setAbstract(false);
     m_SequenceDefEClass->setInterface(false);
-    m_SequenceDef__bound->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_SequenceDef__bound->setEType(m_ExpressionEClass);
     m_SequenceDef__bound->setName("bound");
     m_SequenceDef__bound->setDefaultValueLiteral("");
     m_SequenceDef__bound->setLowerBound(0);
@@ -1003,8 +1138,8 @@ IdlmmPackage::IdlmmPackage()
     m_SequenceDef__bound->setTransient(false);
     m_SequenceDef__bound->setVolatile(false);
     m_SequenceDef__bound->setChangeable(true);
-    m_SequenceDef__bound->setUnsettable(false);
-    m_SequenceDef__bound->setID(false);
+    m_SequenceDef__bound->setContainment(true);
+    m_SequenceDef__bound->setResolveProxies(true);
     m_SequenceDef__bound->setUnique(true);
     m_SequenceDef__bound->setDerived(false);
     m_SequenceDef__bound->setOrdered(true);
@@ -1026,7 +1161,7 @@ IdlmmPackage::IdlmmPackage()
     m_UnionField__identifier->setUnique(true);
     m_UnionField__identifier->setDerived(false);
     m_UnionField__identifier->setOrdered(true);
-    m_UnionField__label->setEType(m_EAnyEDataType);
+    m_UnionField__label->setEType(m_ExpressionEClass);
     m_UnionField__label->setName("label");
     m_UnionField__label->setDefaultValueLiteral("");
     m_UnionField__label->setLowerBound(0);
@@ -1034,8 +1169,8 @@ IdlmmPackage::IdlmmPackage()
     m_UnionField__label->setTransient(false);
     m_UnionField__label->setVolatile(false);
     m_UnionField__label->setChangeable(true);
-    m_UnionField__label->setUnsettable(false);
-    m_UnionField__label->setID(false);
+    m_UnionField__label->setContainment(true);
+    m_UnionField__label->setResolveProxies(true);
     m_UnionField__label->setUnique(true);
     m_UnionField__label->setDerived(false);
     m_UnionField__label->setOrdered(true);
@@ -1090,20 +1225,22 @@ IdlmmPackage::IdlmmPackage()
     m_EnumDefEClass->setName("EnumDef");
     m_EnumDefEClass->setAbstract(false);
     m_EnumDefEClass->setInterface(false);
-    m_EnumDef__members->setEType(
-            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_EnumDef__members->setEType(m_EnumMemberEClass);
     m_EnumDef__members->setName("members");
     m_EnumDef__members->setDefaultValueLiteral("");
-    m_EnumDef__members->setLowerBound(0);
+    m_EnumDef__members->setLowerBound(1);
     m_EnumDef__members->setUpperBound(-1);
     m_EnumDef__members->setTransient(false);
     m_EnumDef__members->setVolatile(false);
     m_EnumDef__members->setChangeable(true);
-    m_EnumDef__members->setUnsettable(false);
-    m_EnumDef__members->setID(false);
+    m_EnumDef__members->setContainment(true);
+    m_EnumDef__members->setResolveProxies(true);
     m_EnumDef__members->setUnique(true);
     m_EnumDef__members->setDerived(false);
     m_EnumDef__members->setOrdered(true);
+    m_EnumDef__members->setEOpposite(
+            ::ecore::instanceOf< ::ecore::EReference >(
+                    m_EnumMemberEClass->getEStructuralFeatures()[0]));
     // StructDef
     m_StructDefEClass->setName("StructDef");
     m_StructDefEClass->setAbstract(false);
@@ -1183,6 +1320,196 @@ IdlmmPackage::IdlmmPackage()
     m_Include__importURI->setUnique(true);
     m_Include__importURI->setDerived(false);
     m_Include__importURI->setOrdered(true);
+    m_Include__translationUnit->setEType(m_TranslationUnitEClass);
+    m_Include__translationUnit->setName("translationUnit");
+    m_Include__translationUnit->setDefaultValueLiteral("");
+    m_Include__translationUnit->setLowerBound(0);
+    m_Include__translationUnit->setUpperBound(1);
+    m_Include__translationUnit->setTransient(false);
+    m_Include__translationUnit->setVolatile(false);
+    m_Include__translationUnit->setChangeable(true);
+    m_Include__translationUnit->setContainment(false);
+    m_Include__translationUnit->setResolveProxies(true);
+    m_Include__translationUnit->setUnique(true);
+    m_Include__translationUnit->setDerived(false);
+    m_Include__translationUnit->setOrdered(true);
+    // Expression
+    m_ExpressionEClass->setName("Expression");
+    m_ExpressionEClass->setAbstract(true);
+    m_ExpressionEClass->setInterface(false);
+    // BinaryExpression
+    m_BinaryExpressionEClass->setName("BinaryExpression");
+    m_BinaryExpressionEClass->setAbstract(false);
+    m_BinaryExpressionEClass->setInterface(false);
+    m_BinaryExpression__operator->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_BinaryExpression__operator->setName("operator");
+    m_BinaryExpression__operator->setDefaultValueLiteral("");
+    m_BinaryExpression__operator->setLowerBound(1);
+    m_BinaryExpression__operator->setUpperBound(1);
+    m_BinaryExpression__operator->setTransient(false);
+    m_BinaryExpression__operator->setVolatile(false);
+    m_BinaryExpression__operator->setChangeable(true);
+    m_BinaryExpression__operator->setUnsettable(false);
+    m_BinaryExpression__operator->setID(false);
+    m_BinaryExpression__operator->setUnique(true);
+    m_BinaryExpression__operator->setDerived(false);
+    m_BinaryExpression__operator->setOrdered(true);
+    m_BinaryExpression__left->setEType(m_ExpressionEClass);
+    m_BinaryExpression__left->setName("left");
+    m_BinaryExpression__left->setDefaultValueLiteral("");
+    m_BinaryExpression__left->setLowerBound(1);
+    m_BinaryExpression__left->setUpperBound(1);
+    m_BinaryExpression__left->setTransient(false);
+    m_BinaryExpression__left->setVolatile(false);
+    m_BinaryExpression__left->setChangeable(true);
+    m_BinaryExpression__left->setContainment(true);
+    m_BinaryExpression__left->setResolveProxies(true);
+    m_BinaryExpression__left->setUnique(true);
+    m_BinaryExpression__left->setDerived(false);
+    m_BinaryExpression__left->setOrdered(true);
+    m_BinaryExpression__right->setEType(m_ExpressionEClass);
+    m_BinaryExpression__right->setName("right");
+    m_BinaryExpression__right->setDefaultValueLiteral("");
+    m_BinaryExpression__right->setLowerBound(1);
+    m_BinaryExpression__right->setUpperBound(1);
+    m_BinaryExpression__right->setTransient(false);
+    m_BinaryExpression__right->setVolatile(false);
+    m_BinaryExpression__right->setChangeable(true);
+    m_BinaryExpression__right->setContainment(true);
+    m_BinaryExpression__right->setResolveProxies(true);
+    m_BinaryExpression__right->setUnique(true);
+    m_BinaryExpression__right->setDerived(false);
+    m_BinaryExpression__right->setOrdered(true);
+    // UnaryExpression
+    m_UnaryExpressionEClass->setName("UnaryExpression");
+    m_UnaryExpressionEClass->setAbstract(false);
+    m_UnaryExpressionEClass->setInterface(false);
+    m_UnaryExpression__operator->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_UnaryExpression__operator->setName("operator");
+    m_UnaryExpression__operator->setDefaultValueLiteral("");
+    m_UnaryExpression__operator->setLowerBound(1);
+    m_UnaryExpression__operator->setUpperBound(1);
+    m_UnaryExpression__operator->setTransient(false);
+    m_UnaryExpression__operator->setVolatile(false);
+    m_UnaryExpression__operator->setChangeable(true);
+    m_UnaryExpression__operator->setUnsettable(false);
+    m_UnaryExpression__operator->setID(false);
+    m_UnaryExpression__operator->setUnique(true);
+    m_UnaryExpression__operator->setDerived(false);
+    m_UnaryExpression__operator->setOrdered(true);
+    m_UnaryExpression__expression->setEType(m_ExpressionEClass);
+    m_UnaryExpression__expression->setName("expression");
+    m_UnaryExpression__expression->setDefaultValueLiteral("");
+    m_UnaryExpression__expression->setLowerBound(1);
+    m_UnaryExpression__expression->setUpperBound(1);
+    m_UnaryExpression__expression->setTransient(false);
+    m_UnaryExpression__expression->setVolatile(false);
+    m_UnaryExpression__expression->setChangeable(true);
+    m_UnaryExpression__expression->setContainment(true);
+    m_UnaryExpression__expression->setResolveProxies(true);
+    m_UnaryExpression__expression->setUnique(true);
+    m_UnaryExpression__expression->setDerived(false);
+    m_UnaryExpression__expression->setOrdered(true);
+    // LiteralExpression
+    m_LiteralExpressionEClass->setName("LiteralExpression");
+    m_LiteralExpressionEClass->setAbstract(true);
+    m_LiteralExpressionEClass->setInterface(false);
+    // ConstantDefRef
+    m_ConstantDefRefEClass->setName("ConstantDefRef");
+    m_ConstantDefRefEClass->setAbstract(false);
+    m_ConstantDefRefEClass->setInterface(false);
+    m_ConstantDefRef__constant->setEType(m_ConstantEClass);
+    m_ConstantDefRef__constant->setName("constant");
+    m_ConstantDefRef__constant->setDefaultValueLiteral("");
+    m_ConstantDefRef__constant->setLowerBound(1);
+    m_ConstantDefRef__constant->setUpperBound(1);
+    m_ConstantDefRef__constant->setTransient(false);
+    m_ConstantDefRef__constant->setVolatile(false);
+    m_ConstantDefRef__constant->setChangeable(true);
+    m_ConstantDefRef__constant->setContainment(false);
+    m_ConstantDefRef__constant->setResolveProxies(true);
+    m_ConstantDefRef__constant->setUnique(true);
+    m_ConstantDefRef__constant->setDerived(false);
+    m_ConstantDefRef__constant->setOrdered(true);
+    // ValueExpression
+    m_ValueExpressionEClass->setName("ValueExpression");
+    m_ValueExpressionEClass->setAbstract(false);
+    m_ValueExpressionEClass->setInterface(false);
+    m_ValueExpression__value->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_ValueExpression__value->setName("value");
+    m_ValueExpression__value->setDefaultValueLiteral("");
+    m_ValueExpression__value->setLowerBound(1);
+    m_ValueExpression__value->setUpperBound(1);
+    m_ValueExpression__value->setTransient(false);
+    m_ValueExpression__value->setVolatile(false);
+    m_ValueExpression__value->setChangeable(true);
+    m_ValueExpression__value->setUnsettable(false);
+    m_ValueExpression__value->setID(false);
+    m_ValueExpression__value->setUnique(true);
+    m_ValueExpression__value->setDerived(false);
+    m_ValueExpression__value->setOrdered(true);
+    // ForwardDef
+    m_ForwardDefEClass->setName("ForwardDef");
+    m_ForwardDefEClass->setAbstract(false);
+    m_ForwardDefEClass->setInterface(false);
+    m_ForwardDef__definition->setEType(m_InterfaceDefEClass);
+    m_ForwardDef__definition->setName("definition");
+    m_ForwardDef__definition->setDefaultValueLiteral("");
+    m_ForwardDef__definition->setLowerBound(0);
+    m_ForwardDef__definition->setUpperBound(1);
+    m_ForwardDef__definition->setTransient(false);
+    m_ForwardDef__definition->setVolatile(false);
+    m_ForwardDef__definition->setChangeable(true);
+    m_ForwardDef__definition->setContainment(false);
+    m_ForwardDef__definition->setResolveProxies(true);
+    m_ForwardDef__definition->setUnique(true);
+    m_ForwardDef__definition->setDerived(false);
+    m_ForwardDef__definition->setOrdered(true);
+    // EnumMember
+    m_EnumMemberEClass->setName("EnumMember");
+    m_EnumMemberEClass->setAbstract(false);
+    m_EnumMemberEClass->setInterface(false);
+    m_EnumMember__enum->setEType(m_EnumDefEClass);
+    m_EnumMember__enum->setName("enum");
+    m_EnumMember__enum->setDefaultValueLiteral("");
+    m_EnumMember__enum->setLowerBound(1);
+    m_EnumMember__enum->setUpperBound(1);
+    m_EnumMember__enum->setTransient(false);
+    m_EnumMember__enum->setVolatile(false);
+    m_EnumMember__enum->setChangeable(true);
+    m_EnumMember__enum->setContainment(false);
+    m_EnumMember__enum->setResolveProxies(true);
+    m_EnumMember__enum->setUnique(true);
+    m_EnumMember__enum->setDerived(false);
+    m_EnumMember__enum->setOrdered(true);
+    m_EnumMember__enum->setEOpposite(
+            ::ecore::instanceOf< ::ecore::EReference >(
+                    m_EnumDefEClass->getEStructuralFeatures()[0]));
+    // Constant
+    m_ConstantEClass->setName("Constant");
+    m_ConstantEClass->setAbstract(true);
+    m_ConstantEClass->setInterface(false);
+    // NamedElement
+    m_NamedElementEClass->setName("NamedElement");
+    m_NamedElementEClass->setAbstract(true);
+    m_NamedElementEClass->setInterface(false);
+    m_NamedElement__identifier->setEType(
+            dynamic_cast< ::ecore::EcorePackage* > (::ecore::EcorePackage::_instance())->getEString());
+    m_NamedElement__identifier->setName("identifier");
+    m_NamedElement__identifier->setDefaultValueLiteral("");
+    m_NamedElement__identifier->setLowerBound(0);
+    m_NamedElement__identifier->setUpperBound(1);
+    m_NamedElement__identifier->setTransient(false);
+    m_NamedElement__identifier->setVolatile(false);
+    m_NamedElement__identifier->setChangeable(true);
+    m_NamedElement__identifier->setUnsettable(false);
+    m_NamedElement__identifier->setID(false);
+    m_NamedElement__identifier->setUnique(true);
+    m_NamedElement__identifier->setDerived(false);
+    m_NamedElement__identifier->setOrdered(true);
 
     // TODO: Initialize data types
 
@@ -1565,10 +1892,50 @@ IdlmmPackage::IdlmmPackage()
 {
     return m_IncludeEClass;
 }
-
-::ecore::EAttribute_ptr IdlmmPackage::getContained__identifier()
+::ecore::EClass_ptr IdlmmPackage::getExpression()
 {
-    return m_Contained__identifier;
+    return m_ExpressionEClass;
+}
+::ecore::EClass_ptr IdlmmPackage::getBinaryExpression()
+{
+    return m_BinaryExpressionEClass;
+}
+::ecore::EClass_ptr IdlmmPackage::getUnaryExpression()
+{
+    return m_UnaryExpressionEClass;
+}
+::ecore::EClass_ptr IdlmmPackage::getLiteralExpression()
+{
+    return m_LiteralExpressionEClass;
+}
+::ecore::EClass_ptr IdlmmPackage::getConstantDefRef()
+{
+    return m_ConstantDefRefEClass;
+}
+::ecore::EClass_ptr IdlmmPackage::getValueExpression()
+{
+    return m_ValueExpressionEClass;
+}
+::ecore::EClass_ptr IdlmmPackage::getForwardDef()
+{
+    return m_ForwardDefEClass;
+}
+::ecore::EClass_ptr IdlmmPackage::getEnumMember()
+{
+    return m_EnumMemberEClass;
+}
+::ecore::EClass_ptr IdlmmPackage::getConstant()
+{
+    return m_ConstantEClass;
+}
+::ecore::EClass_ptr IdlmmPackage::getNamedElement()
+{
+    return m_NamedElementEClass;
+}
+
+::ecore::EAttribute_ptr IdlmmPackage::getNamedElement__identifier()
+{
+    return m_NamedElement__identifier;
 }
 ::ecore::EAttribute_ptr IdlmmPackage::getContained__repositoryId()
 {
@@ -1610,6 +1977,10 @@ IdlmmPackage::IdlmmPackage()
 {
     return m_InterfaceDef__derivesFrom;
 }
+::ecore::EReference_ptr IdlmmPackage::getInterfaceDef__forward()
+{
+    return m_InterfaceDef__forward;
+}
 ::ecore::EAttribute_ptr IdlmmPackage::getModuleDef__prefix()
 {
     return m_ModuleDef__prefix;
@@ -1650,7 +2021,7 @@ IdlmmPackage::IdlmmPackage()
 {
     return m_AttributeDef__isReadonly;
 }
-::ecore::EAttribute_ptr IdlmmPackage::getConstantDef__constValue()
+::ecore::EReference_ptr IdlmmPackage::getConstantDef__constValue()
 {
     return m_ConstantDef__constValue;
 }
@@ -1678,27 +2049,31 @@ IdlmmPackage::IdlmmPackage()
 {
     return m_Field__identifier;
 }
-::ecore::EAttribute_ptr IdlmmPackage::getFixedDef__digits()
+::ecore::EReference_ptr IdlmmPackage::getFixedDef__digits()
 {
     return m_FixedDef__digits;
 }
-::ecore::EAttribute_ptr IdlmmPackage::getFixedDef__scale()
+::ecore::EReference_ptr IdlmmPackage::getFixedDef__scale()
 {
     return m_FixedDef__scale;
 }
-::ecore::EAttribute_ptr IdlmmPackage::getWstringDef__bound()
+::ecore::EReference_ptr IdlmmPackage::getWstringDef__bound()
 {
     return m_WstringDef__bound;
 }
-::ecore::EAttribute_ptr IdlmmPackage::getStringDef__bound()
+::ecore::EReference_ptr IdlmmPackage::getStringDef__bound()
 {
     return m_StringDef__bound;
 }
-::ecore::EAttribute_ptr IdlmmPackage::getArrayDef__bound()
+::ecore::EAttribute_ptr IdlmmPackage::getArrayDef__name()
 {
-    return m_ArrayDef__bound;
+    return m_ArrayDef__name;
 }
-::ecore::EAttribute_ptr IdlmmPackage::getSequenceDef__bound()
+::ecore::EReference_ptr IdlmmPackage::getArrayDef__bounds()
+{
+    return m_ArrayDef__bounds;
+}
+::ecore::EReference_ptr IdlmmPackage::getSequenceDef__bound()
 {
     return m_SequenceDef__bound;
 }
@@ -1706,7 +2081,7 @@ IdlmmPackage::IdlmmPackage()
 {
     return m_UnionField__identifier;
 }
-::ecore::EAttribute_ptr IdlmmPackage::getUnionField__label()
+::ecore::EReference_ptr IdlmmPackage::getUnionField__label()
 {
     return m_UnionField__label;
 }
@@ -1722,7 +2097,7 @@ IdlmmPackage::IdlmmPackage()
 {
     return m_UnionDef__sharedDiscrim;
 }
-::ecore::EAttribute_ptr IdlmmPackage::getEnumDef__members()
+::ecore::EReference_ptr IdlmmPackage::getEnumDef__members()
 {
     return m_EnumDef__members;
 }
@@ -1745,5 +2120,45 @@ IdlmmPackage::IdlmmPackage()
 ::ecore::EAttribute_ptr IdlmmPackage::getInclude__importURI()
 {
     return m_Include__importURI;
+}
+::ecore::EReference_ptr IdlmmPackage::getInclude__translationUnit()
+{
+    return m_Include__translationUnit;
+}
+::ecore::EReference_ptr IdlmmPackage::getBinaryExpression__left()
+{
+    return m_BinaryExpression__left;
+}
+::ecore::EReference_ptr IdlmmPackage::getBinaryExpression__right()
+{
+    return m_BinaryExpression__right;
+}
+::ecore::EAttribute_ptr IdlmmPackage::getBinaryExpression__operator()
+{
+    return m_BinaryExpression__operator;
+}
+::ecore::EReference_ptr IdlmmPackage::getUnaryExpression__expression()
+{
+    return m_UnaryExpression__expression;
+}
+::ecore::EAttribute_ptr IdlmmPackage::getUnaryExpression__operator()
+{
+    return m_UnaryExpression__operator;
+}
+::ecore::EReference_ptr IdlmmPackage::getConstantDefRef__constant()
+{
+    return m_ConstantDefRef__constant;
+}
+::ecore::EAttribute_ptr IdlmmPackage::getValueExpression__value()
+{
+    return m_ValueExpression__value;
+}
+::ecore::EReference_ptr IdlmmPackage::getForwardDef__definition()
+{
+    return m_ForwardDef__definition;
+}
+::ecore::EReference_ptr IdlmmPackage::getEnumMember__enum()
+{
+    return m_EnumMember__enum;
 }
 

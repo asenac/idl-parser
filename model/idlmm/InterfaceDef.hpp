@@ -61,6 +61,9 @@ namespace idlmm
         // References
         ::ecorecpp::mapping::EList< ::idlmm::InterfaceDef >& getDerivesFrom();
 
+        ::idlmm::ForwardDef_ptr getForward();
+        void setForward(::idlmm::ForwardDef_ptr _forward);
+
         /*PROTECTED REGION ID(InterfaceDef) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
@@ -93,6 +96,8 @@ namespace idlmm
 
         ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
                 ::idlmm::InterfaceDef > > m_derivesFrom;
+
+        ::idlmm::ForwardDef_ptr m_forward;
 
     };
 

@@ -66,7 +66,7 @@ void TypedefDef::_initialize()
                 m_typeCode);
     }
         return _any;
-    case ::idlmm::IdlmmPackage::CONTAINED__IDENTIFIER:
+    case ::idlmm::IdlmmPackage::NAMEDELEMENT__IDENTIFIER:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::toAny(_any,
                 m_identifier);
@@ -111,7 +111,7 @@ void TypedefDef::eSet(::ecore::EInt _featureID,
                 _newValue, m_typeCode);
     }
         return;
-    case ::idlmm::IdlmmPackage::CONTAINED__IDENTIFIER:
+    case ::idlmm::IdlmmPackage::NAMEDELEMENT__IDENTIFIER:
     {
         ::ecorecpp::mapping::any_traits< ::ecore::EString >::fromAny(_newValue,
                 m_identifier);
@@ -156,7 +156,7 @@ void TypedefDef::eSet(::ecore::EInt _featureID,
     case ::idlmm::IdlmmPackage::IDLTYPE__TYPECODE:
         return ::ecorecpp::mapping::set_traits< ::idlmm::ETypeCode >::is_set(
                 m_typeCode);
-    case ::idlmm::IdlmmPackage::CONTAINED__IDENTIFIER:
+    case ::idlmm::IdlmmPackage::NAMEDELEMENT__IDENTIFIER:
         return ::ecorecpp::mapping::set_traits< ::ecore::EString >::is_set(
                 m_identifier);
     case ::idlmm::IdlmmPackage::CONTAINED__REPOSITORYID:

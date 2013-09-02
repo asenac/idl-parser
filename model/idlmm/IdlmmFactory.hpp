@@ -58,6 +58,16 @@ namespace idlmm
         virtual StructDef_ptr createStructDef();
         virtual TranslationUnit_ptr createTranslationUnit();
         virtual Include_ptr createInclude();
+        virtual Expression_ptr createExpression();
+        virtual BinaryExpression_ptr createBinaryExpression();
+        virtual UnaryExpression_ptr createUnaryExpression();
+        virtual LiteralExpression_ptr createLiteralExpression();
+        virtual ConstantDefRef_ptr createConstantDefRef();
+        virtual ValueExpression_ptr createValueExpression();
+        virtual ForwardDef_ptr createForwardDef();
+        virtual EnumMember_ptr createEnumMember();
+        virtual Constant_ptr createConstant();
+        virtual NamedElement_ptr createNamedElement();
 
         virtual ::ecore::EObject_ptr create(::ecore::EClass_ptr _eClass);
         virtual ::ecore::EJavaObject createFromString(

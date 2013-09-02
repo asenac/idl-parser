@@ -21,6 +21,7 @@
 #include <idlmm/Typed.hpp>
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
+#include <idlmm/Expression.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include "idlmm/IdlmmPackage.hpp"
@@ -35,6 +36,10 @@ using namespace ::idlmm;
 // Default constructor
 UnionField::UnionField()
 {
+
+    m_label.reset(
+            new ::ecorecpp::mapping::ReferenceEListImpl< ::idlmm::Expression,
+                    -1, true, false >(this, NULL));
 
     /*PROTECTED REGION ID(UnionFieldImpl__UnionFieldImpl) START*/
     // Please, enable the protected region if you add manually written code.
@@ -83,55 +88,9 @@ void UnionField::setIdentifier(::ecore::EString const& _identifier)
 #endif
 }
 
-std::vector< ::idlmm::EAny > const& UnionField::getLabel() const
-{
-    return m_label;
-}
-
-void UnionField::setLabel(std::vector< ::idlmm::EAny > _label)
-{
-#ifdef ECORECPP_NOTIFICATION_API
-    std::vector< ::idlmm::EAny > _old_label = m_label;
-#endif
-    m_label = _label;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getUnionField__label(),
-                _old_label,
-                m_label
-        );
-        eNotify(&notification);
-    }
-#endif
-}
-
-void UnionField::addLabel(::idlmm::EAny const& _new_element_in_label)
-{
-    m_label.push_back(_new_element_in_label);
-}
-
-void UnionField::setLabelAt(size_t _position,
-        ::idlmm::EAny const& _new_element_in_label)
-{
-    if (_position >= m_label.size())
-        m_label.resize(_position + 1, 0);
-
-    m_label[_position] = _new_element_in_label;
-}
-
-void UnionField::deleteLabelAt(size_t _position)
-{
-    if (_position >= m_label.size())
-        throw "Attribute counter out of bounds!";
-
-    // TODO: This is not actually quite true
-    if (_position == m_label.size() - 1)
-        m_label.resize(_position);
-}
-
 // References
+::ecorecpp::mapping::EList< ::idlmm::Expression >& UnionField::getLabel()
+{
+    return *m_label;
+}
 

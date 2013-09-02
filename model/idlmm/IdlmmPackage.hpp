@@ -40,79 +40,99 @@ namespace idlmm
 
         static const int ATTRIBUTEDEF = 2;
 
-        static const int CONSTANTDEF = 3;
+        static const int BINARYEXPRESSION = 3;
 
-        static const int CONTAINED = 4;
+        static const int CONSTANT = 4;
 
-        static const int CONTAINER = 5;
+        static const int CONSTANTDEF = 5;
 
-        static const int EANY = 6;
+        static const int CONSTANTDEFREF = 6;
 
-        static const int ENUMDEF = 7;
+        static const int CONTAINED = 7;
 
-        static const int ETYPECODE = 8;
+        static const int CONTAINER = 8;
 
-        static const int EXCEPTIONDEF = 9;
+        static const int EANY = 9;
 
-        static const int FIELD = 10;
+        static const int ENUMDEF = 10;
 
-        static const int FIXEDDEF = 11;
+        static const int ENUMMEMBER = 11;
 
-        static const int IDLTYPE = 12;
+        static const int ETYPECODE = 12;
 
-        static const int INCLUDE = 13;
+        static const int EXCEPTIONDEF = 13;
 
-        static const int INTERFACEDEF = 14;
+        static const int EXPRESSION = 14;
 
-        static const int MODULEDEF = 15;
+        static const int FIELD = 15;
 
-        static const int OPERATIONDEF = 16;
+        static const int FIXEDDEF = 16;
 
-        static const int PARAMETERDEF = 17;
+        static const int FORWARDDEF = 17;
 
-        static const int PARAMETERMODE = 18;
+        static const int IDLTYPE = 18;
 
-        static const int PRIMITIVEDEF = 19;
+        static const int INCLUDE = 19;
 
-        static const int PRIMITIVEKIND = 20;
+        static const int INTERFACEDEF = 20;
 
-        static const int SEQUENCEDEF = 21;
+        static const int LITERALEXPRESSION = 21;
 
-        static const int STRINGDEF = 22;
+        static const int MODULEDEF = 22;
 
-        static const int STRUCTDEF = 23;
+        static const int NAMEDELEMENT = 23;
 
-        static const int TRANSLATIONUNIT = 24;
+        static const int OPERATIONDEF = 24;
 
-        static const int TYPED = 25;
+        static const int PARAMETERDEF = 25;
 
-        static const int TYPEDEFDEF = 26;
+        static const int PARAMETERMODE = 26;
 
-        static const int UNIONDEF = 27;
+        static const int PRIMITIVEDEF = 27;
 
-        static const int UNIONFIELD = 28;
+        static const int PRIMITIVEKIND = 28;
 
-        static const int WSTRINGDEF = 29;
+        static const int SEQUENCEDEF = 29;
+
+        static const int STRINGDEF = 30;
+
+        static const int STRUCTDEF = 31;
+
+        static const int TRANSLATIONUNIT = 32;
+
+        static const int TYPED = 33;
+
+        static const int TYPEDEFDEF = 34;
+
+        static const int UNARYEXPRESSION = 35;
+
+        static const int UNIONDEF = 36;
+
+        static const int UNIONFIELD = 37;
+
+        static const int VALUEEXPRESSION = 38;
+
+        static const int WSTRINGDEF = 39;
 
         static const int CONTAINER__CONTAINS = 0;
 
-        static const int CONTAINED__IDENTIFIER = 1;
+        static const int CONTAINED__REPOSITORYID = 1;
 
-        static const int CONTAINED__REPOSITORYID = 2;
+        static const int CONTAINED__VERSION = 2;
 
-        static const int CONTAINED__VERSION = 3;
+        static const int CONTAINED__ABSOLUTENAME = 3;
 
-        static const int CONTAINED__ABSOLUTENAME = 4;
+        static const int CONTAINED__DEFINEDIN = 4;
 
-        static const int CONTAINED__DEFINEDIN = 5;
+        static const int INTERFACEDEF__ISABSTRACT = 5;
 
-        static const int INTERFACEDEF__ISABSTRACT = 6;
+        static const int INTERFACEDEF__ISCUSTOM = 6;
 
-        static const int INTERFACEDEF__ISCUSTOM = 7;
+        static const int INTERFACEDEF__ISTRUNCATABLE = 7;
 
-        static const int INTERFACEDEF__ISTRUNCATABLE = 8;
+        static const int INTERFACEDEF__DERIVESFROM = 8;
 
-        static const int INTERFACEDEF__DERIVESFROM = 9;
+        static const int INTERFACEDEF__FORWARD = 9;
 
         static const int MODULEDEF__PREFIX = 10;
 
@@ -158,31 +178,55 @@ namespace idlmm
 
         static const int STRINGDEF__BOUND = 31;
 
-        static const int ARRAYDEF__BOUND = 32;
+        static const int ARRAYDEF__NAME = 32;
 
-        static const int SEQUENCEDEF__BOUND = 33;
+        static const int ARRAYDEF__BOUNDS = 33;
 
-        static const int UNIONFIELD__IDENTIFIER = 34;
+        static const int SEQUENCEDEF__BOUND = 34;
 
-        static const int UNIONFIELD__LABEL = 35;
+        static const int UNIONFIELD__IDENTIFIER = 35;
 
-        static const int UNIONDEF__UNIONMEMBERS = 36;
+        static const int UNIONFIELD__LABEL = 36;
 
-        static const int UNIONDEF__CONTAINEDDISCRIM = 37;
+        static const int UNIONDEF__UNIONMEMBERS = 37;
 
-        static const int UNIONDEF__SHAREDDISCRIM = 38;
+        static const int UNIONDEF__CONTAINEDDISCRIM = 38;
 
-        static const int ENUMDEF__MEMBERS = 39;
+        static const int UNIONDEF__SHAREDDISCRIM = 39;
 
-        static const int STRUCTDEF__MEMBERS = 40;
+        static const int ENUMDEF__MEMBERS = 40;
 
-        static const int TRANSLATIONUNIT__CONTAINS = 41;
+        static const int STRUCTDEF__MEMBERS = 41;
 
-        static const int TRANSLATIONUNIT__IDENTIFIER = 42;
+        static const int TRANSLATIONUNIT__CONTAINS = 42;
 
-        static const int TRANSLATIONUNIT__INCLUDES = 43;
+        static const int TRANSLATIONUNIT__IDENTIFIER = 43;
 
-        static const int INCLUDE__IMPORTURI = 44;
+        static const int TRANSLATIONUNIT__INCLUDES = 44;
+
+        static const int INCLUDE__IMPORTURI = 45;
+
+        static const int INCLUDE__TRANSLATIONUNIT = 46;
+
+        static const int BINARYEXPRESSION__LEFT = 47;
+
+        static const int BINARYEXPRESSION__RIGHT = 48;
+
+        static const int BINARYEXPRESSION__OPERATOR = 49;
+
+        static const int UNARYEXPRESSION__EXPRESSION = 50;
+
+        static const int UNARYEXPRESSION__OPERATOR = 51;
+
+        static const int CONSTANTDEFREF__CONSTANT = 52;
+
+        static const int VALUEEXPRESSION__VALUE = 53;
+
+        static const int FORWARDDEF__DEFINITION = 54;
+
+        static const int ENUMMEMBER__ENUM = 55;
+
+        static const int NAMEDELEMENT__IDENTIFIER = 56;
 
         // IDs for classifiers for class AliasDef 
 
@@ -192,7 +236,7 @@ namespace idlmm
 
         static const int ALIASDEF__TYPECODE = IDLTYPE__TYPECODE;
 
-        static const int ALIASDEF__IDENTIFIER = CONTAINED__IDENTIFIER;
+        static const int ALIASDEF__IDENTIFIER = NAMEDELEMENT__IDENTIFIER;
 
         static const int ALIASDEF__REPOSITORYID = CONTAINED__REPOSITORYID;
 
@@ -212,7 +256,7 @@ namespace idlmm
 
         // IDs for classifiers for class AttributeDef 
 
-        static const int ATTRIBUTEDEF__IDENTIFIER = CONTAINED__IDENTIFIER;
+        static const int ATTRIBUTEDEF__IDENTIFIER = NAMEDELEMENT__IDENTIFIER;
 
         static const int ATTRIBUTEDEF__REPOSITORYID = CONTAINED__REPOSITORYID;
 
@@ -226,9 +270,24 @@ namespace idlmm
 
         static const int ATTRIBUTEDEF__SHAREDTYPE = TYPED__SHAREDTYPE;
 
+        // IDs for classifiers for class BinaryExpression 
+
+
+        // IDs for classifiers for class Constant 
+
+        static const int CONSTANT__IDENTIFIER = NAMEDELEMENT__IDENTIFIER;
+
+        static const int CONSTANT__REPOSITORYID = CONTAINED__REPOSITORYID;
+
+        static const int CONSTANT__VERSION = CONTAINED__VERSION;
+
+        static const int CONSTANT__ABSOLUTENAME = CONTAINED__ABSOLUTENAME;
+
+        static const int CONSTANT__DEFINEDIN = CONTAINED__DEFINEDIN;
+
         // IDs for classifiers for class ConstantDef 
 
-        static const int CONSTANTDEF__IDENTIFIER = CONTAINED__IDENTIFIER;
+        static const int CONSTANTDEF__IDENTIFIER = NAMEDELEMENT__IDENTIFIER;
 
         static const int CONSTANTDEF__REPOSITORYID = CONTAINED__REPOSITORYID;
 
@@ -242,12 +301,16 @@ namespace idlmm
 
         static const int CONSTANTDEF__SHAREDTYPE = TYPED__SHAREDTYPE;
 
+        // IDs for classifiers for class ConstantDefRef 
+
+
         // IDs for classifiers for class Contained 
 
+        static const int CONTAINED__IDENTIFIER = NAMEDELEMENT__IDENTIFIER;
 
         // IDs for classifiers for class Container 
 
-        static const int CONTAINER__IDENTIFIER = CONTAINED__IDENTIFIER;
+        static const int CONTAINER__IDENTIFIER = NAMEDELEMENT__IDENTIFIER;
 
         static const int CONTAINER__REPOSITORYID = CONTAINED__REPOSITORYID;
 
@@ -261,7 +324,7 @@ namespace idlmm
 
         static const int ENUMDEF__TYPECODE = IDLTYPE__TYPECODE;
 
-        static const int ENUMDEF__IDENTIFIER = CONTAINED__IDENTIFIER;
+        static const int ENUMDEF__IDENTIFIER = NAMEDELEMENT__IDENTIFIER;
 
         static const int ENUMDEF__REPOSITORYID = CONTAINED__REPOSITORYID;
 
@@ -271,9 +334,21 @@ namespace idlmm
 
         static const int ENUMDEF__DEFINEDIN = CONTAINED__DEFINEDIN;
 
+        // IDs for classifiers for class EnumMember 
+
+        static const int ENUMMEMBER__IDENTIFIER = NAMEDELEMENT__IDENTIFIER;
+
+        static const int ENUMMEMBER__REPOSITORYID = CONTAINED__REPOSITORYID;
+
+        static const int ENUMMEMBER__VERSION = CONTAINED__VERSION;
+
+        static const int ENUMMEMBER__ABSOLUTENAME = CONTAINED__ABSOLUTENAME;
+
+        static const int ENUMMEMBER__DEFINEDIN = CONTAINED__DEFINEDIN;
+
         // IDs for classifiers for class ExceptionDef 
 
-        static const int EXCEPTIONDEF__IDENTIFIER = CONTAINED__IDENTIFIER;
+        static const int EXCEPTIONDEF__IDENTIFIER = NAMEDELEMENT__IDENTIFIER;
 
         static const int EXCEPTIONDEF__REPOSITORYID = CONTAINED__REPOSITORYID;
 
@@ -282,6 +357,9 @@ namespace idlmm
         static const int EXCEPTIONDEF__ABSOLUTENAME = CONTAINED__ABSOLUTENAME;
 
         static const int EXCEPTIONDEF__DEFINEDIN = CONTAINED__DEFINEDIN;
+
+        // IDs for classifiers for class Expression 
+
 
         // IDs for classifiers for class Field 
 
@@ -293,6 +371,18 @@ namespace idlmm
 
         static const int FIXEDDEF__TYPECODE = IDLTYPE__TYPECODE;
 
+        // IDs for classifiers for class ForwardDef 
+
+        static const int FORWARDDEF__IDENTIFIER = NAMEDELEMENT__IDENTIFIER;
+
+        static const int FORWARDDEF__REPOSITORYID = CONTAINED__REPOSITORYID;
+
+        static const int FORWARDDEF__VERSION = CONTAINED__VERSION;
+
+        static const int FORWARDDEF__ABSOLUTENAME = CONTAINED__ABSOLUTENAME;
+
+        static const int FORWARDDEF__DEFINEDIN = CONTAINED__DEFINEDIN;
+
         // IDs for classifiers for class IDLType 
 
 
@@ -301,7 +391,7 @@ namespace idlmm
 
         // IDs for classifiers for class InterfaceDef 
 
-        static const int INTERFACEDEF__IDENTIFIER = CONTAINED__IDENTIFIER;
+        static const int INTERFACEDEF__IDENTIFIER = NAMEDELEMENT__IDENTIFIER;
 
         static const int INTERFACEDEF__REPOSITORYID = CONTAINED__REPOSITORYID;
 
@@ -315,9 +405,12 @@ namespace idlmm
 
         static const int INTERFACEDEF__TYPECODE = IDLTYPE__TYPECODE;
 
+        // IDs for classifiers for class LiteralExpression 
+
+
         // IDs for classifiers for class ModuleDef 
 
-        static const int MODULEDEF__IDENTIFIER = CONTAINED__IDENTIFIER;
+        static const int MODULEDEF__IDENTIFIER = NAMEDELEMENT__IDENTIFIER;
 
         static const int MODULEDEF__REPOSITORYID = CONTAINED__REPOSITORYID;
 
@@ -329,9 +422,12 @@ namespace idlmm
 
         static const int MODULEDEF__CONTAINS = CONTAINER__CONTAINS;
 
+        // IDs for classifiers for class NamedElement 
+
+
         // IDs for classifiers for class OperationDef 
 
-        static const int OPERATIONDEF__IDENTIFIER = CONTAINED__IDENTIFIER;
+        static const int OPERATIONDEF__IDENTIFIER = NAMEDELEMENT__IDENTIFIER;
 
         static const int OPERATIONDEF__REPOSITORYID = CONTAINED__REPOSITORYID;
 
@@ -371,7 +467,7 @@ namespace idlmm
 
         static const int STRUCTDEF__TYPECODE = IDLTYPE__TYPECODE;
 
-        static const int STRUCTDEF__IDENTIFIER = CONTAINED__IDENTIFIER;
+        static const int STRUCTDEF__IDENTIFIER = NAMEDELEMENT__IDENTIFIER;
 
         static const int STRUCTDEF__REPOSITORYID = CONTAINED__REPOSITORYID;
 
@@ -391,7 +487,7 @@ namespace idlmm
 
         static const int TYPEDEFDEF__TYPECODE = IDLTYPE__TYPECODE;
 
-        static const int TYPEDEFDEF__IDENTIFIER = CONTAINED__IDENTIFIER;
+        static const int TYPEDEFDEF__IDENTIFIER = NAMEDELEMENT__IDENTIFIER;
 
         static const int TYPEDEFDEF__REPOSITORYID = CONTAINED__REPOSITORYID;
 
@@ -401,11 +497,14 @@ namespace idlmm
 
         static const int TYPEDEFDEF__DEFINEDIN = CONTAINED__DEFINEDIN;
 
+        // IDs for classifiers for class UnaryExpression 
+
+
         // IDs for classifiers for class UnionDef 
 
         static const int UNIONDEF__TYPECODE = IDLTYPE__TYPECODE;
 
-        static const int UNIONDEF__IDENTIFIER = CONTAINED__IDENTIFIER;
+        static const int UNIONDEF__IDENTIFIER = NAMEDELEMENT__IDENTIFIER;
 
         static const int UNIONDEF__REPOSITORYID = CONTAINED__REPOSITORYID;
 
@@ -420,6 +519,9 @@ namespace idlmm
         static const int UNIONFIELD__CONTAINEDTYPE = TYPED__CONTAINEDTYPE;
 
         static const int UNIONFIELD__SHAREDTYPE = TYPED__SHAREDTYPE;
+
+        // IDs for classifiers for class ValueExpression 
+
 
         // IDs for classifiers for class WstringDef 
 
@@ -487,9 +589,29 @@ namespace idlmm
 
         virtual ::ecore::EClass_ptr getInclude();
 
+        virtual ::ecore::EClass_ptr getExpression();
+
+        virtual ::ecore::EClass_ptr getBinaryExpression();
+
+        virtual ::ecore::EClass_ptr getUnaryExpression();
+
+        virtual ::ecore::EClass_ptr getLiteralExpression();
+
+        virtual ::ecore::EClass_ptr getConstantDefRef();
+
+        virtual ::ecore::EClass_ptr getValueExpression();
+
+        virtual ::ecore::EClass_ptr getForwardDef();
+
+        virtual ::ecore::EClass_ptr getEnumMember();
+
+        virtual ::ecore::EClass_ptr getConstant();
+
+        virtual ::ecore::EClass_ptr getNamedElement();
+
         // EStructuralFeatures methods
 
-        virtual ::ecore::EAttribute_ptr getContained__identifier();
+        virtual ::ecore::EAttribute_ptr getNamedElement__identifier();
 
         virtual ::ecore::EAttribute_ptr getContained__repositoryId();
 
@@ -511,6 +633,8 @@ namespace idlmm
 
         virtual ::ecore::EReference_ptr getInterfaceDef__derivesFrom();
 
+        virtual ::ecore::EReference_ptr getInterfaceDef__forward();
+
         virtual ::ecore::EAttribute_ptr getModuleDef__prefix();
 
         virtual ::ecore::EReference_ptr getTyped__containedType();
@@ -531,7 +655,7 @@ namespace idlmm
 
         virtual ::ecore::EAttribute_ptr getAttributeDef__isReadonly();
 
-        virtual ::ecore::EAttribute_ptr getConstantDef__constValue();
+        virtual ::ecore::EReference_ptr getConstantDef__constValue();
 
         virtual ::ecore::EAttribute_ptr getParameterDef__identifier();
 
@@ -545,21 +669,23 @@ namespace idlmm
 
         virtual ::ecore::EAttribute_ptr getField__identifier();
 
-        virtual ::ecore::EAttribute_ptr getFixedDef__digits();
+        virtual ::ecore::EReference_ptr getFixedDef__digits();
 
-        virtual ::ecore::EAttribute_ptr getFixedDef__scale();
+        virtual ::ecore::EReference_ptr getFixedDef__scale();
 
-        virtual ::ecore::EAttribute_ptr getWstringDef__bound();
+        virtual ::ecore::EReference_ptr getWstringDef__bound();
 
-        virtual ::ecore::EAttribute_ptr getStringDef__bound();
+        virtual ::ecore::EReference_ptr getStringDef__bound();
 
-        virtual ::ecore::EAttribute_ptr getArrayDef__bound();
+        virtual ::ecore::EAttribute_ptr getArrayDef__name();
 
-        virtual ::ecore::EAttribute_ptr getSequenceDef__bound();
+        virtual ::ecore::EReference_ptr getArrayDef__bounds();
+
+        virtual ::ecore::EReference_ptr getSequenceDef__bound();
 
         virtual ::ecore::EAttribute_ptr getUnionField__identifier();
 
-        virtual ::ecore::EAttribute_ptr getUnionField__label();
+        virtual ::ecore::EReference_ptr getUnionField__label();
 
         virtual ::ecore::EReference_ptr getUnionDef__unionMembers();
 
@@ -567,7 +693,7 @@ namespace idlmm
 
         virtual ::ecore::EReference_ptr getUnionDef__sharedDiscrim();
 
-        virtual ::ecore::EAttribute_ptr getEnumDef__members();
+        virtual ::ecore::EReference_ptr getEnumDef__members();
 
         virtual ::ecore::EReference_ptr getStructDef__members();
 
@@ -578,6 +704,26 @@ namespace idlmm
         virtual ::ecore::EReference_ptr getTranslationUnit__includes();
 
         virtual ::ecore::EAttribute_ptr getInclude__importURI();
+
+        virtual ::ecore::EReference_ptr getInclude__translationUnit();
+
+        virtual ::ecore::EReference_ptr getBinaryExpression__left();
+
+        virtual ::ecore::EReference_ptr getBinaryExpression__right();
+
+        virtual ::ecore::EAttribute_ptr getBinaryExpression__operator();
+
+        virtual ::ecore::EReference_ptr getUnaryExpression__expression();
+
+        virtual ::ecore::EAttribute_ptr getUnaryExpression__operator();
+
+        virtual ::ecore::EReference_ptr getConstantDefRef__constant();
+
+        virtual ::ecore::EAttribute_ptr getValueExpression__value();
+
+        virtual ::ecore::EReference_ptr getForwardDef__definition();
+
+        virtual ::ecore::EReference_ptr getEnumMember__enum();
 
     protected:
 
@@ -639,6 +785,26 @@ namespace idlmm
 
         ::ecore::EClass_ptr m_IncludeEClass;
 
+        ::ecore::EClass_ptr m_ExpressionEClass;
+
+        ::ecore::EClass_ptr m_BinaryExpressionEClass;
+
+        ::ecore::EClass_ptr m_UnaryExpressionEClass;
+
+        ::ecore::EClass_ptr m_LiteralExpressionEClass;
+
+        ::ecore::EClass_ptr m_ConstantDefRefEClass;
+
+        ::ecore::EClass_ptr m_ValueExpressionEClass;
+
+        ::ecore::EClass_ptr m_ForwardDefEClass;
+
+        ::ecore::EClass_ptr m_EnumMemberEClass;
+
+        ::ecore::EClass_ptr m_ConstantEClass;
+
+        ::ecore::EClass_ptr m_NamedElementEClass;
+
         // EEnuminstances 
 
         ::ecore::EEnum_ptr m_ParameterModeEEnum;
@@ -653,7 +819,7 @@ namespace idlmm
 
         // EStructuralFeatures instances
 
-        ::ecore::EAttribute_ptr m_Contained__identifier;
+        ::ecore::EAttribute_ptr m_NamedElement__identifier;
 
         ::ecore::EAttribute_ptr m_Contained__repositoryId;
 
@@ -675,6 +841,8 @@ namespace idlmm
 
         ::ecore::EReference_ptr m_InterfaceDef__derivesFrom;
 
+        ::ecore::EReference_ptr m_InterfaceDef__forward;
+
         ::ecore::EAttribute_ptr m_ModuleDef__prefix;
 
         ::ecore::EReference_ptr m_Typed__containedType;
@@ -695,7 +863,7 @@ namespace idlmm
 
         ::ecore::EAttribute_ptr m_AttributeDef__isReadonly;
 
-        ::ecore::EAttribute_ptr m_ConstantDef__constValue;
+        ::ecore::EReference_ptr m_ConstantDef__constValue;
 
         ::ecore::EAttribute_ptr m_ParameterDef__identifier;
 
@@ -709,21 +877,23 @@ namespace idlmm
 
         ::ecore::EAttribute_ptr m_Field__identifier;
 
-        ::ecore::EAttribute_ptr m_FixedDef__digits;
+        ::ecore::EReference_ptr m_FixedDef__digits;
 
-        ::ecore::EAttribute_ptr m_FixedDef__scale;
+        ::ecore::EReference_ptr m_FixedDef__scale;
 
-        ::ecore::EAttribute_ptr m_WstringDef__bound;
+        ::ecore::EReference_ptr m_WstringDef__bound;
 
-        ::ecore::EAttribute_ptr m_StringDef__bound;
+        ::ecore::EReference_ptr m_StringDef__bound;
 
-        ::ecore::EAttribute_ptr m_ArrayDef__bound;
+        ::ecore::EAttribute_ptr m_ArrayDef__name;
 
-        ::ecore::EAttribute_ptr m_SequenceDef__bound;
+        ::ecore::EReference_ptr m_ArrayDef__bounds;
+
+        ::ecore::EReference_ptr m_SequenceDef__bound;
 
         ::ecore::EAttribute_ptr m_UnionField__identifier;
 
-        ::ecore::EAttribute_ptr m_UnionField__label;
+        ::ecore::EReference_ptr m_UnionField__label;
 
         ::ecore::EReference_ptr m_UnionDef__unionMembers;
 
@@ -731,7 +901,7 @@ namespace idlmm
 
         ::ecore::EReference_ptr m_UnionDef__sharedDiscrim;
 
-        ::ecore::EAttribute_ptr m_EnumDef__members;
+        ::ecore::EReference_ptr m_EnumDef__members;
 
         ::ecore::EReference_ptr m_StructDef__members;
 
@@ -742,6 +912,26 @@ namespace idlmm
         ::ecore::EReference_ptr m_TranslationUnit__includes;
 
         ::ecore::EAttribute_ptr m_Include__importURI;
+
+        ::ecore::EReference_ptr m_Include__translationUnit;
+
+        ::ecore::EReference_ptr m_BinaryExpression__left;
+
+        ::ecore::EReference_ptr m_BinaryExpression__right;
+
+        ::ecore::EAttribute_ptr m_BinaryExpression__operator;
+
+        ::ecore::EReference_ptr m_UnaryExpression__expression;
+
+        ::ecore::EAttribute_ptr m_UnaryExpression__operator;
+
+        ::ecore::EReference_ptr m_ConstantDefRef__constant;
+
+        ::ecore::EAttribute_ptr m_ValueExpression__value;
+
+        ::ecore::EReference_ptr m_ForwardDef__definition;
+
+        ::ecore::EReference_ptr m_EnumMember__enum;
 
     };
 

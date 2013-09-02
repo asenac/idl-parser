@@ -53,7 +53,8 @@ namespace idlmm
         void setImportURI(::ecore::EString const& _importURI);
 
         // References
-
+        ::idlmm::TranslationUnit_ptr getTranslationUnit();
+        void setTranslationUnit(::idlmm::TranslationUnit_ptr _translationUnit);
 
         /*PROTECTED REGION ID(Include) START*/
         // Please, enable the protected region if you add manually written code.
@@ -80,6 +81,8 @@ namespace idlmm
         ::ecore::EString m_importURI;
 
         // References
+
+        ::idlmm::TranslationUnit_ptr m_translationUnit;
 
     };
 

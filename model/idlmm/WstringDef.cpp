@@ -19,6 +19,7 @@
 
 #include "WstringDef.hpp"
 #include <idlmm/IDLType.hpp>
+#include <idlmm/Expression.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include "idlmm/IdlmmPackage.hpp"
@@ -31,7 +32,8 @@
 using namespace ::idlmm;
 
 // Default constructor
-WstringDef::WstringDef()
+WstringDef::WstringDef() :
+    m_bound(0)
 {
 
     /*PROTECTED REGION ID(WstringDefImpl__WstringDefImpl) START*/
@@ -46,6 +48,10 @@ WstringDef::WstringDef()
 
 WstringDef::~WstringDef()
 {
+    if (m_bound)
+    {
+        delete m_bound;
+    }
 }
 
 /*PROTECTED REGION ID(WstringDef.cpp) START*/
@@ -55,17 +61,18 @@ WstringDef::~WstringDef()
 
 // Attributes
 
-::ecore::EString const& WstringDef::getBound() const
+// References
+::idlmm::Expression_ptr WstringDef::getBound()
 {
     return m_bound;
 }
 
-void WstringDef::setBound(::ecore::EString const& _bound)
+void WstringDef::setBound(::idlmm::Expression_ptr _bound)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_bound = m_bound;
-#endif
+    ::idlmm::Expression_ptr _old_bound = m_bound;
+
     m_bound = _bound;
+
 #ifdef ECORECPP_NOTIFICATION_API
     if (eNotificationRequired())
     {
@@ -79,7 +86,7 @@ void WstringDef::setBound(::ecore::EString const& _bound)
         eNotify(&notification);
     }
 #endif
-}
 
-// References
+    delete _old_bound;
+}
 
