@@ -100,7 +100,13 @@ enum semantic_context_type
     CONTEXT_PARAMETER,
     CONTEXT_ENUM,
     CONTEXT_SEQUENCE,
-    CONTEXT_CONST
+    CONTEXT_CONST,
+
+    // Expressions
+    CONTEXT_UNARY_EXPRESSION,
+    CONTEXT_BINARY_EXPRESSION,
+    CONTEXT_VALUE_EXPRESSION,
+    CONTEXT_CONSTANT_REF
 };
 
 template < typename C0, semantic_context_type type >
@@ -124,7 +130,7 @@ struct semantic_context
     template <typename S, typename match_pair>
     static inline void process_match (S& state, match_pair const& mp)
     {
-        //const std::string s (state.to_string(mp.first, mp.second));
+        state.semantic_state().set_context_data(state, mp);
     }
 };
 
@@ -242,9 +248,7 @@ typedef
             type_rule,
             space_,
             identifier_,
-            char_ < '(' >,
-            parameter_list, 
-            char_ < ')' >
+            embrace_ < '(', parameter_list, ')' >
         > 
     operation_rule;
 
@@ -257,6 +261,20 @@ struct operation_ :
 };
 
 // constant
+struct const_expr;
+typedef semantic_context< fqn_rule, CONTEXT_CONSTANT_REF > 
+    constant_ref_expr;
+typedef semantic_context< 
+            or_ <  string_rule, bool_, number_ >, 
+            CONTEXT_VALUE_EXPRESSION > value_expr;
+typedef or_ < 
+            value_expr, 
+            constant_ref_expr,  
+            embrace_ < '(', const_expr, ')' >
+            > primary_expr;
+typedef semantic_context< 
+            seq_ <  unary_operator_, spaces_, primary_expr >, 
+            CONTEXT_UNARY_EXPRESSION > unary_expr;
 
 struct const_value : 
     semantic_rule < const_value, or_ < string_rule, expression_rule > >

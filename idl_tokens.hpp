@@ -33,6 +33,11 @@ typedef or_ <
                 seq_ < char_ < '|' >, char_ < '|' > >
                 >
             > operator_;
+typedef or_ <
+            char_ < '+' >,
+            char_ < '-' >,
+            char_ < '~' >
+            > unary_operator_;
 
 typedef seq_< 
             or_ < 
@@ -103,6 +108,7 @@ typedef or_ <
                 req_ < '*' >,
                 req_ < '-' >,
                 req_ < '=' >,
+                req_ < '~' >,
                 req_ < '%' >
                 >
             > rspace;
@@ -213,6 +219,11 @@ typedef tok_ < t_, r_, u_, e_ > true_t;
 typedef tok_ < f_, a_, l_, s_, e_ > false_t;
 
 
+template< char i, typename Rule, char e >
+struct embrace_ : seq_ < char_ < i >, spaces_, Rule, spaces_, char_ < e > >
+{};
+typedef or_ < true_t, false_t > bool_; 
+
 // expressions
 struct exp_item;
 
@@ -220,9 +231,8 @@ struct exp_item :
     or_ < 
         number_, 
         identifier_rule,  
-        true_t,
-        false_t,
-        seq_ < char_ < '(' >, spaces_, exp_item, spaces_, char_ < ')' > >
+        bool_,
+        embrace_ < '(', exp_item, ')' >
         >
 {};
 

@@ -271,6 +271,12 @@ struct SemanticState
         }
         return try_to_set_type(typed);
     }
+    
+    template < typename S, typename match_pair >
+    void set_context_data(S& state, match_pair const& mp)
+    {
+        // TODO switch for expressions
+    }
 
     void commit()
     {
