@@ -22,19 +22,20 @@ typedef seq_ < plus_< digit_ >, opt_ < seq_ < point, plus_ < digit_ > > > >
 // TODO remove this rule
 typedef or_ <
             seq_ < char_ < '>' >, char_ < '>' > >,
-            seq_ < char_ < '<' >, char_ < '<' > >,
-            or_ <
-                seq_ < char_ < '&' >, char_ < '&' > >,
-                seq_ < char_ < '=' >, char_ < '=' > >,
-                seq_ < char_ < '|' >, char_ < '|' > >
-                >
-            > operator_;
+            seq_ < char_ < '<' >, char_ < '<' > >
+            >
+            shift_operator;
+
+typedef char_ < '&' > and_operator;
+typedef char_ < '&' > or_operator;
+typedef char_ < '^' > xor_operator;
+//seq_ < char_ < '=' >, char_ < '=' > >
 
 typedef or_ <
             char_ < '+' >,
             char_ < '-' >,
             char_ < '~' >
-            > unary_operator_;
+            > unary_operator;
 
 typedef or_< char_ < '*' >, char_ < '/' >, char_ < '%' > > mult_operator;
 

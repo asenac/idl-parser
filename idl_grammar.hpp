@@ -284,58 +284,54 @@ typedef or_ <
 
 typedef semantic_context< 
                 seq_ <  
-                        data_ < unary_operator_ >, spaces_, primary_expr 
+                        data_ < unary_operator >, spaces_, primary_expr 
                     >, 
                     CONTEXT_UNARY_EXPRESSION 
                 > unary_expr;
 
-struct mult_expr :  
+template < typename Operator, typename Left, typename Right = Left >
+struct binary_expr :
     semantic_context< 
         seq_ <  
-            primary_expr, 
+            Left, 
             opt_ <
                 seq_ <
                     spaces_, 
-                    data_ < mult_operator >, 
+                    data_ < Operator >, 
                     spaces_, 
-                    mult_expr
+                    Right
                 >
             >
         >, 
         CONTEXT_BINARY_EXPRESSION >
+{};
+
+struct mult_expr :  
+    binary_expr < mult_operator, primary_expr, mult_expr > 
 {};
 
 struct add_expr :  
-    semantic_context< 
-        seq_ <  
-            mult_expr, 
-            opt_ <
-                seq_ <
-                    spaces_, 
-                    data_ < add_operator >, 
-                    spaces_, 
-                    mult_expr 
-                >
-            >
-        >, 
-        CONTEXT_BINARY_EXPRESSION >
+    binary_expr < add_operator, mult_expr > 
 {};
 
-// TODO shift_expr
-
-struct const_expr : add_expr
+struct shift_expr :  
+    binary_expr < shift_operator, add_expr > 
 {};
 
-//struct const_value : 
-    //semantic_rule < const_value, or_ < string_rule, expression_rule > >
-//{
-    //template <typename S, typename match_pair>
-    //static inline void process_match (S& state, match_pair const& mp)
-    //{
-        ////const std::string s (state.to_string(mp.first, mp.second));
-        //// TODO put it in the model
-    //}
-//};
+struct and_expr :  
+    binary_expr < and_operator, shift_expr > 
+{};
+
+struct xor_expr :  
+    binary_expr < xor_operator, and_expr > 
+{};
+
+struct or_expr :  
+    binary_expr < or_operator, xor_expr > 
+{};
+
+struct const_expr : or_expr
+{};
 
 typedef seq_ < 
                 const_t, 
