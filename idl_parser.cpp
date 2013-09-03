@@ -128,7 +128,9 @@ struct SemanticState
     {
         for (std::size_t i = c.prev_size; i < c.objects.size(); i++) 
         {
-            (o->*f)().push_back(c.objects[i]->as< Contained >());
+            Contained * t = c.objects[i]->as< Contained >();
+            assert(t);
+            if (t) (o->*f)().push_back(t);
         }
 
         // avoid double free
@@ -137,6 +139,7 @@ struct SemanticState
 
     // attempt to implement a lookup function
     // TODO must be optimized
+    // TODO merge equivalent namespaces
     template < typename Type >
     Type* lookup(const std::string& f)
     {
@@ -326,6 +329,18 @@ struct SemanticState
                 obj = o;
             }
             break;
+        case CONTEXT_UNION:
+            {
+                UnionDef_ptr o = f->createUnionDef();
+                o->setIdentifier(c.identifier);
+
+                populate< UnionField >(c, o, &UnionDef::getUnionMembers);
+
+                // TODO discriminator
+
+                obj = o;
+            }
+            break;
         case CONTEXT_INTERFACE:
             {
                 InterfaceDef_ptr o = f->createInterfaceDef();
@@ -379,6 +394,18 @@ struct SemanticState
                 o->setIdentifier(c.identifier);
 
                 try_to_set_type(o);
+
+                obj = o;
+            }
+            break;
+        case CONTEXT_UNION_FIELD:
+            {
+                UnionField_ptr o = f->createUnionField();
+                o->setIdentifier(c.identifier);
+
+                try_to_set_type(o);
+                
+                populate< Expression >(c, o, &UnionField::getLabel);
 
                 obj = o;
             }

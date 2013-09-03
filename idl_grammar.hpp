@@ -104,6 +104,8 @@ enum semantic_context_type
     CONTEXT_INTERFACE,
     CONTEXT_STRUCT,
     CONTEXT_STRUCT_FIELD,
+    CONTEXT_UNION,
+    CONTEXT_UNION_FIELD,
     CONTEXT_ALIAS,
     CONTEXT_ARRAY,
     CONTEXT_ATTRIBUTE,
@@ -414,16 +416,19 @@ struct context_:
 template < typename Name, 
            typename Body, 
            semantic_context_type type,
-           typename Sep = semicol >
+           typename Sep = semicol,
+           typename PreContext = true_ >
 struct context_rule : 
     seq_< 
         Name, space_, 
         semantic_context < 
-            seq_ <identifier_, spaces_, context_ < Body, Sep > >, 
+            seq_ <identifier_, spaces_, PreContext, spaces_, context_ < Body, Sep > >, 
             type 
         >
     >
 {};
+
+// struct
 
 typedef 
     semantic_context < 
@@ -434,6 +439,25 @@ typedef
 
 typedef struct_field struct_body; 
 typedef context_rule< struct_t, struct_body, CONTEXT_STRUCT > struct_;
+
+// union
+
+typedef 
+    semantic_context < 
+            seq_ < 
+                // TODO default:
+                star_ < seq_ < case_t, space_, const_expr, spaces_, char_ < ':' >, spaces_ > >, 
+                type_rule, 
+                space_, 
+                identifier_ 
+                >, 
+            CONTEXT_UNION_FIELD 
+        > 
+    union_field;
+
+typedef union_field union_body; 
+typedef embrace_ < '(' , type_rule, ')' > discriminator_;
+typedef context_rule< union_t, union_body, CONTEXT_UNION, discriminator_ > union_;
 
 template < typename Name, 
            typename Body, 

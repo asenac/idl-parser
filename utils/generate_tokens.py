@@ -41,6 +41,10 @@ tokens = [
     "const",
     "true",
     "false",
+    "union",
+    "case",
+    "switch",
+    "default",
     ]
 tokens.extend(types)
 

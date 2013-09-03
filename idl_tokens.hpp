@@ -219,7 +219,10 @@ typedef tok_ < s_, e_, q_, u_, e_, n_, c_, e_ > sequence_t;
 typedef tok_ < c_, o_, n_, s_, t_ > const_t;
 typedef tok_ < t_, r_, u_, e_ > true_t;
 typedef tok_ < f_, a_, l_, s_, e_ > false_t;
-
+typedef tok_ < u_, n_, i_, o_, n_ > union_t;
+typedef tok_ < c_, a_, s_, e_ > case_t;
+typedef tok_ < s_, w_, i_, t_, c_, h_ > switch_t;
+typedef tok_ < d_, e_, f_, a_, u_, l_, t_ > default_t;
 
 template< char i, typename Rule, char e >
 struct embrace_ : seq_ < char_ < i >, spaces_, Rule, spaces_, char_ < e > >
