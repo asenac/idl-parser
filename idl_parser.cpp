@@ -49,7 +49,7 @@ struct SemanticState
     {
         context_type_t context_type;
         std::string identifier;
-        std::string type;
+        std::string data;
         std::bitset< sizeof(void *) * 8 > flags; 
         objects_t& objects;
         std::size_t prev_size;
@@ -103,12 +103,6 @@ struct SemanticState
     {
         //std::cout << __FUNCTION__ << " " << l << std::endl;
         literals.push_back(l);
-    }
-
-    void push_type(const std::string& type)
-    {
-        //std::cout << "type " << type << std::endl;
-        contexts.back().type = type;
     }
 
     void new_context(context_type_t type)
@@ -240,9 +234,9 @@ struct SemanticState
             typed->setContainedType(p);
             res = true;
         }
-        else if (!c.type.empty())
+        else if (!c.data.empty())
         {
-            idlmm::TypedefDef_ptr t = lookup(c.type);
+            idlmm::TypedefDef_ptr t = lookup(c.data);
             if (t)
             {
                 typed->setSharedType(t);
@@ -276,6 +270,12 @@ struct SemanticState
     void set_context_data(S& state, match_pair const& mp)
     {
         // TODO switch for expressions
+    }
+
+    template < typename S, typename match_pair >
+    void set_data(S& state, match_pair const& mp)
+    {
+        contexts.back().data = state.to_string(mp.first, mp.second);
     }
 
     void commit()
@@ -431,6 +431,49 @@ struct SemanticState
                 try_to_set_type(o);
 
                 // TODO constant value
+
+                obj = o;
+            }
+            break;
+        case CONTEXT_BINARY_EXPRESSION:
+            {
+                const std::size_t diff = objects.size() - c.prev_size;
+
+                if (diff == 2)
+                {
+                    BinaryExpression_ptr o = f->createBinaryExpression();
+                    o->setLeft(objects[c.prev_size]->as< Expression >());
+                    o->setRight(objects[c.prev_size + 1]->as< Expression >());
+                    o->setOperator(c.data);
+
+                    c.clear();
+                    obj = o;
+                }
+                else if (diff == 1)
+                {
+                    obj = objects[c.prev_size];
+                    c.clear();
+                }
+                else
+                    assert(false);
+            }
+            break;
+        case CONTEXT_UNARY_EXPRESSION:
+            {
+                UnaryExpression_ptr o = f->createUnaryExpression();
+                o->setExpression(objects[c.prev_size]->as< Expression >());
+                o->setOperator(c.data);
+
+                c.clear();
+                obj = o;
+            }
+            break;
+        case CONTEXT_VALUE_EXPRESSION:
+            {
+                // TODO it could a ConstantDefRef. Perform lookup in
+                // that case.
+                ValueExpression_ptr o = f->createValueExpression();
+                o->setValue(c.data);
 
                 obj = o;
             }

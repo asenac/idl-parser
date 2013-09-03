@@ -86,6 +86,17 @@ struct optflag_ : opt_< seq_< flag_ < Name, flag >, space_ > >
 {
 };
 
+template < typename rule >
+struct data_ : 
+    semantic_rule < data_ < rule >, rule >
+{
+    template <typename S, typename match_pair>
+    static inline void process_match (S& state, match_pair const& mp)
+    {
+        state.semantic_state().set_data(state, mp);
+    }
+};
+
 enum semantic_context_type
 {
     CONTEXT_TRANSLATION_UNIT,
@@ -130,7 +141,7 @@ struct semantic_context
     template <typename S, typename match_pair>
     static inline void process_match (S& state, match_pair const& mp)
     {
-        state.semantic_state().set_context_data(state, mp);
+        //state.semantic_state().set_context_data(state, mp);
     }
 };
 
@@ -162,19 +173,11 @@ struct literal_ :
     }
 };
 
-struct type_fqn_ :
-    semantic_rule < 
-        type_fqn_,
+typedef
+    data_< 
         fqn_rule
     >
-{
-    template <typename S, typename match_pair>
-    static inline void process_match (S& state, match_pair const& mp)
-    {
-        const std::string s (state.to_string(mp.first, mp.second));
-        state.semantic_state().push_type(s);
-    }
-};
+    type_fqn_;
 
 typedef 
     or_ < primitive_types_rule, type_fqn_ >
@@ -262,30 +265,77 @@ struct operation_ :
 
 // constant
 struct const_expr;
+struct mult_expr;
+struct add_expr;
+
 typedef semantic_context< fqn_rule, CONTEXT_CONSTANT_REF > 
     constant_ref_expr;
-typedef semantic_context< 
-            or_ <  string_rule, bool_, number_ >, 
-            CONTEXT_VALUE_EXPRESSION > value_expr;
-typedef or_ < 
-            value_expr, 
-            constant_ref_expr,  
-            embrace_ < '(', const_expr, ')' >
-            > primary_expr;
-typedef semantic_context< 
-            seq_ <  unary_operator_, spaces_, primary_expr >, 
-            CONTEXT_UNARY_EXPRESSION > unary_expr;
 
-struct const_value : 
-    semantic_rule < const_value, or_ < string_rule, expression_rule > >
-{
-    template <typename S, typename match_pair>
-    static inline void process_match (S& state, match_pair const& mp)
-    {
-        //const std::string s (state.to_string(mp.first, mp.second));
-        // TODO put it in the model
-    }
-};
+typedef semantic_context< 
+                or_ <  string_rule, bool_, number_ >, 
+                CONTEXT_VALUE_EXPRESSION 
+            > value_expr;
+
+typedef or_ < 
+                value_expr, 
+                constant_ref_expr,  
+                embrace_ < '(', const_expr, ')' >
+            > primary_expr;
+
+typedef semantic_context< 
+                seq_ <  
+                        data_ < unary_operator_ >, spaces_, primary_expr 
+                    >, 
+                    CONTEXT_UNARY_EXPRESSION 
+                > unary_expr;
+
+struct mult_expr :  
+    semantic_context< 
+        seq_ <  
+            primary_expr, 
+            opt_ <
+                seq_ <
+                    spaces_, 
+                    data_ < mult_operator >, 
+                    spaces_, 
+                    mult_expr
+                >
+            >
+        >, 
+        CONTEXT_BINARY_EXPRESSION >
+{};
+
+struct add_expr :  
+    semantic_context< 
+        seq_ <  
+            mult_expr, 
+            opt_ <
+                seq_ <
+                    spaces_, 
+                    data_ < add_operator >, 
+                    spaces_, 
+                    mult_expr 
+                >
+            >
+        >, 
+        CONTEXT_BINARY_EXPRESSION >
+{};
+
+// TODO shift_expr
+
+struct const_expr : add_expr
+{};
+
+//struct const_value : 
+    //semantic_rule < const_value, or_ < string_rule, expression_rule > >
+//{
+    //template <typename S, typename match_pair>
+    //static inline void process_match (S& state, match_pair const& mp)
+    //{
+        ////const std::string s (state.to_string(mp.first, mp.second));
+        //// TODO put it in the model
+    //}
+//};
 
 typedef seq_ < 
                 const_t, 
@@ -297,7 +347,7 @@ typedef seq_ <
                 seq_ < 
                         char_ < '=' >, 
                         spaces_, 
-                        const_value
+                        const_expr
                 > 
         > 
         const_rule;

@@ -19,12 +19,8 @@ typedef cirange_ < '0', '9'> digit_;
 typedef seq_ < plus_< digit_ >, opt_ < seq_ < point, plus_ < digit_ > > > > 
     number_;
 
+// TODO remove this rule
 typedef or_ <
-            char_ < '+' >,
-            char_ < '-' >,
-            char_ < '*' >,
-            char_ < '/' >,
-            char_ < '%' >,
             seq_ < char_ < '>' >, char_ < '>' > >,
             seq_ < char_ < '<' >, char_ < '<' > >,
             or_ <
@@ -33,11 +29,16 @@ typedef or_ <
                 seq_ < char_ < '|' >, char_ < '|' > >
                 >
             > operator_;
+
 typedef or_ <
             char_ < '+' >,
             char_ < '-' >,
             char_ < '~' >
             > unary_operator_;
+
+typedef or_< char_ < '*' >, char_ < '/' >, char_ < '%' > > mult_operator;
+
+typedef or_< char_ < '+' >, char_ < '-' > > add_operator;
 
 typedef seq_< 
             or_ < 
@@ -222,26 +223,27 @@ typedef tok_ < f_, a_, l_, s_, e_ > false_t;
 template< char i, typename Rule, char e >
 struct embrace_ : seq_ < char_ < i >, spaces_, Rule, spaces_, char_ < e > >
 {};
+
 typedef or_ < true_t, false_t > bool_; 
 
 // expressions
-struct exp_item;
+//struct exp_item;
 
-struct exp_item : 
-    or_ < 
-        number_, 
-        identifier_rule,  
-        bool_,
-        embrace_ < '(', exp_item, ')' >
-        >
-{};
+//struct exp_item : 
+    //or_ < 
+        //number_, 
+        //identifier_rule,  
+        //bool_,
+        //embrace_ < '(', exp_item, ')' >
+        //>
+//{};
 
-typedef seq_< 
-            spaces_,
-            exp_item, 
-            spaces_,
-            star_ < seq_ < operator_, spaces_, exp_item, spaces_ > > 
-            > expression_rule;
+//typedef seq_< 
+            //spaces_,
+            //exp_item, 
+            //spaces_,
+            //star_ < seq_ < operator_, spaces_, exp_item, spaces_ > > 
+            //> expression_rule;
 
 } // namespace tokens
 } // namespace idl

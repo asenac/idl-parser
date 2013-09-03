@@ -476,6 +476,11 @@ struct semantic_rule
     }
 };
 
+template <typename A>
+struct semantic_action : semantic_rule < A, true_ >
+{
+};
+
 // Ordered sequence of elements: abc
 template <typename C0,
           typename C1,
