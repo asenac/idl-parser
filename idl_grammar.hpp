@@ -446,7 +446,21 @@ typedef
     semantic_context < 
             seq_ < 
                 // TODO default:
-                star_ < seq_ < case_t, space_, const_expr, spaces_, char_ < ':' >, spaces_ > >, 
+                star_ < 
+                    seq_ < 
+                        or_ <
+                            seq_ <
+                                case_t, 
+                                space_, 
+                                const_expr 
+                                >,
+                            default_t
+                            >,
+                        spaces_, 
+                        char_ < ':' >, 
+                        spaces_ 
+                        > 
+                    >, 
                 type_rule, 
                 space_, 
                 identifier_ 
@@ -488,7 +502,7 @@ typedef
     enum_;
 
 // Can it be an interface within an interface?
-typedef or_< const_, array_, alias_, struct_, enum_ > contained_;
+typedef or_< const_, array_, alias_, struct_, union_, enum_ > contained_;
 
 typedef or_< contained_, attribute_, operation_ > interface_body;
 typedef 
