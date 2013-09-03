@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cassert>
+#include <sstream>
 #include <idlmm.hpp>
 #include "idl_parser.hpp"
 #include "idl_grammar.hpp"
@@ -11,15 +12,25 @@ using namespace idl::parser;
 template < typename Rule >
 struct TestGrammar
 {
-    const std::string& str_;
+    std::istringstream str_;
     SemanticState ss;
-    parser::State < SemanticState > iss;
+    parser::IStreamState < SemanticState > iss;
     std::ostream& err;
 
-    TestGrammar(const std::string& str, std::ostream& er = std::cerr) :
-        str_(str), iss(ss, str_.c_str(), str_.size()), err(er)
+    TestGrammar(const char * str, std::ostream& er = std::cerr) :
+        str_(str), iss(ss, str_), err(er)
     {
     }
+
+    //const std::string& str_;
+    //SemanticState ss;
+    //parser::State < SemanticState > iss;
+    //std::ostream& err;
+
+    //TestGrammar(const char * str, std::ostream& er = std::cerr) :
+        //str_(str), iss(ss, str_.c_str(), str_.size()), err(er)
+    //{
+    //}
 
     template < typename ExpectedResultType >
     ExpectedResultType * parse()
@@ -64,7 +75,7 @@ int main(int argc, char **argv)
     const char * tu_tests[] = {
         "module A {};", 
         "/***/module A {};", 
-        "//\nmodule A {};", 
+        "//\nmodule A {}; /* asas asd */ \t", 
         NULL
     };
     for (const char ** i = tu_tests; *i; i++)
