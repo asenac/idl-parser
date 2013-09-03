@@ -74,7 +74,7 @@ struct SemanticState
         }
     };
 
-    idlmm::TranslationUnit_ptr result;
+    ecore::EObject * result;
 
     typedef std::deque< Context > contexts_t; 
     contexts_t contexts;
@@ -300,7 +300,6 @@ struct SemanticState
                 populate< Contained >(c, o, 
                         &TranslationUnit::getContains);
 
-                result = o;
                 obj = o;
             }
             break;
@@ -534,8 +533,8 @@ struct SemanticState
         }
         else
         {
-            assert(result);
-            assert(result == obj);
+            assert (obj); 
+            result = obj;
         }
     }
 
@@ -546,8 +545,6 @@ struct SemanticState
         literals.clear();
     }
 };
-
-
 
 } // namespace parser
 } // namespace idl

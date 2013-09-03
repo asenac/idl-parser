@@ -31,7 +31,8 @@ idlmm::TranslationUnit_ptr doParse(State& s)
 
     if (idl::grammar::gram::match(s))
     {
-        res = s.semantic_state().result;
+        ecore::EObject * obj = s.semantic_state().result;
+        res = obj->as< idlmm::TranslationUnit > ( );
 
         assert(res);
 

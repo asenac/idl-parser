@@ -14,15 +14,25 @@ struct TestGrammar
     const std::string& str_;
     SemanticState ss;
     parser::State < SemanticState > iss;
+    std::ostream& err;
 
-    TestGrammar(const std::string& str) :
-        str_(str), iss(ss, str_.c_str(), str_.size())
+    TestGrammar(const std::string& str, std::ostream& er = std::cerr) :
+        str_(str), iss(ss, str_.c_str(), str_.size()), err(er)
     {
     }
 
-    bool parse()
+    template < typename ExpectedResultType >
+    ExpectedResultType * parse()
     {
-        return Rule::match(iss);
+        bool res = Rule::match(iss);
+
+        if (!res) 
+        {
+            std::cout << "ERROR" << std::endl;
+            iss.get_error(err);
+        }
+
+        return res? ss.result->as< ExpectedResultType >() : NULL;
     }
 
     ~TestGrammar()
@@ -31,8 +41,37 @@ struct TestGrammar
     }
 };
 
+template< typename ExpectedResultType, typename Test >
+void assertNotNull(Test& t)
+{
+    assert(t.template parse< ExpectedResultType >());
+}
+
 int main(int argc, char **argv)
 {
+    const char * module_tests[] = {
+        "module A {}", 
+        "module A{}", 
+        "module A{ }", 
+        NULL
+    };
+    for (const char ** i = module_tests; *i; i++)
+    {
+        TestGrammar< module_ > t(*i);
+        assertNotNull< idlmm::ModuleDef >(t);
+    }
+
+    const char * tu_tests[] = {
+        "module A {};", 
+        "/***/module A {};", 
+        "//\nmodule A {};", 
+        NULL
+    };
+    for (const char ** i = tu_tests; *i; i++)
+    {
+        TestGrammar< gram > t(*i);
+        assertNotNull< idlmm::TranslationUnit >(t);
+    }
     
     return 0;
 }
