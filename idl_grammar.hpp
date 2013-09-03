@@ -405,12 +405,11 @@ struct array_ :
 
 template < typename Statements, typename Sep = semicol >
 struct context_: 
-    seq_< 
-            char_ < '{' >, 
-            star_< seq_ < spaces_, Statements, spaces_, Sep >  >,
-            spaces_,
-            char_ < '}' > 
-        >
+    embrace_ < 
+            '{', 
+                star_< seq_ < spaces_, Statements, spaces_, Sep > >,
+            '}' 
+        > 
 {};
 
 template < typename Name, 
@@ -445,7 +444,6 @@ typedef context_rule< struct_t, struct_body, CONTEXT_STRUCT > struct_;
 typedef 
     semantic_context < 
             seq_ < 
-                // TODO default:
                 star_ < 
                     seq_ < 
                         or_ <
@@ -484,9 +482,7 @@ struct list_context :
             seq_ < 
                 identifier_, 
                 spaces_, 
-                char_ < '{' >, 
-                list_ < Body, Sep >, 
-                char_ < '}' > 
+                embrace_ < '{', list_ < Body, Sep >, '}' > 
                 >, 
             type 
         >
