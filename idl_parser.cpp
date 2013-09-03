@@ -135,12 +135,14 @@ struct SemanticState
         c.clear();
     }
 
-    typedef std::map< std::string, idlmm::TypedefDef_ptr > scope_t;
-
     // attempt to implement a lookup function
     // TODO must be optimized
-    idlmm::TypedefDef_ptr lookup(const std::string& f)
+    template < typename Type >
+    Type* lookup(const std::string& f)
     {
+        typedef Type* Type_ptr;
+        typedef std::map< std::string, Type_ptr > scope_t;
+
         scope_t scope;
         std::size_t size = objects.size();
 
@@ -153,7 +155,7 @@ struct SemanticState
                 scope_t old (scope);
                 scope.clear();
 
-                for (scope_t::iterator jt = old.begin(); 
+                for (typename scope_t::iterator jt = old.begin(); 
                         jt != old.end(); ++jt) 
                 {
                     scope[it->identifier + NSS + jt->first] = jt->second;
@@ -167,8 +169,8 @@ struct SemanticState
             // current objects
             for (std::size_t i = it->prev_size; i < size; i++) 
             {
-                idlmm::TypedefDef_ptr t = 
-                    objects[i]->as< idlmm::TypedefDef  >(); 
+                Type_ptr t = 
+                    objects[i]->as< Type  >(); 
 
                 if (t)
                     scope[t->getIdentifier()] = t;
@@ -192,8 +194,8 @@ struct SemanticState
 
                 for (std::size_t j = 0; j < c->getContains().size(); j++) 
                 {
-                    idlmm::TypedefDef_ptr t = 
-                        c->getContains()[j]->as< idlmm::TypedefDef  >(); 
+                    Type_ptr t = 
+                        c->getContains()[j]->as< Type  >(); 
 
                     if (t)
                         scope[prefix + t->getIdentifier()] = t;
@@ -207,14 +209,15 @@ struct SemanticState
                 }
             }
 
-            scope_t::iterator i = scope.find(f);
+            typename scope_t::iterator i = scope.find(f);
             if (i != scope.end())
                 return i->second;
         }
 
         std::cerr << "Error: undefined reference to " << f << std::endl;
         std::cerr << "Current scope:" << std::endl;
-        for (scope_t::const_iterator it = scope.begin(); it != scope.end(); ++it) 
+        for (typename scope_t::const_iterator it = scope.begin(); 
+                it != scope.end(); ++it) 
         {
             std::cerr << "  " << it->first << std::endl;
         }
@@ -236,7 +239,7 @@ struct SemanticState
         }
         else if (!c.data.empty())
         {
-            idlmm::TypedefDef_ptr t = lookup(c.data);
+            idlmm::TypedefDef_ptr t = lookup< idlmm::TypedefDef >(c.data);
             if (t)
             {
                 typed->setSharedType(t);
@@ -470,10 +473,20 @@ struct SemanticState
             break;
         case CONTEXT_VALUE_EXPRESSION:
             {
-                // TODO it could a ConstantDefRef. Perform lookup in
-                // that case.
                 ValueExpression_ptr o = f->createValueExpression();
                 o->setValue(c.data);
+
+                obj = o;
+            }
+            break;
+        case CONTEXT_CONSTANT_REF:
+            {
+                ConstantDefRef_ptr o = f->createConstantDefRef();
+                // TODO support references to enum members
+                Constant_ptr r = lookup< Constant >(c.data);
+
+                if (r)
+                    o->setConstant(r);
 
                 obj = o;
             }

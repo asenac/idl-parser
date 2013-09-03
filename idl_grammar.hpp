@@ -141,7 +141,7 @@ struct semantic_context
     template <typename S, typename match_pair>
     static inline void process_match (S& state, match_pair const& mp)
     {
-        //state.semantic_state().set_context_data(state, mp);
+        state.semantic_state().set_context_data(state, mp);
     }
 };
 
@@ -268,7 +268,7 @@ struct const_expr;
 struct mult_expr;
 struct add_expr;
 
-typedef semantic_context< fqn_rule, CONTEXT_CONSTANT_REF > 
+typedef semantic_context< data_ < fqn_rule >, CONTEXT_CONSTANT_REF > 
     constant_ref_expr;
 
 typedef semantic_context< 
