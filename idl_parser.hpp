@@ -1,6 +1,8 @@
 #ifndef IDL_PARSER_HPP
 #define IDL_PARSER_HPP
 
+#include <string>
+
 namespace idlmm 
 {
 class TranslationUnit;
@@ -11,6 +13,7 @@ namespace idl
 {
 
 idlmm::TranslationUnit_ptr parse(const char * file);
+idlmm::TranslationUnit_ptr parseString(const std::string& str);
 
 } // namespace idl
 

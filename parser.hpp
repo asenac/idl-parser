@@ -33,9 +33,11 @@ struct State
     // State stack, for backtracking
     std::deque< const char* > pos_stack_;
 
+    PositionType max_pos_;
+
     // ctor
     State (SemanticState& ss, const char* b, size_t l)
-        : buf_ (b), pos_ (b),  len_(l), ss_ (ss)
+        : buf_ (b), pos_ (b),  len_(l), ss_ (ss), max_pos_(NULL)
     {
     }
 
@@ -105,8 +107,16 @@ struct State
     }
 
     inline void
+    check_max()
+    {
+        if (max_pos_ < pos_)
+            max_pos_ = pos_;
+    }
+
+    inline void
     rollback()
     {
+        check_max();
         pos_ = pos_stack_.front();
         pos_stack_.pop_front();
     }
@@ -114,6 +124,7 @@ struct State
     inline void
     commit()
     {
+        check_max();
         pos_stack_.pop_front();
     }
 
@@ -121,6 +132,40 @@ struct State
     to_string(const char * p, std::size_t size) const
     {
         return std::string(p, size);
+    }
+
+    template < typename Stream >
+    void get_error(Stream& ss)
+    {
+        if (max_pos_)
+        {
+            PositionType init =  max_pos_;
+            PositionType end =  max_pos_;
+
+            if (init > buf_)
+            {
+                do 
+                {
+                    init--;
+                }
+                while (init > buf_ && *init != '\n');
+
+                if (*init == '\n') init++;
+            }
+
+            while (end < buf_ + len_ && *end != '\n')
+                end++;
+
+            // error line
+            const std::size_t size = end - init;
+            ss << to_string(init, size) << std::endl;
+
+            // marker
+            const std::size_t diff = max_pos_ - init;
+            for (std::size_t i = 0; i < diff; i++) 
+                ss << ' ';
+            ss << '^' << std::endl;
+        }
     }
 };
 
