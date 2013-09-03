@@ -287,6 +287,7 @@ struct SemanticState
         IdlmmFactory_ptr f = IdlmmFactory::_instance(); 
 
         Context& c = contexts.back();
+        const std::size_t diff = objects.size() - c.prev_size;
         //std::cout << "commit " << c.context_type << std::endl;
 
         ecore::EObject_ptr obj = NULL;
@@ -401,8 +402,14 @@ struct SemanticState
                 try_to_set_type(a);
                 o->setContainedType(a);
 
-                // TODO bounds
+                // bounds
+                assert(diff > 0);
+                for (std::size_t i = c.prev_size; i < objects.size(); i++) 
+                {
+                    a->getBounds().push_back(objects[i]->as< Expression >());
+                }
 
+                c.clear();
                 obj = o;
             }
             break;
@@ -433,15 +440,16 @@ struct SemanticState
 
                 try_to_set_type(o);
 
-                // TODO constant value
+                // constant value
+                assert(diff == 1);
+                o->setConstValue(objects[c.prev_size]->as< Expression >());
 
+                c.clear();
                 obj = o;
             }
             break;
         case CONTEXT_BINARY_EXPRESSION:
             {
-                const std::size_t diff = objects.size() - c.prev_size;
-
                 if (diff == 2)
                 {
                     BinaryExpression_ptr o = f->createBinaryExpression();

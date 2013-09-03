@@ -388,7 +388,7 @@ struct alias_ :
 
 typedef seq_ < 
             typedef_t, space_, type_rule, space_, identifier_, spaces_,
-            plus_ < seq_<  char_<'['>, plus_< notchar_< ']'> >, char_< ']' > > >
+            plus_ < embrace_<'[', const_expr, ']' > >
         > array_rule;
 
 struct array_ :
