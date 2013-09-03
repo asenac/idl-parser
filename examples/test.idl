@@ -34,6 +34,11 @@ module B
     };
 };
 
+//union A switch (long) {
+    //case 1: long a;
+    //default: long b;
+//};
+
 module C
 {
     typedef long ssss;

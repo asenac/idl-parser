@@ -470,7 +470,7 @@ typedef
     union_field;
 
 typedef union_field union_body; 
-typedef embrace_ < '(' , type_rule, ')' > discriminator_;
+typedef seq_< switch_t, spaces_, embrace_ < '(' , type_rule, ')' > > discriminator_;
 typedef context_rule< union_t, union_body, CONTEXT_UNION, discriminator_ > union_;
 
 template < typename Name, 
