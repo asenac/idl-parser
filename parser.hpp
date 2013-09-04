@@ -401,17 +401,6 @@ struct char_
     }
 };
 
-// requires char
-template <char c>
-struct req_
-{
-    template <typename S>
-    static inline bool match (S& state)
-    {
-        return state.match_at_pos (c);
-    }
-};
-
 // NOTE: I could have implemented this in some other way
 // but it would need a negative match with another Truth Environment
 // or something...
@@ -514,6 +503,35 @@ struct untilchars_
     }
 };
 
+// Non-advance rules
+// requires char
+template <char c>
+struct req_
+{
+    template <typename S>
+    static inline bool match (S& state)
+    {
+        return state.match_at_pos (c);
+    }
+};
+
+template <char c1, char c2>
+struct req_not_cirange_
+{
+    template <typename S>
+    static inline bool match (S& state)
+    {
+        if (state.at_end())
+            return true;
+
+        char c = state.char_at_pos();
+        if (c >= c1 && c <= c2)
+        {
+            return false;
+        }
+        return true;
+    }
+};
 
 // Semantic Rule: for rules that want a process_match operation to be
 // called in their A type. Usually tends to be the class itself, but

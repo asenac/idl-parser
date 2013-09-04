@@ -68,7 +68,8 @@ enum flags
     FLAG_ABSTRACT,
     FLAG_IN,
     FLAG_OUT,
-    FLAG_INOUT
+    FLAG_INOUT,
+    FLAG_DEFAULT
 };
 
 template < typename Name, flags flag >
@@ -452,7 +453,7 @@ typedef
                                 space_, 
                                 const_expr 
                                 >,
-                            default_t
+                            flag_< default_t, FLAG_DEFAULT >
                             >,
                         spaces_, 
                         char_ < ':' >, 

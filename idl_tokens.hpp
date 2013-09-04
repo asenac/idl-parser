@@ -19,13 +19,11 @@ typedef cirange_ < '0', '9'> digit_;
 typedef seq_ < plus_< digit_ >, opt_ < seq_ < point, plus_ < digit_ > > > > 
     number_;
 
-// TODO remove this rule
 typedef or_ <
             seq_ < char_ < '>' >, char_ < '>' > >,
             seq_ < char_ < '<' >, char_ < '<' > >
             >
             shift_operator;
-
 typedef char_ < '&' > and_operator;
 typedef char_ < '&' > or_operator;
 typedef char_ < '^' > xor_operator;
@@ -95,24 +93,10 @@ typedef
     space;
 
 // chars not allowed to be in tokens
-// TODO maybe we could use ranges
-typedef or_ < 
-            req_ < ' ' >, 
-            req_ < '\r' >, 
-            req_ < '\n' >, 
-            req_ < '/' >, 
-            req_ < '&' >, 
-            req_ < '|' >, 
-            req_ < '>' >, 
-            or_ <
-                req_ < '<' >,
-                req_ < '+' >,
-                req_ < '*' >,
-                req_ < '-' >,
-                req_ < '=' >,
-                req_ < '~' >,
-                req_ < '%' >
-                >
+typedef seq_ < 
+            req_not_cirange_ < 'a', 'z' >,
+            req_not_cirange_ < 'A', 'Z' >,
+            req_not_cirange_ < '0', '9' >
             > rspace;
 
 // token: requires an space at the end 

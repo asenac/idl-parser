@@ -22,6 +22,11 @@ struct TestGrammar
     {
     }
 
+    bool ruleMatch() 
+    {
+        return Rule::match(iss);
+    }
+
     template < typename ExpectedResultType >
     ExpectedResultType * parse()
     {
@@ -50,6 +55,11 @@ struct TestGrammarString
     TestGrammarString(const char * str, std::ostream& er = std::cerr) :
         str_(str), iss(ss, str_.c_str(), str_.size()), err(er)
     {
+    }
+
+    bool ruleMatch() 
+    {
+        return Rule::match(iss);
     }
 
     template < typename ExpectedResultType >
@@ -84,10 +94,26 @@ void assertNotNullAtEnd(Test& t)
 
 int main(int argc, char **argv)
 {
+    // Token
+    {
+#define STR(tok) #tok
+#define TOKEN_TEST(tok)                                                 \
+        { TestGrammar< tok ## _t > t(STR(tok)); assert(t.ruleMatch()); }
+
+        TOKEN_TEST(union);
+        TOKEN_TEST(switch);
+        TOKEN_TEST(module);
+        TOKEN_TEST(interface);
+        TOKEN_TEST(struct);
+
+#undef TOKEN_TEST
+    }
+
     // Union
     {
         const char * union_tests[] = {
-            //"union A switch (long) {\n}", 
+            "union A switch (long) {\n}", 
+            "union A switch(long){ default: \n long b;}", 
             NULL
         };
         for (const char ** i = union_tests; *i; i++)
@@ -120,6 +146,7 @@ int main(int argc, char **argv)
             "/***/module A {};", 
             "//\nmodule A {}; /* asas asd */ \t", 
             "union A switch (long) {\n};", 
+            "typedef long B;\nunion A switch (B) { default: B a;\n};", 
             NULL
         };
         for (const char ** i = tu_tests; *i; i++)
