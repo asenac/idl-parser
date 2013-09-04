@@ -38,10 +38,7 @@ struct TestGrammar
         bool res = Rule::match(iss);
 
         if (!res) 
-        {
-            std::cout << "ERROR" << std::endl;
             iss.get_error(err);
-        }
 
         return res? ss.result->as< ExpectedResultType >() : NULL;
     }
@@ -60,28 +57,49 @@ void assertNotNull(Test& t)
 
 int main(int argc, char **argv)
 {
-    const char * module_tests[] = {
-        "module A {}", 
-        "module A{}", 
-        "module A{ }", 
-        NULL
-    };
-    for (const char ** i = module_tests; *i; i++)
+    // Union
     {
-        TestGrammar< module_ > t(*i);
-        assertNotNull< idlmm::ModuleDef >(t);
+        const char * union_tests[] = {
+            //"union A switch (long) {\n}", 
+            NULL
+        };
+        for (const char ** i = union_tests; *i; i++)
+        {
+            TestGrammar< union_ > t(*i);
+            assertNotNull< idlmm::UnionDef >(t);
+        }
     }
 
-    const char * tu_tests[] = {
-        "module A {};", 
-        "/***/module A {};", 
-        "//\nmodule A {}; /* asas asd */ \t", 
-        NULL
-    };
-    for (const char ** i = tu_tests; *i; i++)
+    // Module
     {
-        TestGrammar< gram > t(*i);
-        assertNotNull< idlmm::TranslationUnit >(t);
+        const char * module_tests[] = {
+            "module A {}", 
+            "module A{}", 
+            "module A{ }", 
+            "module A{ interface C {}; /* aseas23\n**/}", 
+            NULL
+        };
+        for (const char ** i = module_tests; *i; i++)
+        {
+            TestGrammar< module_ > t(*i);
+            assertNotNull< idlmm::ModuleDef >(t);
+        }
+    }
+
+    // Translation unit
+    {
+        const char * tu_tests[] = {
+            "module A {};", 
+            "/***/module A {};", 
+            "//\nmodule A {}; /* asas asd */ \t", 
+            "union A switch (long) {\n};", 
+            NULL
+        };
+        for (const char ** i = tu_tests; *i; i++)
+        {
+            TestGrammar< gram > t(*i);
+            assertNotNull< idlmm::TranslationUnit >(t);
+        }
     }
     
     return 0;

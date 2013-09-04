@@ -314,6 +314,7 @@ struct IStreamState
         {
             std::streampos init =  max_pos_;
 
+            // Begining
             if (init > 0)
             {
                 do 
@@ -324,17 +325,30 @@ struct IStreamState
                 }
                 while (in_.good() && in_.peek() != '\n');
 
-                if (in_.peek() == '\n')
+                if (!in_.good())
+                {
+                    in_.clear();
+                    in_.seekg(0, in_.beg);
+                    init = in_.tellg();
+                }
+                else if (in_.peek() == '\n')
                 {
                     in_.seekg(1, in_.cur);
                     init = in_.tellg();
                 }
             }
 
+            // End
             in_.seekg(max_pos_);
 
             while (!at_end() && in_.peek() != '\n')
                 in_.get();
+
+            if (at_end())
+            {
+                in_.clear();
+                in_.seekg(0, in_.end);
+            }
 
             // error line
             const std::size_t size = in_.tellg() - init;
