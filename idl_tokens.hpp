@@ -207,6 +207,7 @@ typedef tok_ < u_, n_, i_, o_, n_ > union_t;
 typedef tok_ < c_, a_, s_, e_ > case_t;
 typedef tok_ < s_, w_, i_, t_, c_, h_ > switch_t;
 typedef tok_ < d_, e_, f_, a_, u_, l_, t_ > default_t;
+typedef tok_ < e_, x_, c_, e_, p_, t_, i_, seq_ < o_, n_ > > exception_t;
 
 template< char i, typename Rule, char e >
 struct embrace_ : seq_ < char_ < i >, spaces_, Rule, spaces_, char_ < e > >

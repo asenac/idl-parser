@@ -45,6 +45,7 @@ tokens = [
     "case",
     "switch",
     "default",
+    "expcetion",
     ]
 tokens.extend(types)
 

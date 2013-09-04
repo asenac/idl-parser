@@ -116,6 +116,7 @@ enum semantic_context_type
     CONTEXT_ENUM,
     CONTEXT_SEQUENCE,
     CONTEXT_CONST,
+    CONTEXT_EXCEPTION,
 
     // Expressions
     CONTEXT_UNARY_EXPRESSION,
@@ -442,6 +443,10 @@ typedef
 typedef struct_field struct_body; 
 typedef context_rule< struct_t, struct_body, CONTEXT_STRUCT > struct_;
 
+// exception 
+
+typedef context_rule< exception_t, struct_field, CONTEXT_EXCEPTION > exception_;
+
 // union
 
 typedef 
@@ -501,7 +506,7 @@ typedef
     enum_;
 
 // Can it be an interface within an interface?
-typedef or_< const_, array_, alias_, struct_, union_, enum_ > contained_;
+typedef or_< const_, array_, alias_, exception_, struct_, union_, enum_ > contained_;
 
 typedef or_< contained_, attribute_, operation_ > interface_body;
 typedef 

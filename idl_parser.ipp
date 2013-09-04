@@ -130,6 +130,17 @@ struct SemanticState
         c.clear();
     }
 
+    // for those classes that can have more than one kind of children
+    template < class Contained, class Obj, typename Fn >
+    void populateIf(Context& c, Obj * o, Fn f)
+    {
+        for (std::size_t i = c.prev_size; i < c.objects.size(); i++) 
+        {
+            Contained * t = c.objects[i]->as< Contained >();
+            if (t) (o->*f)().push_back(t);
+        }
+    }
+
     // attempt to implement a lookup function
     // TODO must be optimized
     // TODO merge equivalent namespaces
@@ -319,6 +330,16 @@ struct SemanticState
                 o->setIdentifier(c.identifier);
 
                 populate< Field >(c, o, &StructDef::getMembers);
+
+                obj = o;
+            }
+            break;
+        case CONTEXT_EXCEPTION:
+            {
+                ExceptionDef_ptr o = f->createExceptionDef();
+                o->setIdentifier(c.identifier);
+
+                populate< Field >(c, o, &ExceptionDef::getMembers);
 
                 obj = o;
             }
