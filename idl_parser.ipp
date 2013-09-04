@@ -459,7 +459,13 @@ struct SemanticState
                 SequenceDef_ptr o = f->createSequenceDef();
                 try_to_set_type(o);
 
-                // TODO bounds
+                // bound
+                if (diff)
+                {
+                    assert(diff == 1);
+                    o->setBound(objects[c.prev_size]->as< Expression >());
+                    c.clear();
+                }
 
                 obj = o;
             }

@@ -364,6 +364,7 @@ typedef
         spaces_, 
         type_rule, 
         spaces_, 
+        opt_< seq_ < comma, spaces_, const_expr, spaces_ > >,
         char_ < '>' > 
     > 
     sequence_rule;

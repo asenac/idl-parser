@@ -148,6 +148,7 @@ int main(int argc, char **argv)
             "union A switch (long) {\n};", 
             "typedef long B;\nunion A switch (B) { default: B a;\n};", 
             "interface Andres;",
+            "typedef sequence< long, 10 > mySeq;",
             NULL
         };
         for (const char ** i = tu_tests; *i; i++)
