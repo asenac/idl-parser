@@ -22,16 +22,6 @@ struct TestGrammar
     {
     }
 
-    //const std::string& str_;
-    //SemanticState ss;
-    //parser::State < SemanticState > iss;
-    //std::ostream& err;
-
-    //TestGrammar(const char * str, std::ostream& er = std::cerr) :
-        //str_(str), iss(ss, str_.c_str(), str_.size()), err(er)
-    //{
-    //}
-
     template < typename ExpectedResultType >
     ExpectedResultType * parse()
     {
@@ -49,10 +39,47 @@ struct TestGrammar
     }
 };
 
+template < typename Rule >
+struct TestGrammarString
+{
+    const std::string str_;
+    SemanticState ss;
+    parser::State < SemanticState > iss;
+    std::ostream& err;
+
+    TestGrammarString(const char * str, std::ostream& er = std::cerr) :
+        str_(str), iss(ss, str_.c_str(), str_.size()), err(er)
+    {
+    }
+
+    template < typename ExpectedResultType >
+    ExpectedResultType * parse()
+    {
+        bool res = Rule::match(iss);
+
+        if (!res) 
+            iss.get_error(err);
+
+        return res? ss.result->as< ExpectedResultType >() : NULL;
+    }
+
+    ~TestGrammarString()
+    {
+        delete ss.result;
+    }
+};
+
 template< typename ExpectedResultType, typename Test >
 void assertNotNull(Test& t)
 {
     assert(t.template parse< ExpectedResultType >());
+}
+
+template< typename ExpectedResultType, typename Test >
+void assertNotNullAtEnd(Test& t)
+{
+    assert(t.template parse< ExpectedResultType >());
+    assert(t.iss.at_end());
 }
 
 int main(int argc, char **argv)
@@ -98,7 +125,10 @@ int main(int argc, char **argv)
         for (const char ** i = tu_tests; *i; i++)
         {
             TestGrammar< gram > t(*i);
-            assertNotNull< idlmm::TranslationUnit >(t);
+            assertNotNullAtEnd< idlmm::TranslationUnit >(t);
+
+            TestGrammarString< gram > ts(*i);
+            assertNotNullAtEnd< idlmm::TranslationUnit >(ts);
         }
     }
     

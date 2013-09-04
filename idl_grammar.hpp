@@ -415,8 +415,8 @@ struct context_:
 template < typename Name, 
            typename Body, 
            semantic_context_type type,
-           typename Sep = semicol,
-           typename PreContext = true_ >
+           typename PreContext = true_,
+           typename Sep = semicol >
 struct context_rule : 
     seq_< 
         Name, space_, 
@@ -525,7 +525,7 @@ typedef
 
 typedef 
     semantic_context < 
-            seq_ < star_ < statement_ >, eof_ >, 
+            seq_ < star_ < statement_ >, spaces_, eof_ >, 
             CONTEXT_TRANSLATION_UNIT 
         >
     gram;
