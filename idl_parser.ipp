@@ -346,6 +346,16 @@ struct SemanticState
                 obj = o;
             }
             break;
+        case CONTEXT_INTERFACE_FWD:
+            {
+                ForwardDef_ptr o = f->createForwardDef();
+                o->setIdentifier(c.identifier);
+                // Error in the model 
+                // o->setIsAbstract(c.flags.test(FLAG_ABSTRACT));
+
+                obj = o;
+            }
+            break;
         case CONTEXT_OPERATION:
             {
                 OperationDef_ptr o = f->createOperationDef();

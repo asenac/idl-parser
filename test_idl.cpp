@@ -1,5 +1,4 @@
 #include <iostream>
-#include <fstream>
 #include <idlmm.hpp>
 #include <ecorecpp.hpp> // EMF4CPP utils
 

@@ -103,6 +103,7 @@ enum semantic_context_type
     CONTEXT_TRANSLATION_UNIT,
     CONTEXT_MODULE,
     CONTEXT_INTERFACE,
+    CONTEXT_INTERFACE_FWD,
     CONTEXT_STRUCT,
     CONTEXT_STRUCT_FIELD,
     CONTEXT_UNION,
@@ -510,6 +511,13 @@ typedef
         > 
     interface_;
 
+typedef 
+    semantic_context< 
+            seq_ < interface_t, space_, identifier_ >, 
+            CONTEXT_INTERFACE_FWD
+        > 
+    interface_fwd_;
+
 struct module_;
 typedef or_< module_, interface_, contained_ > module_body;
 struct module_ : context_rule < module_t, module_body, CONTEXT_MODULE >
@@ -518,7 +526,7 @@ struct module_ : context_rule < module_t, module_body, CONTEXT_MODULE >
 typedef 
     seq_ < 
             spaces_, 
-            or_ < module_, interface_, contained_ >, 
+            or_ < module_, interface_, interface_fwd_, contained_ >, 
             spaces_, 
             semicol 
         > 
