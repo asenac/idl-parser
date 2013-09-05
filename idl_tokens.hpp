@@ -75,17 +75,6 @@ typedef seq_ <
 
 // spaces
 
-struct new_line : semantic_rule < new_line, char_< '\n' > >
-{
-    template <typename S, typename match_pair>
-    static inline void process_match (S& state, match_pair const& mp)
-    {
-        //state.semantic_state().new_line();
-    }
-};
-
-typedef notchar_ < '\n' > not_new_line;
-typedef apply_until_ < not_new_line, new_line > until_new_line;
 typedef seq_ < char_ < '*' >, char_ < '/' > > ccomment_end;
 typedef 
     seq_ < 

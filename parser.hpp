@@ -35,9 +35,13 @@ struct State
 
     PositionType max_pos_;
 
+    std::size_t line_;
+
+    std::deque< std::size_t > line_stack_;
+
     // ctor
     State (SemanticState& ss, const char* b, size_t l)
-        : buf_ (b), pos_ (b),  len_(l), ss_ (ss), max_pos_(NULL)
+        : buf_ (b), pos_ (b),  len_(l), ss_ (ss), max_pos_(NULL), line_(1)
     {
     }
 
@@ -45,6 +49,12 @@ struct State
     semantic_state()
     {
         return ss_;
+    }
+
+    inline void
+    new_line()
+    {
+        line_++;
     }
 
     inline bool
@@ -103,6 +113,7 @@ struct State
     inline void
     push_state()
     {
+        line_stack_.push_front (line_);
         pos_stack_.push_front (pos_);
     }
 
@@ -118,7 +129,9 @@ struct State
     {
         check_max();
         pos_ = pos_stack_.front();
+        line_ = line_stack_.front();
         pos_stack_.pop_front();
+        line_stack_.pop_front();
     }
 
     inline void
@@ -126,6 +139,7 @@ struct State
     {
         check_max();
         pos_stack_.pop_front();
+        line_stack_.pop_front();
     }
 
     inline std::string
@@ -191,9 +205,13 @@ struct IStreamState
 
     std::streampos max_pos_;
 
+    std::size_t line_;
+
+    std::deque< std::size_t > line_stack_;
+
     // ctor
     IStreamState (SemanticState& ss, std::istream& in)
-        : in_ (in), ss_ (ss), max_pos_(0)
+        : in_ (in), ss_ (ss), max_pos_(0), line_(1)
     {
     }
 
@@ -201,6 +219,12 @@ struct IStreamState
     semantic_state()
     {
         return ss_;
+    }
+
+    inline void
+    new_line()
+    {
+        line_++;
     }
 
     inline bool
@@ -284,7 +308,9 @@ struct IStreamState
     {
         check_max();
         in_.seekg(pos_stack_.front());
+        line_ = line_stack_.front();
         pos_stack_.pop_front();
+        line_stack_.pop_front();
     }
 
     inline void
@@ -292,6 +318,7 @@ struct IStreamState
     {
         check_max();
         pos_stack_.pop_front();
+        line_stack_.pop_front();
     }
 
     inline std::string
@@ -704,6 +731,22 @@ struct apply_until_
         return var;
     }
 };
+
+struct new_line 
+{
+    template <typename S>
+    static inline bool match(S& state)
+    {
+        bool res = state.match_at_pos_advance ('\n');
+        if (res) state.new_line();
+        return res;
+    }
+};
+
+typedef notchar_ < '\n' > not_new_line;
+typedef apply_until_ < not_new_line, new_line > until_new_line;
+// anychar counting lines
+typedef or_< new_line, not_new_line> anychar_lc;
 
 } // parser
 
