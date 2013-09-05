@@ -683,6 +683,28 @@ struct until_ : seq_ < star_ < notchar_ < c > >, char_ < c > >
 {
 };
 
+// apply C0 until C1
+template <typename C0,
+          typename C1>
+struct apply_until_ 
+{
+    template <typename S>
+    static inline bool match (S& state)
+    {
+        state.push_state();
+
+        bool var = false;
+
+        while (!(var = C1::match (state)))
+            if (!C0::match (state))
+                break;
+
+        var ? state.commit() : state.rollback();
+
+        return var;
+    }
+};
+
 } // parser
 
 #endif // PARSER_HPP

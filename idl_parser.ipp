@@ -577,7 +577,6 @@ struct SemanticState
 
     void rollback()
     {
-        //std::cout << "rollback " << contexts.back().context_type << std::endl;
         contexts.pop_back();
         literals.clear();
     }

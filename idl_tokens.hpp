@@ -38,6 +38,7 @@ typedef or_ <
 typedef or_< char_ < '*' >, char_ < '/' >, char_ < '%' > > mult_operator;
 
 typedef or_< char_ < '+' >, char_ < '-' > > add_operator;
+typedef seq_ < opt_ < add_operator >, plus_< digit_ > > integer_;
 
 typedef seq_< 
             or_ < 
@@ -74,20 +75,36 @@ typedef seq_ <
 
 // spaces
 
+struct new_line : semantic_rule < new_line, char_< '\n' > >
+{
+    template <typename S, typename match_pair>
+    static inline void process_match (S& state, match_pair const& mp)
+    {
+        //state.semantic_state().new_line();
+    }
+};
+
+typedef notchar_ < '\n' > not_new_line;
+typedef apply_until_ < not_new_line, new_line > until_new_line;
+typedef seq_ < char_ < '*' >, char_ < '/' > > ccomment_end;
 typedef 
     seq_ < 
             char_ < '/' >, 
             char_ < '*' >, 
-            untilchars_ < '*', '/' > 
+            apply_until_ < 
+                // to be or not to be
+                or_ < new_line, not_new_line >,
+                ccomment_end 
+            >
         > 
     ccomment_;
 
-typedef seq_ < char_ < '/' >, char_ < '/' >, until_ < '\n' > > comment_;
+typedef seq_ < char_ < '/' >, char_ < '/' >, until_new_line > comment_;
 
 // space
 typedef 
     or_ < 
-            char_<' '>, char_<'\t'>, char_<'\n'>, char_<'\r'>, 
+            char_<' '>, char_<'\t'>, new_line, char_<'\r'>, 
             comment_, ccomment_
         > 
     space;
