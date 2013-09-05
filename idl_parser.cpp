@@ -52,8 +52,10 @@ idlmm::TranslationUnit_ptr parse(const char * file)
     std::ifstream is(file);
     if (is.good())
     {
+        using namespace ::parser;
+        IStreamReader reader(is);
         SemanticState ss;
-        ::parser::IStreamState < SemanticState > iss(ss, is);
+        ReaderState < SemanticState, IStreamReader > iss(ss, reader);
 
         return doParse(iss);
     }
@@ -63,8 +65,10 @@ idlmm::TranslationUnit_ptr parse(const char * file)
 
 idlmm::TranslationUnit_ptr parseString(const std::string& str)
 {
+    using namespace ::parser;
+    Reader reader(str.c_str(), str.size());
     SemanticState ss;
-    ::parser::State < SemanticState > iss(ss, str.c_str(), str.size());
+    ReaderState < SemanticState, Reader > iss(ss, reader);
 
     return doParse(iss);
 }

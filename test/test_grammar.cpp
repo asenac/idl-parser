@@ -1,5 +1,6 @@
 #include <iostream>
 #include <cassert>
+#include <cstring>
 #include <sstream>
 #include <idlmm.hpp>
 #include "idl_parser.hpp"
@@ -9,16 +10,15 @@
 using namespace idl::grammar;
 using namespace idl::parser;
 
-template < typename Rule >
+template < typename Rule, typename Reader = ::parser::Reader >
 struct TestGrammar
 {
-    std::istringstream str_;
     SemanticState ss;
-    parser::IStreamState < SemanticState > iss;
+    parser::ReaderState < SemanticState, Reader > iss;
     std::ostream& err;
 
-    TestGrammar(const char * str, std::ostream& er = std::cerr) :
-        str_(str), iss(ss, str_), err(er)
+    TestGrammar(Reader& r, std::ostream& er = std::cerr) :
+        iss(ss, r), err(er)
     {
     }
 
@@ -44,41 +44,6 @@ struct TestGrammar
     }
 };
 
-template < typename Rule >
-struct TestGrammarString
-{
-    const std::string str_;
-    SemanticState ss;
-    parser::State < SemanticState > iss;
-    std::ostream& err;
-
-    TestGrammarString(const char * str, std::ostream& er = std::cerr) :
-        str_(str), iss(ss, str_.c_str(), str_.size()), err(er)
-    {
-    }
-
-    bool ruleMatch() 
-    {
-        return Rule::match(iss);
-    }
-
-    template < typename ExpectedResultType >
-    ExpectedResultType * parse()
-    {
-        bool res = Rule::match(iss);
-
-        if (!res) 
-            iss.get_error(err);
-
-        return res? ss.result->as< ExpectedResultType >() : NULL;
-    }
-
-    ~TestGrammarString()
-    {
-        delete ss.result;
-    }
-};
-
 template< typename ExpectedResultType, typename Test >
 void assertNotNull(Test& t)
 {
@@ -98,7 +63,8 @@ int main(int argc, char **argv)
     {
 #define STR(tok) #tok
 #define TOKEN_TEST(tok)                                                 \
-        { TestGrammar< tok ## _t > t(STR(tok)); assert(t.ruleMatch()); }
+        {   ::parser::Reader r(STR(tok), std::strlen(STR(tok)));        \
+            TestGrammar< tok ## _t > t(r); assert(t.ruleMatch()); }
 
         TOKEN_TEST(union);
         TOKEN_TEST(switch);
@@ -118,7 +84,8 @@ int main(int argc, char **argv)
         };
         for (const char ** i = union_tests; *i; i++)
         {
-            TestGrammar< union_ > t(*i);
+            ::parser::Reader r(*i, std::strlen(*i));
+            TestGrammar< union_ > t(r);
             assertNotNull< idlmm::UnionDef >(t);
         }
     }
@@ -134,7 +101,8 @@ int main(int argc, char **argv)
         };
         for (const char ** i = module_tests; *i; i++)
         {
-            TestGrammar< module_ > t(*i);
+            ::parser::Reader r(*i, std::strlen(*i));
+            TestGrammar< module_ > t(r);
             assertNotNull< idlmm::ModuleDef >(t);
         }
     }
@@ -153,11 +121,9 @@ int main(int argc, char **argv)
         };
         for (const char ** i = tu_tests; *i; i++)
         {
-            TestGrammar< gram > t(*i);
+            ::parser::Reader r(*i, std::strlen(*i));
+            TestGrammar< gram > t(r);
             assertNotNullAtEnd< idlmm::TranslationUnit >(t);
-
-            TestGrammarString< gram > ts(*i);
-            assertNotNullAtEnd< idlmm::TranslationUnit >(ts);
         }
     }
     

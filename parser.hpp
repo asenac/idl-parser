@@ -3,143 +3,58 @@
 
 #include <string>
 #include <deque>
+#include <utility>
 //#include <exception> // Exceptions
 //#include <stdexcept>
 
 namespace parser
 {
 
-////////////////////////////////////////////////////////////////////////
-// parser state
-template <typename SemanticState>
-struct State
+struct Reader
 {
-    // For reference, the SemanticState itself.
-    typedef SemanticState SemType;
-
     // Position type
     typedef const char * PositionType;
 
     // buffer
-    const char* buf_;
+    PositionType buf_;
     // actual pos
-    const char* pos_;
+    PositionType pos_;
     // buf_fer length
-    size_t len_;
+    std::size_t len_;
 
-    // The inner semantic state.
-    SemanticState& ss_;
-
-    // State stack, for backtracking
-    std::deque< const char* > pos_stack_;
-
-    PositionType max_pos_;
-
-    std::size_t line_;
-
-    std::deque< std::size_t > line_stack_;
-
-    // ctor
-    State (SemanticState& ss, const char* b, size_t l)
-        : buf_ (b), pos_ (b),  len_(l), ss_ (ss), max_pos_(NULL), line_(1)
+    Reader(const char* b, std::size_t l)
+        : buf_ (b), pos_ (b),  len_(l) 
     {
-    }
-
-    SemanticState&
-    semantic_state()
-    {
-        return ss_;
-    }
-
-    inline void
-    new_line()
-    {
-        line_++;
     }
 
     inline bool
     at_end() const
     {
-        return static_cast<size_t>(pos_ - buf_) == len_;
-    }
-
-    inline bool
-    match_at_pos_advance (char c)
-    {
-        if (!at_end() && (*pos_ == c))
-        {
-            ++pos_;
-            return true;
-        }
-        return false;
-    }
-
-    inline bool
-    match_at_pos (char c) const
-    {
-        return !at_end() && (*pos_ == c);
+        return static_cast<std::size_t>(pos_ - buf_) == len_;
     }
 
     inline char
-    char_at_pos() const
+    char_at_pos () const
     {
         return *pos_;
-    }
-
-    inline const char* pos() const
-    {
-        return pos_;
     }
 
     inline void
     advance()
     {
-        if (!at_end())
-            ++pos_;
-
-        // TODO: throw at_end
+        ++pos_;
     }
 
-    inline void
-    skip(size_t how_many)
+    inline PositionType
+    pos()
     {
-        if (static_cast<size_t>(pos_ - buf_) + how_many <= len_)
-            pos_ += how_many;
-
-        // TODO: throw at_end
+        return pos_;
     }
 
-    // Common interface
-    inline void
-    push_state()
+    inline void 
+    set_pos(PositionType p)
     {
-        line_stack_.push_front (line_);
-        pos_stack_.push_front (pos_);
-    }
-
-    inline void
-    check_max()
-    {
-        if (max_pos_ < pos_)
-            max_pos_ = pos_;
-    }
-
-    inline void
-    rollback()
-    {
-        check_max();
-        pos_ = pos_stack_.front();
-        line_ = line_stack_.front();
-        pos_stack_.pop_front();
-        line_stack_.pop_front();
-    }
-
-    inline void
-    commit()
-    {
-        check_max();
-        pos_stack_.pop_front();
-        line_stack_.pop_front();
+        pos_ = p;
     }
 
     inline std::string
@@ -148,83 +63,40 @@ struct State
         return std::string(p, size);
     }
 
-    template < typename Stream >
-    void get_error(Stream& ss)
+    std::pair< PositionType, PositionType > get_line(const char * p)
     {
-        if (max_pos_)
+        PositionType init =  p;
+        PositionType end =  p;
+
+        if (init > buf_)
         {
-            PositionType init =  max_pos_;
-            PositionType end =  max_pos_;
-
-            if (init > buf_)
+            do 
             {
-                do 
-                {
-                    init--;
-                }
-                while (init > buf_ && *init != '\n');
-
-                if (*init == '\n') init++;
+                init--;
             }
+            while (init > buf_ && *init != '\n');
 
-            while (end < buf_ + len_ && *end != '\n')
-                end++;
-
-            // error line
-            const std::size_t size = end - init;
-            ss << to_string(init, size) << std::endl;
-
-            // marker
-            const std::size_t diff = max_pos_ - init;
-            for (std::size_t i = 0; i < diff; i++) 
-                ss << ' ';
-            ss << '^' << std::endl;
+            if (*init == '\n') init++;
         }
+
+        while (end < buf_ + len_ && *end != '\n')
+            end++;
+
+        return std::make_pair(init, end);
     }
 };
 
-////////////////////////////////////////////////////////////////////////
-// parser state
-template <typename SemanticState>
-struct IStreamState
+struct IStreamReader
 {
-    // For reference, the SemanticState itself.
-    typedef SemanticState SemType;
-
     // Position type
     typedef std::streampos PositionType;
 
     // stream
     std::istream& in_;
 
-    // The inner semantic state.
-    SemanticState& ss_;
-
-    // State stack, for backtracking
-    std::deque< std::streampos > pos_stack_;
-
-    std::streampos max_pos_;
-
-    std::size_t line_;
-
-    std::deque< std::size_t > line_stack_;
-
-    // ctor
-    IStreamState (SemanticState& ss, std::istream& in)
-        : in_ (in), ss_ (ss), max_pos_(0), line_(1)
+    IStreamReader(std::istream& in)
+        : in_ (in) 
     {
-    }
-
-    SemanticState&
-    semantic_state()
-    {
-        return ss_;
-    }
-
-    inline void
-    new_line()
-    {
-        line_++;
     }
 
     inline bool
@@ -233,92 +105,28 @@ struct IStreamState
         return !in_.good();
     }
 
-    inline bool
-    match_at_pos_advance (char c)
-    {
-        if (!at_end())
-        {
-            if (in_.get() == c)
-            {
-                return true;
-            }
-            else
-            {
-                in_.unget();
-            }
-        }
-        return false;
-    }
-
-    inline bool
-    match_at_pos (char c) const
-    {
-        if (at_end())
-            return false;
-
-        char r = in_.peek();
-        return (r == c);
-    }
-
     inline char
-    char_at_pos() const
+    char_at_pos () const
     {
         return in_.peek();
-    }
-
-    inline PositionType pos() const
-    {
-        return in_.tellg();
     }
 
     inline void
     advance()
     {
-        if (!at_end())
-            in_.get();
-
-        // TODO: throw at_end
+        in_.get();
     }
 
-    inline void
-    skip(size_t how_many)
+    inline PositionType
+    pos()
     {
-        in_.ignore(how_many);
-
-        // TODO: throw at_end
+        return in_.tellg();
     }
 
-    // Common interface
-    inline void
-    push_state()
+    inline void 
+    set_pos(PositionType p)
     {
-        pos_stack_.push_front (in_.tellg());
-    }
-
-    inline void
-    check_max()
-    {
-        std::streampos cur = in_.tellg();
-        if (max_pos_ < cur)
-            max_pos_ = cur;
-    }
-
-    inline void
-    rollback()
-    {
-        check_max();
-        in_.seekg(pos_stack_.front());
-        line_ = line_stack_.front();
-        pos_stack_.pop_front();
-        line_stack_.pop_front();
-    }
-
-    inline void
-    commit()
-    {
-        check_max();
-        pos_stack_.pop_front();
-        line_stack_.pop_front();
+        in_.seekg(p);
     }
 
     inline std::string
@@ -334,55 +142,188 @@ struct IStreamState
         return std::string(buffer, size);
     }
 
+    std::pair< PositionType, PositionType > get_line(PositionType p)
+    {
+        PositionType init =  p;
+
+        // Begining
+        if (init > 0)
+        {
+            do 
+            {
+                in_.seekg(init);
+                in_.seekg(-1, in_.cur);
+                init = in_.tellg();
+            }
+            while (in_.good() && in_.peek() != '\n');
+
+            if (!in_.good())
+            {
+                in_.clear();
+                in_.seekg(0, in_.beg);
+                init = in_.tellg();
+            }
+            else if (in_.peek() == '\n')
+            {
+                in_.seekg(1, in_.cur);
+                init = in_.tellg();
+            }
+        }
+
+        // End
+        in_.seekg(p);
+
+        while (!at_end() && in_.peek() != '\n')
+            in_.get();
+
+        if (at_end())
+        {
+            in_.clear();
+            in_.seekg(0, in_.end);
+        }
+
+        return std::make_pair(init, in_.tellg());
+    }
+};
+
+template <typename SemanticState, typename Reader >
+struct ReaderState
+{
+    // For reference, the SemanticState itself.
+    typedef SemanticState SemType;
+
+    // Position type
+    typedef typename Reader::PositionType PositionType;
+
+    // The inner semantic state.
+    SemanticState& ss_;
+
+    Reader& reader_;
+
+    // State stack, for backtracking
+    std::deque< PositionType > pos_stack_;
+
+    PositionType max_pos_;
+
+    std::size_t line_;
+
+    std::deque< std::size_t > line_stack_;
+
+    // ctor
+    ReaderState (SemanticState& ss, Reader& r)
+        : ss_ (ss), reader_(r), max_pos_(pos()), line_(1)
+    {
+    }
+
+    SemanticState&
+    semantic_state()
+    {
+        return ss_;
+    }
+
+    inline void
+    new_line()
+    {
+        line_++;
+    }
+
+    inline bool
+    at_end() const
+    {
+        return reader_.at_end();
+    }
+
+    inline bool
+    match_at_pos_advance (char c)
+    {
+        if (!at_end() && reader_.char_at_pos() == c)
+        {
+            reader_.advance();
+            return true;
+        }
+        return false;
+    }
+
+    inline bool
+    match_at_pos (char c) const
+    {
+        return !at_end() && (reader_.char_at_pos() == c);
+    }
+
+    inline char
+    char_at_pos() const
+    {
+        return reader_.char_at_pos();
+    }
+
+    inline PositionType pos() const
+    {
+        return reader_.pos();
+    }
+
+    inline void
+    advance()
+    {
+        if (!at_end())
+            reader_.advance();
+
+        // TODO: throw at_end
+    }
+
+    // Common interface
+    inline void
+    push_state()
+    {
+        line_stack_.push_front (line_);
+        pos_stack_.push_front (pos());
+    }
+
+    inline void
+    check_max()
+    {
+        PositionType p = pos();
+        if (max_pos_ < p)
+            max_pos_ = p;
+    }
+
+    inline void
+    rollback()
+    {
+        check_max();
+        reader_.set_pos(pos_stack_.front());
+        line_ = line_stack_.front();
+        pos_stack_.pop_front();
+        line_stack_.pop_front();
+    }
+
+    inline void
+    commit()
+    {
+        check_max();
+        pos_stack_.pop_front();
+        line_stack_.pop_front();
+    }
+
+    inline std::string
+    to_string(PositionType p, std::size_t size) const
+    {
+        return reader_.to_string(p, size);
+    }
+
     template < typename Stream >
     void get_error(Stream& ss)
     {
-        if (max_pos_ > -1)
+        if (max_pos_)
         {
-            std::streampos init =  max_pos_;
-
-            // Begining
-            if (init > 0)
-            {
-                do 
-                {
-                    in_.seekg(init);
-                    in_.seekg(-1, in_.cur);
-                    init = in_.tellg();
-                }
-                while (in_.good() && in_.peek() != '\n');
-
-                if (!in_.good())
-                {
-                    in_.clear();
-                    in_.seekg(0, in_.beg);
-                    init = in_.tellg();
-                }
-                else if (in_.peek() == '\n')
-                {
-                    in_.seekg(1, in_.cur);
-                    init = in_.tellg();
-                }
-            }
-
-            // End
-            in_.seekg(max_pos_);
-
-            while (!at_end() && in_.peek() != '\n')
-                in_.get();
-
-            if (at_end())
-            {
-                in_.clear();
-                in_.seekg(0, in_.end);
-            }
+            const std::pair< PositionType, PositionType > p =
+                reader_.get_line(max_pos_);
 
             // error line
-            const std::size_t size = in_.tellg() - init;
-            ss << to_string(init, size) << std::endl;
+            const std::size_t size = p.second - p.first;
+            ss << to_string(p.first, size) << std::endl;
 
             // marker
-            const std::size_t diff = max_pos_ - init;
+            const std::size_t diff = max_pos_ - p.first;
             for (std::size_t i = 0; i < diff; i++) 
                 ss << ' ';
             ss << '^' << std::endl;
