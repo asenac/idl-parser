@@ -4,6 +4,7 @@
 #include <string>
 #include <deque>
 #include <utility>
+#include <vector>
 //#include <exception> // Exceptions
 //#include <stdexcept>
 
@@ -134,12 +135,12 @@ struct IStreamReader
     {
         const std::streampos old = in_.tellg();
 
-        char buffer[size];
+        std::vector< char > buffer(size);
         in_.seekg(p);
-        in_.read(buffer, size);
+        in_.read(&*buffer.begin(), size);
         in_.seekg(old);
 
-        return std::string(buffer, size);
+        return std::string(&*buffer.begin(), size);
     }
 
     std::pair< PositionType, PositionType > get_line(PositionType p)

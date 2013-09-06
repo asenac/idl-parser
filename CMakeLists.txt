@@ -5,6 +5,8 @@ enable_testing()
 
 set(EMF4CPP_DIR $ENV{HOME}/local/emf4cpp)
 
+set(CMAKE_CXX_FLAGS "-Wall -Werror -pedantic")
+
 include_directories(
     ${EMF4CPP_DIR}/include/emf4cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/model
