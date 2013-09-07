@@ -47,9 +47,8 @@ idlmm::TranslationUnit_ptr doParse(State& s)
     return res;
 }
 
-idlmm::TranslationUnit_ptr parse(const char * file)
+idlmm::TranslationUnit_ptr parse(std::istream& is)
 {
-    std::ifstream is(file);
     if (is.good())
     {
         using namespace ::parser;
@@ -61,6 +60,12 @@ idlmm::TranslationUnit_ptr parse(const char * file)
     }
 
     return NULL;
+}
+
+idlmm::TranslationUnit_ptr parse(const char * file)
+{
+    std::ifstream is(file);
+    return parse(is);
 }
 
 idlmm::TranslationUnit_ptr parseString(const std::string& str)

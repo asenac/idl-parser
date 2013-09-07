@@ -2,6 +2,8 @@
 #define IDL_TOKENS_HPP
 
 #include "parser.hpp"
+#include "parser_common.hpp"
+#include "preprocessor.hpp"
 
 namespace idl 
 {
@@ -9,15 +11,6 @@ namespace tokens
 {
 
 using namespace ::parser;
-
-typedef char_ < ';' > semicol;
-typedef char_ < ',' > comma;
-typedef char_ < '.' > point;
-
-typedef cirange_ < '0', '9'> digit_;
-// TODO allow scientific notation
-typedef seq_ < plus_< digit_ >, opt_ < seq_ < point, plus_ < digit_ > > > > 
-    number_;
 
 typedef or_ <
             seq_ < char_ < '>' >, char_ < '>' > >,
@@ -56,14 +49,7 @@ typedef seq_<
             > identifier_rule;
 
 // strings
-typedef 
-    seq_< char_< '"' >,
-          star_ < or_ <
-                     seq_< char_ <'\\'>, anychar_ >, // escape
-                     notchar_<'"'> // normal chars
-                     > >,
-          char_<'"'> >
-    string_rule;
+typedef string_ string_rule;
 
 typedef seq_< char_ < ':' >, char_ < ':' > > scope_sep;
 
@@ -93,7 +79,7 @@ typedef seq_ < char_ < '/' >, char_ < '/' >, until_new_line > comment_;
 // space
 typedef 
     or_ < 
-            char_<' '>, char_<'\t'>, new_line, char_<'\r'>, 
+            char_<' '>, char_<'\t'>, ::preprocessor::pp_new_line, char_<'\r'>, 
             comment_, ccomment_
         > 
     space;

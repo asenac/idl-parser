@@ -540,12 +540,17 @@ typedef
         > 
     statement_;
 
-typedef 
+struct gram :
     semantic_context < 
-            seq_ < star_ < statement_ >, spaces_, eof_ >, 
+            seq_ < 
+                ::preprocessor::preprocessor_, 
+                star_ < statement_ >, 
+                spaces_, 
+                eof_ 
+            >, 
             CONTEXT_TRANSLATION_UNIT 
         >
-    gram;
+{};
 
 } // namespace grammar
 } // namespace idl

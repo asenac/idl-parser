@@ -6,13 +6,13 @@
 
 int main(int argc, char **argv)
 {
-    if (argc != 2)
-    {
-        std::cerr << "You must specify an IDL file" << std::endl;
-        return 1;
-    }
+    idlmm::TranslationUnit_ptr res = NULL;
 
-    idlmm::TranslationUnit_ptr res = idl::parse(argv[1]);
+    if (argc < 2)
+        res = idl::parse(std::cin);
+    else
+        res = idl::parse(argv[1]);
+
     bool err = (res == NULL);
 
     if (err)
