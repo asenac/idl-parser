@@ -74,12 +74,14 @@ typedef
         > 
     ccomment_;
 
-typedef seq_ < char_ < '/' >, char_ < '/' >, until_new_line > comment_;
+typedef seq_ < char_ < '/' >, char_ < '/' >, 
+        ::preprocessor::pp_until_new_line > comment_;
 
 // space
 typedef 
     or_ < 
-            char_<' '>, char_<'\t'>, ::preprocessor::pp_new_line, char_<'\r'>, 
+            char_<' '>, char_<'\t'>, 
+            ::preprocessor::pp_new_line, char_<'\r'>, 
             comment_, ccomment_
         > 
     space;

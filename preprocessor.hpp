@@ -21,9 +21,20 @@ struct directive_ :
     > 
 {};
 
-struct preprocessor_ : star_< directive_ > {};
+struct ignore_ : 
+    seq_ < 
+        char_ < '#' >, 
+        until_< '\n' >
+    > 
+{};
+
+struct preprocessor_ : star_< ignore_ > {};
 
 struct pp_new_line : seq_ < new_line, preprocessor_ > {};
+
+struct pp_until_new_line : 
+    apply_until_ < not_new_line, pp_new_line >
+{};
 
 } // namespace preprocessor
 
