@@ -372,7 +372,6 @@ struct SemanticState
     template < typename S, typename match_pair >
     void set_context_data(S& state, match_pair const& mp)
     {
-        // TODO switch for expressions
     }
 
     template < typename S, typename match_pair >

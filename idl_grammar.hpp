@@ -276,8 +276,10 @@ struct add_expr;
 typedef semantic_context< data_ < fqn_rule >, CONTEXT_CONSTANT_REF > 
     constant_ref_expr;
 
+typedef or_ < string_rule, bool_, number_ > value_rule; 
+
 typedef semantic_context< 
-                or_ <  string_rule, bool_, number_ >, 
+                data_ < value_rule >,
                 CONTEXT_VALUE_EXPRESSION 
             > value_expr;
 
