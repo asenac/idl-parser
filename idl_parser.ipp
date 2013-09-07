@@ -322,7 +322,12 @@ struct SemanticState
         return NULL;
     }
 
-    bool try_to_set_type(idlmm::Typed_ptr typed)
+    template < typename Typed >
+    bool try_to_set_type(Typed * typed, 
+            void (Typed::*setContainedType)(idlmm::IDLType_ptr) = 
+                &Typed::setContainedType,
+            void (Typed::*setSharedType)(idlmm::TypedefDef_ptr) = 
+                &Typed::setSharedType)
     {
         using namespace idlmm;
 
@@ -334,7 +339,7 @@ struct SemanticState
             IdlmmFactory_ptr f = IdlmmFactory::_instance(); 
             PrimitiveDef * p = f->createPrimitiveDef();
             p->setKind(get_primitive_kind(c.primitive_type));
-            typed->setContainedType(p);
+            (typed->*setContainedType)(p);
             res = true;
         }
         else if (!c.data.empty())
@@ -342,7 +347,7 @@ struct SemanticState
             idlmm::TypedefDef_ptr t = lookup< idlmm::TypedefDef >(c.data);
             if (t)
             {
-                typed->setSharedType(t);
+                (typed->*setSharedType)(t);
                 res = true;
             }
         }
@@ -366,7 +371,7 @@ struct SemanticState
 
             return true;
         }
-        return try_to_set_type(typed);
+        return try_to_set_type< idlmm::Typed >(typed);
     }
     
     template < typename S, typename match_pair >
@@ -442,7 +447,10 @@ struct SemanticState
 
                 populate< UnionField >(c, o, &UnionDef::getUnionMembers);
 
-                // TODO discriminator
+                // discriminator
+                try_to_set_type< UnionDef >(o, 
+                        &UnionDef::setContainedDiscrim,
+                        &UnionDef::setSharedDiscrim);
 
                 obj = o;
             }
@@ -477,7 +485,7 @@ struct SemanticState
                 populate< ParameterDef >(c, o, 
                         &OperationDef::getParameters);
 
-                try_to_set_type(o);
+                try_to_set_type< Typed >(o);
 
                 obj = o;
             }
@@ -488,7 +496,7 @@ struct SemanticState
                 o->setIdentifier(c.identifier);
                 o->setDirection(get_direction(c.flags));
 
-                try_to_set_type(o);
+                try_to_set_type< Typed >(o);
 
                 obj = o;
             }
@@ -499,7 +507,7 @@ struct SemanticState
                 o->setIdentifier(c.identifier);
                 o->setIsReadonly(c.flags.test(FLAG_READONLY));
 
-                try_to_set_type(o);
+                try_to_set_type< Typed >(o);
 
                 obj = o;
             }
@@ -509,7 +517,7 @@ struct SemanticState
                 Field_ptr o = f->createField();
                 o->setIdentifier(c.identifier);
 
-                try_to_set_type(o);
+                try_to_set_type< Typed >(o);
 
                 obj = o;
             }
@@ -519,7 +527,7 @@ struct SemanticState
                 UnionField_ptr o = f->createUnionField();
                 o->setIdentifier(c.identifier);
 
-                try_to_set_type(o);
+                try_to_set_type< Typed >(o);
                 
                 populate< Expression >(c, o, &UnionField::getLabel);
 
@@ -542,7 +550,7 @@ struct SemanticState
                 o->setIdentifier(c.identifier);
 
                 ArrayDef_ptr a = f->createArrayDef();
-                try_to_set_type(a);
+                try_to_set_type< Typed >(a);
                 o->setContainedType(a);
 
                 // bounds
@@ -576,7 +584,7 @@ struct SemanticState
         case CONTEXT_SEQUENCE:
             {
                 SequenceDef_ptr o = f->createSequenceDef();
-                try_to_set_type(o);
+                try_to_set_type< Typed >(o);
 
                 // bound
                 if (diff)
@@ -594,7 +602,7 @@ struct SemanticState
                 ConstantDef_ptr o = f->createConstantDef();
                 o->setIdentifier(c.identifier);
 
-                try_to_set_type(o);
+                try_to_set_type< Typed >(o);
 
                 // constant value
                 assert(diff == 1);
