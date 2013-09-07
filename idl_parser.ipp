@@ -23,15 +23,76 @@ template < typename Set >
 idlmm::ParameterMode get_direction(const Set& s)
 {
     using namespace grammar;
+    using namespace idlmm;
+    using namespace ecore;
 
-    idlmm::ParameterMode res = 0;
+    IdlmmPackage_ptr p = IdlmmPackage::_instance(); 
+    EEnum_ptr e = p->getParameterMode();
+    const char * str = NULL;
 
     if (s.test(FLAG_OUT))
-        res = 1;
+        str = "PARAM_OUT";
     else if (s.test(FLAG_INOUT))
-        res = 2;
+        str = "PARAM_INOUT";
+    else
+        str = "PARAM_IN";
 
-    return res;
+    EEnumLiteral_ptr l = e->getEEnumLiteral(str);
+    assert(l);
+    return l->getValue();
+}
+
+const char * to_string(idl::grammar::primitive_types t)
+{
+    using namespace grammar;
+    switch (t)
+    {
+        case PT_UNSIGNED_SHORT:
+            return "PK_USHORT";
+        case PT_UNSIGNED_LONG_LONG:
+            return "PK_ULONGLONG";
+        case PT_UNSIGNED_LONG:
+            return "PK_ULONG";
+        case PT_LONG_DOUBLE:
+            return "PK_LONGDOUBLE";
+        case PT_LONG_LONG:
+            return "PK_LONGLONG";
+        case PT_LONG:
+            return "PK_LONG";
+        case PT_OCTET:
+            return "PK_OCTET";
+        case PT_CHAR:
+            return "PK_CHAR";
+        case PT_SHORT:
+            return "PK_SHORT";
+        case PT_FLOAT:
+            return "PK_FLOAT";
+        case PT_DOUBLE:
+            return "PK_DOUBLE";
+        case PT_STRING:
+            return "PK_STRING";
+        case PT_WSTRING:
+            return "PK_WSTRING";
+        case PT_VOID:
+            return "PK_VOID";
+        case PT_NULL:
+        default:
+            return "PK_NULL";
+    }
+
+    return NULL;
+}
+
+idlmm::PrimitiveKind get_primitive_kind(idl::grammar::primitive_types t)
+{
+    using namespace ecore;
+    using namespace idlmm;
+
+    IdlmmPackage_ptr p = IdlmmPackage::_instance(); 
+    EEnum_ptr e = p->getPrimitiveKind();
+    EEnumLiteral_ptr l = e->getEEnumLiteral(to_string(t));
+    assert(l);
+    return l->getValue();
 }
 
 template < typename T >
@@ -263,13 +324,16 @@ struct SemanticState
 
     bool try_to_set_type(idlmm::Typed_ptr typed)
     {
+        using namespace idlmm;
+
         const Context& c = contexts.back();
         bool res = false;
 
         if (c.primitive_type != grammar::PT_NULL)
         {
-            idlmm::PrimitiveDef * p = new idlmm::PrimitiveDef();
-            p->setKind(static_cast< idlmm::PrimitiveKind >(c.primitive_type));
+            IdlmmFactory_ptr f = IdlmmFactory::_instance(); 
+            PrimitiveDef * p = f->createPrimitiveDef();
+            p->setKind(get_primitive_kind(c.primitive_type));
             typed->setContainedType(p);
             res = true;
         }
