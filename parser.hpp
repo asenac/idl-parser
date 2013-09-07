@@ -2,7 +2,6 @@
 #define PARSER_HPP
 
 #include <string>
-#include <deque>
 #include <utility>
 #include <vector>
 //#include <exception> // Exceptions
@@ -202,13 +201,13 @@ struct ReaderState
     Reader& reader_;
 
     // State stack, for backtracking
-    std::deque< PositionType > pos_stack_;
+    std::vector< PositionType > pos_stack_;
 
     PositionType max_pos_;
 
     std::size_t line_;
 
-    std::deque< std::size_t > line_stack_;
+    std::vector< std::size_t > line_stack_;
 
     // ctor
     ReaderState (SemanticState& ss, Reader& r)
@@ -275,8 +274,8 @@ struct ReaderState
     inline void
     push_state()
     {
-        line_stack_.push_front (line_);
-        pos_stack_.push_front (pos());
+        line_stack_.push_back (line_);
+        pos_stack_.push_back (pos());
     }
 
     inline void
@@ -291,18 +290,18 @@ struct ReaderState
     rollback()
     {
         check_max();
-        reader_.set_pos(pos_stack_.front());
-        line_ = line_stack_.front();
-        pos_stack_.pop_front();
-        line_stack_.pop_front();
+        reader_.set_pos(pos_stack_.back());
+        line_ = line_stack_.back();
+        pos_stack_.pop_back();
+        line_stack_.pop_back();
     }
 
     inline void
     commit()
     {
         check_max();
-        pos_stack_.pop_front();
-        line_stack_.pop_front();
+        pos_stack_.pop_back();
+        line_stack_.pop_back();
     }
 
     inline std::string

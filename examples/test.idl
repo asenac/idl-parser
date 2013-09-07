@@ -5,10 +5,17 @@ module A
     // Esto es una mierda
 };
 
+enum EnumA
+{
+    LIT
+};
+
 const long longA = 1;
 const string string1 = "esto es una prueba de string";
 const long longB = 2 * 3 + 1;
 const long longC = longB * 3 + 1;
+
+const long refToEnum = LIT;
 
 module B
 {

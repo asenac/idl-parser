@@ -4,11 +4,12 @@
 #include <iostream>
 #include <fstream>
 #include <bitset>
-#include <set>
 #include <map>
 #include <vector>
+#include <deque>
 #include <cassert>
 #include "idl_grammar.hpp"
+#include <ecore.hpp>
 #include <idlmm.hpp>
 
 namespace idl 
@@ -32,6 +33,35 @@ idlmm::ParameterMode get_direction(const Set& s)
 
     return res;
 }
+
+template < typename T >
+struct lookupInto
+{
+    template< typename Scope, typename C >
+    static inline void apply(const Scope&, const std::string&, const C *)
+    {
+    }
+};
+
+template < >
+struct lookupInto< idlmm::Constant >
+{
+    template< typename Scope, typename C >
+    static inline void apply(Scope& s, const std::string& prefix, C * c)
+    {
+        using namespace idlmm;
+        EnumDef_ptr e = c->template as< EnumDef >();
+
+        if (e)
+        {
+            for (std::size_t i = 0; i < e->getMembers().size(); i++) 
+            {
+                EnumMember_ptr m = e->getMembers()[i];
+                s[prefix + m->getIdentifier()] = m;
+            }
+        }
+    }
+};
 
 struct SemanticState
 {
@@ -88,31 +118,26 @@ struct SemanticState
 
     void push_identifier(const std::string& id)
     {
-        //std::cout << id << std::endl;
         contexts.back().identifier = id;
     }
 
     void push_literal(const std::string& l)
     {
-        //std::cout << __FUNCTION__ << " " << l << std::endl;
         literals.push_back(l);
     }
 
     void new_context(context_type_t type)
     {
-        //std::cout << "context " << type << std::endl;
         contexts.push_back(Context(objects, type));
     }
 
     void set_flag(grammar::flags flag)
     {
-        //std::cout << "flag " << flag << std::endl;
         contexts.back().flags.set(flag);
     }
 
     void set_primitive_type(grammar::primitive_types type)
     {
-        //std::cout << "primitive_type " << type << std::endl;
         contexts.back().primitive_type = type;
     }
 
@@ -177,10 +202,12 @@ struct SemanticState
             for (std::size_t i = it->prev_size; i < size; i++) 
             {
                 Type_ptr t = 
-                    objects[i]->as< Type  >(); 
+                    objects[i]->as< Type >(); 
 
                 if (t)
                     scope[t->getIdentifier()] = t;
+
+                lookupInto< Type >::apply(scope, "", objects[i]);
 
                 idlmm::Container_ptr c =
                     objects[i]->as< idlmm::Container >();
@@ -206,6 +233,8 @@ struct SemanticState
 
                     if (t)
                         scope[prefix + t->getIdentifier()] = t;
+
+                    lookupInto< Type >::apply(scope, prefix, objects[i]);
 
                     idlmm::Container_ptr r =
                         c->getContains()[j]->as< idlmm::Container >();
@@ -297,7 +326,6 @@ struct SemanticState
 
         Context& c = contexts.back();
         const std::size_t diff = objects.size() - c.prev_size;
-        //std::cout << "commit " << c.context_type << std::endl;
 
         ecore::EObject_ptr obj = NULL;
 
@@ -469,7 +497,14 @@ struct SemanticState
             {
                 EnumDef_ptr o = f->createEnumDef();
                 o->setIdentifier(c.identifier);
-                // BUG in EMF4CPP o->setMembers(literals);
+
+                for (literals_t::const_iterator it = literals.begin(); 
+                        it != literals.end(); ++it) 
+                {
+                    EnumMember_ptr m = f->createEnumMember();
+                    m->setIdentifier(*it);
+                    o->getMembers().push_back(m);
+                }
                 literals.clear();
 
                 obj = o;
@@ -548,7 +583,6 @@ struct SemanticState
         case CONTEXT_CONSTANT_REF:
             {
                 ConstantDefRef_ptr o = f->createConstantDefRef();
-                // TODO support references to enum members
                 Constant_ptr r = lookup< Constant >(c.data);
 
                 if (r)

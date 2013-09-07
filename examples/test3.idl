@@ -1,0 +1,16 @@
+enum AAA
+{
+    LIT
+};
+
+module CCC
+{
+    enum AAA
+    {
+        LIT
+    };
+};
+
+const long BBB = LIT;
+const long BBB2 = CCC::LIT;
+
