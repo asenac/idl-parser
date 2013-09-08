@@ -42,6 +42,15 @@ struct primitive_type :
     }
 };
 
+
+struct const_expr;
+struct string_def : 
+    seq_< string_t, opt_ < seq_ < spaces_, embrace_< '<', const_expr, '>' > > > >
+{};
+struct wstring_def : 
+    seq_< wstring_t, opt_ < seq_ < spaces_, embrace_< '<', const_expr, '>' > > > >
+{};
+
 typedef or_<
        primitive_type < unsigned_short_t, PT_UNSIGNED_SHORT >,
        primitive_type < unsigned_long_long_t, PT_UNSIGNED_LONG_LONG >,
@@ -115,6 +124,8 @@ enum semantic_context_type
     CONTEXT_PARAMETER,
     CONTEXT_ENUM,
     CONTEXT_SEQUENCE,
+    CONTEXT_STRING,
+    CONTEXT_WSTRING,
     CONTEXT_CONST,
     CONTEXT_EXCEPTION,
 
@@ -379,9 +390,15 @@ typedef
     >
     sequence_;
 
+struct typedef_string_ : semantic_context< string_def, CONTEXT_STRING >
+{};
+
+struct typedef_wstring_ : semantic_context< wstring_def, CONTEXT_WSTRING >
+{};
+
 // typedefs
 
-struct typedef_type_rule : or_ < sequence_, type_rule > 
+struct typedef_type_rule : or_ < typedef_string_, typedef_wstring_, sequence_, type_rule > 
 {};
 
 typedef seq_ < typedef_t, space_, typedef_type_rule, space_, identifier_ > alias_rule;

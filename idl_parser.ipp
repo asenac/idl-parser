@@ -597,6 +597,34 @@ struct SemanticState
                 obj = o;
             }
             break;
+         case CONTEXT_STRING:
+            {
+                StringDef_ptr o = f->createStringDef();
+
+                if (diff)
+                {
+                    assert(diff == 1);
+                    o->setBound(objects[c.prev_size]->as< Expression >());
+                    c.clear();
+                }
+
+                obj = o;
+            }
+            break;
+         case CONTEXT_WSTRING:
+            {
+                WstringDef_ptr o = f->createWstringDef();
+
+                if (diff)
+                {
+                    assert(diff == 1);
+                    o->setBound(objects[c.prev_size]->as< Expression >());
+                    c.clear();
+                }
+
+                obj = o;
+            }
+            break;
         case CONTEXT_CONST:
             {
                 ConstantDef_ptr o = f->createConstantDef();

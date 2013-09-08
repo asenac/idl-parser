@@ -97,6 +97,8 @@ int main(int argc, char **argv)
             "module A{}", 
             "module A{ }", 
             "module A{ interface C {}; /* aseas23\n**/}", 
+            "module B { typedef string string_t; }",
+            "module B { typedef string < 10 * 10 > string_t; }",
             NULL
         };
         for (const char ** i = module_tests; *i; i++)
