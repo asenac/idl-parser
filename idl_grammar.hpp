@@ -528,11 +528,14 @@ typedef
 typedef or_< const_, array_, alias_, exception_, struct_, union_, enum_ > contained_;
 
 typedef or_< contained_, attribute_, operation_ > interface_body;
+struct inheritance_ : opt_ < seq_< char_ < ':' >, spaces_, fqn_rule, star_< seq_ < spaces_, char_ < ',' >, spaces_, fqn_rule > > > >
+{};
 typedef 
     context_rule< 
             interface_t, 
             interface_body, 
-            CONTEXT_INTERFACE 
+            CONTEXT_INTERFACE,
+            inheritance_
         > 
     interface_;
 
