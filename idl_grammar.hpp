@@ -247,14 +247,20 @@ struct item_ :
          >
 {};
 
+
 // useful for comma-separated lists
+template < typename Item, typename Sep = comma >
+struct pluslist_ :
+    seq_ <
+            item_ < Item >,
+            star_ < seq_ < Sep, item_ < Item > > >
+         > 
+{};
+
 template < typename Item, typename Sep = comma >
 struct list_ :
     or_ <
-        seq_ <
-                item_ < Item >,
-                star_ < seq_ < Sep, item_ < Item > > >
-             >, 
+        pluslist_< Item, Sep >,
         spaces_ 
     >
 {};
@@ -527,8 +533,19 @@ typedef
 // Can it be an interface within an interface?
 typedef or_< const_, array_, alias_, exception_, struct_, union_, enum_ > contained_;
 
+struct super_type : 
+    semantic_rule < super_type, fqn_rule >
+{
+    template <typename S, typename match_pair>
+    static inline void process_match (S& state, match_pair const& mp)
+    {
+        const std::string s (state.to_string(mp.first, mp.second));
+        //state.semantic_state().push_literal(s);
+    }
+};
+
 typedef or_< contained_, attribute_, operation_ > interface_body;
-struct inheritance_ : opt_ < seq_< char_ < ':' >, spaces_, fqn_rule, star_< seq_ < spaces_, char_ < ',' >, spaces_, fqn_rule > > > >
+struct inheritance_ : opt_ < seq_< char_ < ':' >, pluslist_ < super_type > > >
 {};
 typedef 
     context_rule< 

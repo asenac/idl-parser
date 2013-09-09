@@ -121,6 +121,7 @@ int main(int argc, char **argv)
             "typedef sequence< long, 10 > mySeq;",
             "interface A : B {};",
             "interface A : B, C , D {};",
+            "interface A:B,C,D{};",
             NULL
         };
         for (const char ** i = tu_tests; *i; i++)
