@@ -540,7 +540,7 @@ struct super_type :
     static inline void process_match (S& state, match_pair const& mp)
     {
         const std::string s (state.to_string(mp.first, mp.second));
-        //state.semantic_state().push_literal(s);
+        state.semantic_state().push_literal(s);
     }
 };
 

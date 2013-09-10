@@ -11,6 +11,7 @@
 #include "idl_grammar.hpp"
 #include <ecore.hpp>
 #include <idlmm.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace idl 
 {
@@ -131,43 +132,48 @@ struct SemanticState
 
     struct Context
     {
+        SemanticState& ss;
         context_type_t context_type;
+        std::size_t objects_prev_size;
+        std::size_t literals_prev_size;
+        grammar::primitive_types primitive_type;
+
         std::string identifier;
         std::string data;
         std::bitset< sizeof(void *) * 8 > flags; 
-        objects_t& objects;
-        std::size_t prev_size;
-        grammar::primitive_types primitive_type;
 
-        Context(objects_t& objects_,
+        Context(SemanticState& ss_,
                 context_type_t context_type_) : 
+            ss(ss_),
             context_type(context_type_),
-            objects(objects_),
-            prev_size(objects_.size()),
+            objects_prev_size(ss.objects.size()),
+            literals_prev_size(ss.literals.size()),
             primitive_type(grammar::PT_NULL)
         {}
 
         // restores previous size, discards current objects
         void clear()
         {
-            objects.resize(prev_size);
+            ss.objects.resize(objects_prev_size);
         }
 
         ~Context()
         {
             // No memory leaks due to rollback
-            for (std::size_t i = prev_size; i < objects.size(); i++) 
+            for (std::size_t i = objects_prev_size; i < ss.objects.size(); i++) 
             {
-                delete objects[i];
+                delete ss.objects[i];
             }
 
             clear();
+            ss.literals.resize(literals_prev_size);
         }
     };
 
     ecore::EObject * result;
 
-    typedef std::deque< Context > contexts_t; 
+    typedef boost::shared_ptr< Context > Context_ptr;
+    typedef std::deque< Context_ptr > contexts_t; 
     contexts_t contexts;
 
     objects_t objects;
@@ -179,7 +185,7 @@ struct SemanticState
 
     void push_identifier(const std::string& id)
     {
-        contexts.back().identifier = id;
+        contexts.back()->identifier = id;
     }
 
     void push_literal(const std::string& l)
@@ -189,25 +195,25 @@ struct SemanticState
 
     void new_context(context_type_t type)
     {
-        contexts.push_back(Context(objects, type));
+        contexts.push_back(Context_ptr(new Context(*this, type)));
     }
 
     void set_flag(grammar::flags flag)
     {
-        contexts.back().flags.set(flag);
+        contexts.back()->flags.set(flag);
     }
 
     void set_primitive_type(grammar::primitive_types type)
     {
-        contexts.back().primitive_type = type;
+        contexts.back()->primitive_type = type;
     }
 
     template < class Contained, class Obj, typename Fn >
     void populate(Context& c, Obj * o, Fn f)
     {
-        for (std::size_t i = c.prev_size; i < c.objects.size(); i++) 
+        for (std::size_t i = c.objects_prev_size; i < objects.size(); i++) 
         {
-            Contained * t = c.objects[i]->as< Contained >();
+            Contained * t = objects[i]->as< Contained >();
             assert(t);
             if (t) (o->*f)().push_back(t);
         }
@@ -220,9 +226,9 @@ struct SemanticState
     template < class Contained, class Obj, typename Fn >
     void populateIf(Context& c, Obj * o, Fn f)
     {
-        for (std::size_t i = c.prev_size; i < c.objects.size(); i++) 
+        for (std::size_t i = c.objects_prev_size; i < objects.size(); i++) 
         {
-            Contained * t = c.objects[i]->as< Contained >();
+            Contained * t = objects[i]->as< Contained >();
             if (t) (o->*f)().push_back(t);
         }
     }
@@ -243,7 +249,7 @@ struct SemanticState
                 it != contexts.rend(); it++) 
         {
             // previous scope transformation
-            if (!it->identifier.empty() && !scope.empty())
+            if (!(*it)->identifier.empty() && !scope.empty())
             {
                 scope_t old (scope);
                 scope.clear();
@@ -251,7 +257,7 @@ struct SemanticState
                 for (typename scope_t::iterator jt = old.begin(); 
                         jt != old.end(); ++jt) 
                 {
-                    scope[it->identifier + NSS + jt->first] = jt->second;
+                    scope[(*it)->identifier + NSS + jt->first] = jt->second;
                 }
             }
 
@@ -260,7 +266,7 @@ struct SemanticState
             containers_t containers;
 
             // current objects
-            for (std::size_t i = it->prev_size; i < size; i++) 
+            for (std::size_t i = (*it)->objects_prev_size; i < size; i++) 
             {
                 Type_ptr t = 
                     objects[i]->as< Type >(); 
@@ -277,7 +283,7 @@ struct SemanticState
                     containers.push_back(std::make_pair(c->getIdentifier(), c));
             }
             // next iteration
-            size = it->prev_size;
+            size = (*it)->objects_prev_size;
 
             // Recurse into the containers
             for (std::size_t i = 0; i < containers.size(); i++) 
@@ -331,7 +337,7 @@ struct SemanticState
     {
         using namespace idlmm;
 
-        const Context& c = contexts.back();
+        const Context& c = *contexts.back();
         bool res = false;
 
         if (c.primitive_type != grammar::PT_NULL)
@@ -357,13 +363,13 @@ struct SemanticState
 
     bool try_to_set_type_to_alias(idlmm::AliasDef_ptr typed)
     {
-        Context& c = contexts.back();
-        if (c.prev_size != objects.size())
+        Context& c = *contexts.back();
+        if (c.objects_prev_size != objects.size())
         {
-            assert(objects.size() == c.prev_size + 1);
+            assert(objects.size() == c.objects_prev_size + 1);
 
             idlmm::IDLType_ptr t = 
-                objects[c.prev_size]->as< idlmm::IDLType >();
+                objects[c.objects_prev_size]->as< idlmm::IDLType >();
             assert(t);
             typed->setContainedType(t);
 
@@ -382,7 +388,7 @@ struct SemanticState
     template < typename S, typename match_pair >
     void set_data(S& state, match_pair const& mp)
     {
-        contexts.back().data = state.to_string(mp.first, mp.second);
+        contexts.back()->data = state.to_string(mp.first, mp.second);
     }
 
     void commit()
@@ -392,8 +398,8 @@ struct SemanticState
 
         IdlmmFactory_ptr f = IdlmmFactory::_instance(); 
 
-        Context& c = contexts.back();
-        const std::size_t diff = objects.size() - c.prev_size;
+        Context& c = *contexts.back();
+        const std::size_t diff = objects.size() - c.objects_prev_size;
 
         ecore::EObject_ptr obj = NULL;
 
@@ -462,6 +468,14 @@ struct SemanticState
                 o->setIsAbstract(c.flags.test(FLAG_ABSTRACT));
 
                 populate< Contained >(c, o, &InterfaceDef::getContains);
+
+                for (std::size_t i = c.literals_prev_size; 
+                        i < literals.size(); i++)
+                {
+                    InterfaceDef_ptr t = lookup< InterfaceDef >(literals[i]);
+                    if (t) 
+                        o->getDerivesFrom().push_back(t);
+                }
 
                 obj = o;
             }
@@ -555,7 +569,7 @@ struct SemanticState
 
                 // bounds
                 assert(diff > 0);
-                for (std::size_t i = c.prev_size; i < objects.size(); i++) 
+                for (std::size_t i = c.objects_prev_size; i < objects.size(); i++) 
                 {
                     a->getBounds().push_back(objects[i]->as< Expression >());
                 }
@@ -569,14 +583,13 @@ struct SemanticState
                 EnumDef_ptr o = f->createEnumDef();
                 o->setIdentifier(c.identifier);
 
-                for (literals_t::const_iterator it = literals.begin(); 
-                        it != literals.end(); ++it) 
+                for (std::size_t i = c.literals_prev_size; 
+                        i < literals.size(); i++)
                 {
                     EnumMember_ptr m = f->createEnumMember();
-                    m->setIdentifier(*it);
+                    m->setIdentifier(literals[i]);
                     o->getMembers().push_back(m);
                 }
-                literals.clear();
 
                 obj = o;
             }
@@ -590,7 +603,7 @@ struct SemanticState
                 if (diff)
                 {
                     assert(diff == 1);
-                    o->setBound(objects[c.prev_size]->as< Expression >());
+                    o->setBound(objects[c.objects_prev_size]->as< Expression >());
                     c.clear();
                 }
 
@@ -604,7 +617,7 @@ struct SemanticState
                 if (diff)
                 {
                     assert(diff == 1);
-                    o->setBound(objects[c.prev_size]->as< Expression >());
+                    o->setBound(objects[c.objects_prev_size]->as< Expression >());
                     c.clear();
                 }
 
@@ -618,7 +631,7 @@ struct SemanticState
                 if (diff)
                 {
                     assert(diff == 1);
-                    o->setBound(objects[c.prev_size]->as< Expression >());
+                    o->setBound(objects[c.objects_prev_size]->as< Expression >());
                     c.clear();
                 }
 
@@ -634,7 +647,7 @@ struct SemanticState
 
                 // constant value
                 assert(diff == 1);
-                o->setConstValue(objects[c.prev_size]->as< Expression >());
+                o->setConstValue(objects[c.objects_prev_size]->as< Expression >());
 
                 c.clear();
                 obj = o;
@@ -645,8 +658,8 @@ struct SemanticState
                 if (diff == 2)
                 {
                     BinaryExpression_ptr o = f->createBinaryExpression();
-                    o->setLeft(objects[c.prev_size]->as< Expression >());
-                    o->setRight(objects[c.prev_size + 1]->as< Expression >());
+                    o->setLeft(objects[c.objects_prev_size]->as< Expression >());
+                    o->setRight(objects[c.objects_prev_size + 1]->as< Expression >());
                     o->setOperator(c.data);
 
                     c.clear();
@@ -654,7 +667,7 @@ struct SemanticState
                 }
                 else if (diff == 1)
                 {
-                    obj = objects[c.prev_size];
+                    obj = objects[c.objects_prev_size];
                     c.clear();
                 }
                 else
@@ -664,7 +677,7 @@ struct SemanticState
         case CONTEXT_UNARY_EXPRESSION:
             {
                 UnaryExpression_ptr o = f->createUnaryExpression();
-                o->setExpression(objects[c.prev_size]->as< Expression >());
+                o->setExpression(objects[c.objects_prev_size]->as< Expression >());
                 o->setOperator(c.data);
 
                 c.clear();
@@ -711,7 +724,6 @@ struct SemanticState
     void rollback()
     {
         contexts.pop_back();
-        literals.clear();
     }
 };
 
