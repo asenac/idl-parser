@@ -46,6 +46,13 @@ tokens = [
     "switch",
     "default",
     "expcetion",
+    "valuetype",
+    "factory",
+    "setraises",
+    "getraises",
+    "raises",
+    "public",
+    "private",
     ]
 tokens.extend(types)
 

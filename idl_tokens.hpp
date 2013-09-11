@@ -202,6 +202,13 @@ typedef tok_ < c_, a_, s_, e_ > case_t;
 typedef tok_ < s_, w_, i_, t_, c_, h_ > switch_t;
 typedef tok_ < d_, e_, f_, a_, u_, l_, t_ > default_t;
 typedef tok_ < e_, x_, c_, e_, p_, t_, i_, seq_ < o_, n_ > > exception_t;
+typedef tok_ < v_, a_, l_, u_, e_, t_, y_, seq_ < p_, e_ > > valuetype_t;
+typedef tok_ < f_, a_, c_, t_, o_, r_, y_ > factory_t;
+typedef tok_ < s_, e_, t_, r_, a_, i_, s_, seq_ < e_, s_ > > setraises_t;
+typedef tok_ < g_, e_, t_, r_, a_, i_, s_, seq_ < e_, s_ > > getraises_t;
+typedef tok_ < r_, a_, i_, s_, e_, s_ > raises_t;
+typedef tok_ < p_, u_, b_, l_, i_, c_ > public_t;
+typedef tok_ < p_, r_, i_, v_, a_, t_, e_ > private_t;
 
 template< char i, typename Rule, char e >
 struct embrace_ : seq_ < char_ < i >, spaces_, Rule, spaces_, char_ < e > >

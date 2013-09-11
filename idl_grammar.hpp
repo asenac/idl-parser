@@ -128,6 +128,7 @@ enum semantic_context_type
     CONTEXT_WSTRING,
     CONTEXT_CONST,
     CONTEXT_EXCEPTION,
+    CONTEXT_VALUETYPE,
 
     // Expressions
     CONTEXT_UNARY_EXPRESSION,
@@ -267,13 +268,29 @@ struct list_ :
 
 typedef list_ < parameter_ > parameter_list;
 
+struct fqn_usage : 
+    semantic_rule < fqn_usage, fqn_rule >
+{
+    template <typename S, typename match_pair>
+    static inline void process_match (S& state, match_pair const& mp)
+    {
+        const std::string s (state.to_string(mp.first, mp.second));
+        state.semantic_state().push_literal(s);
+    }
+};
+
+struct raises_ : 
+    seq_ < raises_t, embrace_< '(', pluslist_ < fqn_usage  >, ')' > >
+{};
+
 typedef
     seq_ < 
             optflag_< oneway_t, FLAG_ONEWAY >,
             type_rule,
             space_,
             identifier_,
-            embrace_ < '(', parameter_list, ')' >
+            embrace_ < '(', parameter_list, ')' >,
+            opt_ < seq_ < spaces_, raises_ > >
         > 
     operation_rule;
 
@@ -472,6 +489,13 @@ typedef context_rule< struct_t, struct_body, CONTEXT_STRUCT > struct_;
 
 typedef context_rule< exception_t, struct_field, CONTEXT_EXCEPTION > exception_;
 
+// value type
+struct valuetype_body : struct_field 
+{};
+struct valuetype_ : 
+    context_rule < valuetype_t, valuetype_body, CONTEXT_VALUETYPE >
+{};
+
 // union
 
 typedef 
@@ -533,16 +557,7 @@ typedef
 // Can it be an interface within an interface?
 typedef or_< const_, array_, alias_, exception_, struct_, union_, enum_ > contained_;
 
-struct super_type : 
-    semantic_rule < super_type, fqn_rule >
-{
-    template <typename S, typename match_pair>
-    static inline void process_match (S& state, match_pair const& mp)
-    {
-        const std::string s (state.to_string(mp.first, mp.second));
-        state.semantic_state().push_literal(s);
-    }
-};
+typedef fqn_usage super_type;
 
 typedef or_< contained_, attribute_, operation_ > interface_body;
 struct inheritance_ : opt_ < seq_< char_ < ':' >, pluslist_ < super_type > > >

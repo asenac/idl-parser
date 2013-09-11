@@ -224,13 +224,16 @@ struct SemanticState
 
     // for those classes that can have more than one kind of children
     template < class Contained, class Obj, typename Fn >
-    void populateIf(Context& c, Obj * o, Fn f)
+    std::size_t populateWhile(Context& c, Obj * o, Fn f)
     {
         for (std::size_t i = c.objects_prev_size; i < objects.size(); i++) 
         {
             Contained * t = objects[i]->as< Contained >();
             if (t) (o->*f)().push_back(t);
+            else return i;
         }
+
+        return objects.size();
     }
 
     // attempt to implement a lookup function
@@ -501,6 +504,14 @@ struct SemanticState
 
                 try_to_set_type< Typed >(o);
 
+                for (std::size_t i = c.literals_prev_size; 
+                        i < literals.size(); i++)
+                {
+                    ExceptionDef_ptr t = lookup< ExceptionDef >(literals[i]);
+                    if (t) 
+                        o->getCanRaise().push_back(t);
+                }
+
                 obj = o;
             }
             break;
@@ -569,7 +580,8 @@ struct SemanticState
 
                 // bounds
                 assert(diff > 0);
-                for (std::size_t i = c.objects_prev_size; i < objects.size(); i++) 
+                for (std::size_t i = c.objects_prev_size; 
+                        i < objects.size(); i++) 
                 {
                     a->getBounds().push_back(objects[i]->as< Expression >());
                 }
