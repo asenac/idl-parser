@@ -442,10 +442,20 @@ struct typedef_wstring_ : semantic_context< wstring_def, CONTEXT_WSTRING >
 
 // typedefs
 
-struct typedef_type_rule : or_ < typedef_string_, typedef_wstring_, sequence_, fixed_, type_rule > 
+struct typedef_type_rule : 
+    or_ < 
+        typedef_string_, typedef_wstring_, 
+        sequence_, fixed_, type_rule 
+    > 
 {};
 
-typedef seq_ < typedef_t, space_, typedef_type_rule, space_, identifier_ > alias_rule;
+struct alias_rule : 
+    seq_ < 
+        typedef_t, space_, 
+        typedef_type_rule, space_, 
+        pluslist_ < literal_  > 
+    >
+{};
 
 struct alias_ :
     semantic_context < 

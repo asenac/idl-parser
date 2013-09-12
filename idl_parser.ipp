@@ -404,7 +404,7 @@ struct SemanticState
         Context& c = *contexts.back();
         const std::size_t diff = objects.size() - c.objects_prev_size;
 
-        ecore::EObject_ptr obj = NULL;
+        objects_t objs;
 
         switch (c.context_type)
         {
@@ -416,7 +416,7 @@ struct SemanticState
                 populate< Contained >(c, o, 
                         &TranslationUnit::getContains);
 
-                obj = o;
+                objs.push_back(o);
             }
             break;
         case CONTEXT_MODULE:
@@ -426,7 +426,7 @@ struct SemanticState
 
                 populate< Contained >(c, o, &ModuleDef::getContains);
 
-                obj = o;
+                objs.push_back(o);
             }
             break;
         case CONTEXT_STRUCT:
@@ -436,7 +436,7 @@ struct SemanticState
 
                 populate< Field >(c, o, &StructDef::getMembers);
 
-                obj = o;
+                objs.push_back(o);
             }
             break;
         case CONTEXT_EXCEPTION:
@@ -446,7 +446,7 @@ struct SemanticState
 
                 populate< Field >(c, o, &ExceptionDef::getMembers);
 
-                obj = o;
+                objs.push_back(o);
             }
             break;
         case CONTEXT_UNION:
@@ -461,7 +461,7 @@ struct SemanticState
                         &UnionDef::setContainedDiscrim,
                         &UnionDef::setSharedDiscrim);
 
-                obj = o;
+                objs.push_back(o);
             }
             break;
         case CONTEXT_INTERFACE:
@@ -480,7 +480,7 @@ struct SemanticState
                         o->getDerivesFrom().push_back(t);
                 }
 
-                obj = o;
+                objs.push_back(o);
             }
             break;
         case CONTEXT_INTERFACE_FWD:
@@ -490,7 +490,7 @@ struct SemanticState
                 // Error in the model 
                 // o->setIsAbstract(c.flags.test(FLAG_ABSTRACT));
 
-                obj = o;
+                objs.push_back(o);
             }
             break;
         case CONTEXT_OPERATION:
@@ -512,7 +512,7 @@ struct SemanticState
                         o->getCanRaise().push_back(t);
                 }
 
-                obj = o;
+                objs.push_back(o);
             }
             break;
         case CONTEXT_PARAMETER:
@@ -523,7 +523,7 @@ struct SemanticState
 
                 try_to_set_type< Typed >(o);
 
-                obj = o;
+                objs.push_back(o);
             }
             break;
         case CONTEXT_ATTRIBUTE:
@@ -534,7 +534,7 @@ struct SemanticState
 
                 try_to_set_type< Typed >(o);
 
-                obj = o;
+                objs.push_back(o);
             }
             break;
         case CONTEXT_STRUCT_FIELD:
@@ -544,7 +544,7 @@ struct SemanticState
 
                 try_to_set_type< Typed >(o);
 
-                obj = o;
+                objs.push_back(o);
             }
             break;
         case CONTEXT_UNION_FIELD:
@@ -556,17 +556,21 @@ struct SemanticState
                 
                 populate< Expression >(c, o, &UnionField::getLabel);
 
-                obj = o;
+                objs.push_back(o);
             }
             break;
         case CONTEXT_ALIAS:
             {
-                AliasDef_ptr o = f->createAliasDef();
-                o->setIdentifier(c.identifier);
+                for (std::size_t i = c.literals_prev_size; 
+                        i < literals.size(); i++)
+                {
+                    AliasDef_ptr o = f->createAliasDef();
+                    o->setIdentifier(literals[i]);
 
-                try_to_set_type_to_alias(o);
+                    try_to_set_type_to_alias(o);
 
-                obj = o;
+                    objs.push_back(o);
+                }
             }
             break;
         case CONTEXT_ARRAY:
@@ -587,7 +591,7 @@ struct SemanticState
                 }
 
                 c.clear();
-                obj = o;
+                objs.push_back(o);
             }
             break;
         case CONTEXT_ENUM:
@@ -603,7 +607,7 @@ struct SemanticState
                     o->getMembers().push_back(m);
                 }
 
-                obj = o;
+                objs.push_back(o);
             }
             break;
         case CONTEXT_SEQUENCE:
@@ -619,7 +623,7 @@ struct SemanticState
                     c.clear();
                 }
 
-                obj = o;
+                objs.push_back(o);
             }
             break;
          case CONTEXT_STRING:
@@ -633,7 +637,7 @@ struct SemanticState
                     c.clear();
                 }
 
-                obj = o;
+                objs.push_back(o);
             }
             break;
          case CONTEXT_WSTRING:
@@ -647,7 +651,7 @@ struct SemanticState
                     c.clear();
                 }
 
-                obj = o;
+                objs.push_back(o);
             }
             break;
         case CONTEXT_CONST:
@@ -662,7 +666,7 @@ struct SemanticState
                 o->setConstValue(objects[c.objects_prev_size]->as< Expression >());
 
                 c.clear();
-                obj = o;
+                objs.push_back(o);
             }
             break;
         case CONTEXT_BINARY_EXPRESSION:
@@ -675,11 +679,11 @@ struct SemanticState
                     o->setOperator(c.data);
 
                     c.clear();
-                    obj = o;
+                    objs.push_back(o);
                 }
                 else if (diff == 1)
                 {
-                    obj = objects[c.objects_prev_size];
+                    objs.push_back(objects[c.objects_prev_size]);
                     c.clear();
                 }
                 else
@@ -693,7 +697,7 @@ struct SemanticState
                 o->setOperator(c.data);
 
                 c.clear();
-                obj = o;
+                objs.push_back(o);
             }
             break;
         case CONTEXT_VALUE_EXPRESSION:
@@ -701,7 +705,7 @@ struct SemanticState
                 ValueExpression_ptr o = f->createValueExpression();
                 o->setValue(c.data);
 
-                obj = o;
+                objs.push_back(o);
             }
             break;
         case CONTEXT_CONSTANT_REF:
@@ -712,7 +716,7 @@ struct SemanticState
                 if (r)
                     o->setConstant(r);
 
-                obj = o;
+                objs.push_back(o);
             }
             break;
         case CONTEXT_FIXED:
@@ -723,7 +727,7 @@ struct SemanticState
                 o->setDigits(objects[c.objects_prev_size]->as< Expression >());
                 o->setScale(objects[c.objects_prev_size + 1]->as< Expression >());
                 c.clear();
-                obj = o;
+                objs.push_back(o);
             }
             break;
         default:
@@ -734,13 +738,13 @@ struct SemanticState
 
         if (!contexts.empty())
         {
-            assert (obj); 
-            if (obj) objects.push_back(obj);
+            assert (!objs.empty()); 
+            objects.insert(objects.end(), objs.begin(), objs.end());
         }
         else
         {
-            assert (obj); 
-            result = obj;
+            assert (objs.size() == 1); 
+            result = objs[0];
         }
     }
 
