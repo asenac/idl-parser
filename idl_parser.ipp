@@ -431,12 +431,16 @@ struct SemanticState
             break;
         case CONTEXT_STRUCT:
             {
-                StructDef_ptr o = f->createStructDef();
-                o->setIdentifier(c.identifier);
+                for (std::size_t i = c.literals_prev_size; 
+                        i < literals.size(); i++)
+                {
+                    StructDef_ptr o = f->createStructDef();
+                    o->setIdentifier(literals[i]);
 
-                populate< Field >(c, o, &StructDef::getMembers);
+                    populate< Field >(c, o, &StructDef::getMembers);
 
-                objs.push_back(o);
+                    objs.push_back(o);
+                }
             }
             break;
         case CONTEXT_EXCEPTION:

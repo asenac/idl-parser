@@ -498,7 +498,7 @@ struct context_rule :
     seq_< 
         Name, space_, 
         semantic_context < 
-            seq_ <identifier_, spaces_, PreContext, spaces_, context_ < Body, Sep > >, 
+            seq_ < identifier_, spaces_, PreContext, spaces_, context_ < Body, Sep > >, 
             type 
         >
     >
@@ -508,7 +508,7 @@ struct context_rule :
 
 typedef 
     semantic_context < 
-            seq_ < type_rule, space_, identifier_ >, 
+            seq_ < type_rule, space_, pluslist_< literal_ > >, 
             CONTEXT_STRUCT_FIELD 
         > 
     struct_field;
