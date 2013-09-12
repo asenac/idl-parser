@@ -109,6 +109,14 @@ int main(int argc, char **argv)
         }
     }
 
+    // Fixed
+    {
+        const char * i = "fixed< 1, 1>";
+        ::parser::Reader r(i, std::strlen(i));
+        TestGrammar< fixed_ > t(r);
+        assertNotNull< idlmm::FixedDef >(t);
+    }
+
     // Translation unit
     {
         const char * tu_tests[] = {
@@ -119,6 +127,7 @@ int main(int argc, char **argv)
             "typedef long B;\nunion A switch (B) { default: B a;\n};", 
             "interface Andres;",
             "typedef sequence< long, 10 > mySeq;",
+            "typedef fixed< 2, 10 > myFixed;",
             "interface A : B {};",
             "interface A : B, C , D {};",
             "interface A:B,C,D{};",

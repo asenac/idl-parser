@@ -53,6 +53,7 @@ tokens = [
     "raises",
     "public",
     "private",
+    "fixed",
     ]
 tokens.extend(types)
 

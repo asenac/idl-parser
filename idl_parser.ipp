@@ -715,6 +715,17 @@ struct SemanticState
                 obj = o;
             }
             break;
+        case CONTEXT_FIXED:
+            {
+                FixedDef_ptr o = f->createFixedDef();
+
+                assert(diff == 2);
+                o->setDigits(objects[c.objects_prev_size]->as< Expression >());
+                o->setScale(objects[c.objects_prev_size + 1]->as< Expression >());
+                c.clear();
+                obj = o;
+            }
+            break;
         default:
             assert(false);
             break;

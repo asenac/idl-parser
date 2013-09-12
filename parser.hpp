@@ -139,7 +139,7 @@ struct IStreamReader
         in_.read(&*buffer.begin(), size);
         in_.seekg(old);
 
-        return std::string(&*buffer.begin(), size);
+        return std::string(buffer.begin(), buffer.end());
     }
 
     std::pair< PositionType, PositionType > get_line(PositionType p)

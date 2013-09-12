@@ -209,6 +209,7 @@ typedef tok_ < g_, e_, t_, r_, a_, i_, s_, seq_ < e_, s_ > > getraises_t;
 typedef tok_ < r_, a_, i_, s_, e_, s_ > raises_t;
 typedef tok_ < p_, u_, b_, l_, i_, c_ > public_t;
 typedef tok_ < p_, r_, i_, v_, a_, t_, e_ > private_t;
+typedef tok_ < f_, i_, x_, e_, d_ > fixed_t;
 
 template< char i, typename Rule, char e >
 struct embrace_ : seq_ < char_ < i >, spaces_, Rule, spaces_, char_ < e > >

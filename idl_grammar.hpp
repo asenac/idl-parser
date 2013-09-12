@@ -129,6 +129,7 @@ enum semantic_context_type
     CONTEXT_CONST,
     CONTEXT_EXCEPTION,
     CONTEXT_VALUETYPE,
+    CONTEXT_FIXED,
 
     // Expressions
     CONTEXT_UNARY_EXPRESSION,
@@ -413,6 +414,26 @@ typedef
     >
     sequence_;
 
+// fixed 
+typedef 
+    seq_< 
+        fixed_t, 
+        spaces_, 
+        embrace_ < 
+            '<',  
+            seq_ < const_expr, spaces_,   comma, spaces_, const_expr >,
+            '>' 
+            > 
+    > 
+    fixed_rule;
+
+typedef
+    semantic_context < 
+        fixed_rule,
+        CONTEXT_FIXED
+    >
+    fixed_;
+
 struct typedef_string_ : semantic_context< string_def, CONTEXT_STRING >
 {};
 
@@ -421,7 +442,7 @@ struct typedef_wstring_ : semantic_context< wstring_def, CONTEXT_WSTRING >
 
 // typedefs
 
-struct typedef_type_rule : or_ < typedef_string_, typedef_wstring_, sequence_, type_rule > 
+struct typedef_type_rule : or_ < typedef_string_, typedef_wstring_, sequence_, fixed_, type_rule > 
 {};
 
 typedef seq_ < typedef_t, space_, typedef_type_rule, space_, identifier_ > alias_rule;
