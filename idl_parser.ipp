@@ -356,7 +356,7 @@ struct SemanticState
                         scope[prefix + t->getIdentifier()] = t;
                     }
 
-                    lookupInto< Type >::apply(scope, prefix, objects[i]);
+                    lookupInto< Type >::apply(scope, prefix, c->getContains()[j]);
 
                     idlmm::Container_ptr r =
                         c->getContains()[j]->as< idlmm::Container >();
@@ -366,16 +366,16 @@ struct SemanticState
                                     prefix + r->getIdentifier(), r));
                 }
             }
-
-            // scope transformation
-            if (!(*it)->identifier.empty() && !scope.empty())
-                transform_scope(scope, (*it)->identifier);
-
+ 
             if (pos > 0)
             {
                 Type_ptr t = look_in_scope< Type >(scope, fqn, f);
                 if (t) return t;
             }
+
+            // scope transformation
+            if (!(*it)->identifier.empty() && !scope.empty())
+                transform_scope(scope, (*it)->identifier);
 
             if (!fqn.empty()) fqn.insert(0, NSS, 2);
             fqn.insert(0, (*it)->identifier);
@@ -385,10 +385,10 @@ struct SemanticState
         {
             // scope transformation
             transform_scope(scope, "");
-
-            Type_ptr t = look_in_scope< Type >(scope, fqn, f);
-            if (t) return t;
         }
+
+        Type_ptr t = look_in_scope< Type >(scope, fqn, f);
+        if (t) return t;
 
         std::cerr << "Error: undefined reference to " << f << std::endl;
         std::cerr << "Current scope:" << std::endl;
