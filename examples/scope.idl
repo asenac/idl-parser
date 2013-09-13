@@ -17,5 +17,7 @@ module A
     {
         typedef yy hh;
     };
+
+    typedef ::A::B::hh xx;
 };
 
