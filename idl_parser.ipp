@@ -476,7 +476,8 @@ struct SemanticState
 
         objects_t objs;
 
-        switch (c.context_type)
+        const semantic_context_type context_type = c.context_type;
+        switch (context_type)
         {
         case CONTEXT_TRANSLATION_UNIT:
             {
@@ -501,16 +502,12 @@ struct SemanticState
             break;
         case CONTEXT_STRUCT:
             {
-                for (std::size_t i = c.literals_prev_size; 
-                        i < literals.size(); i++)
-                {
-                    StructDef_ptr o = f->createStructDef();
-                    o->setIdentifier(literals[i]);
+                StructDef_ptr o = f->createStructDef();
+                o->setIdentifier(c.identifier);
 
-                    populate< Field >(c, o, &StructDef::getMembers);
+                populate< Field >(c, o, &StructDef::getMembers);
 
-                    objs.push_back(o);
-                }
+                objs.push_back(o);
             }
             break;
         case CONTEXT_EXCEPTION:
@@ -613,12 +610,16 @@ struct SemanticState
             break;
         case CONTEXT_STRUCT_FIELD:
             {
-                Field_ptr o = f->createField();
-                o->setIdentifier(c.identifier);
+                for (std::size_t i = c.literals_prev_size; 
+                        i < literals.size(); i++)
+                {
+                    Field_ptr o = f->createField();
+                    o->setIdentifier(literals[i]);
 
-                try_to_set_type< Typed >(o);
+                    try_to_set_type< Typed >(o);
 
-                objs.push_back(o);
+                    objs.push_back(o);
+                }
             }
             break;
         case CONTEXT_UNION_FIELD:
