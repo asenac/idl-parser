@@ -1,0 +1,21 @@
+module A
+{
+    module B
+    {
+        typedef long yy;
+    };
+    typedef long tipo;
+};
+
+module A
+{
+    typedef long aaa;
+    typedef aaa bbb;
+    typedef A::aaa ccc;
+    typedef tipo dos;
+    module B
+    {
+        typedef yy hh;
+    };
+};
+

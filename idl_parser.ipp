@@ -105,6 +105,25 @@ struct lookupInto
     }
 };
 
+bool is_scope(idl::grammar::semantic_context_type t)
+{
+    using namespace idl::grammar;
+    bool res = false;
+    switch (t)
+    {
+        case CONTEXT_MODULE:
+        case CONTEXT_INTERFACE:
+        case CONTEXT_STRUCT:
+        case CONTEXT_EXCEPTION:
+        case CONTEXT_TRANSLATION_UNIT:
+            res = true;
+            break;
+        default:
+            break;
+    }
+    return res;
+}
+
 template < >
 struct lookupInto< idlmm::Constant >
 {
@@ -224,7 +243,7 @@ struct SemanticState
 
     // for those classes that can have more than one kind of children
     template < class Contained, class Obj, typename Fn >
-    std::size_t populateWhile(Context& c, Obj * o, Fn f)
+    std::size_t populate_while(Context& c, Obj * o, Fn f)
     {
         for (std::size_t i = c.objects_prev_size; i < objects.size(); i++) 
         {
@@ -236,9 +255,38 @@ struct SemanticState
         return objects.size();
     }
 
+    template < typename scope_t >
+    static inline void transform_scope(scope_t& scope, const std::string& prefix)
+    {
+        scope_t old (scope);
+        scope.clear();
+
+        for (typename scope_t::iterator jt = old.begin(); 
+                jt != old.end(); ++jt) 
+        {
+            scope[prefix + NSS + jt->first] = jt->second;
+        }
+    }
+
+    template < typename Type, typename scope_t >
+    static inline Type * look_in_scope(scope_t& scope, const std::string& fqn, 
+            const std::string& f)
+    {
+        typename scope_t::iterator i = scope.find(f);
+        if (i != scope.end())
+            return i->second;
+
+        if (!fqn.empty())
+        {
+            i = scope.find(fqn + NSS + f);
+            if (i != scope.end())
+                return i->second;
+        }
+        return NULL;
+    }
+
     // attempt to implement a lookup function
     // TODO must be optimized
-    // TODO merge equivalent namespaces
     template < typename Type >
     Type* lookup(const std::string& f)
     {
@@ -246,23 +294,16 @@ struct SemanticState
         typedef std::map< std::string, Type_ptr > scope_t;
 
         scope_t scope;
+        std::string fqn;
         std::size_t size = objects.size();
+        const std::size_t pos = f.find(':');
+        const bool compare_identifier = pos == std::string::npos;
 
         for (contexts_t::reverse_iterator it = contexts.rbegin(); 
                 it != contexts.rend(); it++) 
         {
-            // previous scope transformation
-            if (!(*it)->identifier.empty() && !scope.empty())
-            {
-                scope_t old (scope);
-                scope.clear();
-
-                for (typename scope_t::iterator jt = old.begin(); 
-                        jt != old.end(); ++jt) 
-                {
-                    scope[(*it)->identifier + NSS + jt->first] = jt->second;
-                }
-            }
+            if (!is_scope((*it)->context_type))
+                continue;
 
             typedef std::vector< std::pair< std::string, idlmm::Container_ptr > > 
                 containers_t;
@@ -275,7 +316,11 @@ struct SemanticState
                     objects[i]->as< Type >(); 
 
                 if (t)
+                {
+                    if (compare_identifier && t->getIdentifier() == f)
+                        return t;
                     scope[t->getIdentifier()] = t;
+                }
 
                 lookupInto< Type >::apply(scope, "", objects[i]);
 
@@ -296,13 +341,20 @@ struct SemanticState
                 const std::string prefix = 
                     (first.empty())? first: first + NSS; 
 
+                const bool equivalent_scope = !fqn.empty() && fqn == first;
+
                 for (std::size_t j = 0; j < c->getContains().size(); j++) 
                 {
                     Type_ptr t = 
                         c->getContains()[j]->as< Type  >(); 
 
                     if (t)
+                    {
+                        if (equivalent_scope && compare_identifier 
+                                && t->getIdentifier() == f)
+                            return t;
                         scope[prefix + t->getIdentifier()] = t;
+                    }
 
                     lookupInto< Type >::apply(scope, prefix, objects[i]);
 
@@ -315,9 +367,27 @@ struct SemanticState
                 }
             }
 
-            typename scope_t::iterator i = scope.find(f);
-            if (i != scope.end())
-                return i->second;
+            // scope transformation
+            if (!(*it)->identifier.empty() && !scope.empty())
+                transform_scope(scope, (*it)->identifier);
+
+            if (pos > 0)
+            {
+                Type_ptr t = look_in_scope< Type >(scope, fqn, f);
+                if (t) return t;
+            }
+
+            if (!fqn.empty()) fqn.insert(0, NSS, 2);
+            fqn.insert(0, (*it)->identifier);
+        }
+
+        if (pos == 0)
+        {
+            // scope transformation
+            transform_scope(scope, "");
+
+            Type_ptr t = look_in_scope< Type >(scope, fqn, f);
+            if (t) return t;
         }
 
         std::cerr << "Error: undefined reference to " << f << std::endl;
