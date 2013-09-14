@@ -51,7 +51,9 @@ struct wstring_def :
     seq_< wstring_t, opt_ < seq_ < spaces_, embrace_< '<', const_expr, '>' > > > >
 {};
 
-typedef or_<
+
+struct primitive_types_rule :
+    or_<
        primitive_type < unsigned_short_t, PT_UNSIGNED_SHORT >,
        primitive_type < unsigned_long_long_t, PT_UNSIGNED_LONG_LONG >,
        primitive_type < unsigned_long_t, PT_UNSIGNED_LONG >,
@@ -68,7 +70,8 @@ typedef or_<
            primitive_type < string_t, PT_STRING >,
            primitive_type < wstring_t, PT_WSTRING >
        >
-    > primitive_types_rule;
+    > 
+{};
 
 enum flags
 {
@@ -191,19 +194,19 @@ struct literal_ :
     }
 };
 
-typedef
+struct type_fqn_ :
     data_< 
         fqn_rule
     >
-    type_fqn_;
+{};
 
-typedef 
+struct type_rule :
     or_ < primitive_types_rule, type_fqn_ >
-    type_rule;
+{};
 
 // attribute
 
-typedef
+struct attribute_rule :
     seq_ < 
             optflag_<  readonly_t, FLAG_READONLY >,
             attribute_t,
@@ -212,24 +215,24 @@ typedef
             space_,
             identifier_
         > 
-    attribute_rule;
-typedef
+{};
+struct attribute_ :
     semantic_context < 
         attribute_rule,
         CONTEXT_ATTRIBUTE
     >
-    attribute_;
+{};
 
 // operation
 
-typedef 
+struct direction_rule :
     or_ < 
             flag_ < inout_t, FLAG_INOUT >,   
             flag_ < in_t, FLAG_IN >, 
             flag_ < out_t, FLAG_OUT > 
         >
-    direction_rule;
-typedef 
+{};
+struct parameter_rule :
     seq_ < 
             direction_rule, 
             space_,
@@ -237,8 +240,9 @@ typedef
             space_, 
             identifier_
          > 
-    parameter_rule;
-typedef semantic_context< parameter_rule, CONTEXT_PARAMETER > parameter_;
+{};
+struct parameter_ : semantic_context< parameter_rule, CONTEXT_PARAMETER >
+{};
 
 template < typename Item >
 struct item_ :
@@ -267,7 +271,7 @@ struct list_ :
     >
 {};
 
-typedef list_ < parameter_ > parameter_list;
+struct parameter_list : list_ < parameter_ > {};
 
 struct fqn_usage : 
     semantic_rule < fqn_usage, fqn_rule >
@@ -284,7 +288,7 @@ struct raises_ :
     seq_ < raises_t, embrace_< '(', pluslist_ < fqn_usage  >, ')' > >
 {};
 
-typedef
+struct operation_rule :
     seq_ < 
             optflag_< oneway_t, FLAG_ONEWAY >,
             type_rule,
@@ -293,43 +297,48 @@ typedef
             embrace_ < '(', parameter_list, ')' >,
             opt_ < seq_ < spaces_, raises_ > >
         > 
-    operation_rule;
-
+{};
 struct operation_ :
     semantic_context < 
         operation_rule,
         CONTEXT_OPERATION
     >
-{
-};
+{};
 
 // constant
 struct const_expr;
 struct mult_expr;
 struct add_expr;
 
-typedef semantic_context< data_ < fqn_rule >, CONTEXT_CONSTANT_REF > 
-    constant_ref_expr;
+struct constant_ref_expr :
+    semantic_context< data_ < fqn_rule >, CONTEXT_CONSTANT_REF > 
+{};
 
-typedef or_ < string_rule, bool_, number_ > value_rule; 
+struct value_rule : or_ < string_rule, bool_, number_ > {}; 
 
-typedef semantic_context< 
+struct value_expr :
+    semantic_context< 
                 data_ < value_rule >,
                 CONTEXT_VALUE_EXPRESSION 
-            > value_expr;
+            > 
+{};
 
-typedef or_ < 
+struct primary_expr :
+or_ < 
                 value_expr, 
                 constant_ref_expr,  
                 embrace_ < '(', const_expr, ')' >
-            > primary_expr;
+            > 
+{};
 
-typedef semantic_context< 
+struct unary_expr :
+    semantic_context< 
                 seq_ <  
                         data_ < unary_operator >, spaces_, primary_expr 
                     >, 
                     CONTEXT_UNARY_EXPRESSION 
-                > unary_expr;
+                > 
+{};
 
 template < typename Operator, typename Left, typename Right = Left >
 struct binary_expr :
@@ -375,7 +384,8 @@ struct or_expr :
 struct const_expr : or_expr
 {};
 
-typedef seq_ < 
+struct const_rule :
+    seq_ < 
                 const_t, 
                 space_, 
                 type_rule, 
@@ -388,13 +398,14 @@ typedef seq_ <
                         const_expr
                 > 
         > 
-        const_rule;
+{};
 
-typedef semantic_context< const_rule, CONTEXT_CONST > const_;
+struct const_ : semantic_context< const_rule, CONTEXT_CONST >
+{};
 
 // sequence
 
-typedef 
+struct sequence_rule :
     seq_< 
         sequence_t, 
         spaces_, 
@@ -405,17 +416,17 @@ typedef
         opt_< seq_ < comma, spaces_, const_expr, spaces_ > >,
         char_ < '>' > 
     > 
-    sequence_rule;
+{};
 
-typedef
+struct sequence_ :
     semantic_context < 
         sequence_rule,
         CONTEXT_SEQUENCE
     >
-    sequence_;
+{};
 
 // fixed 
-typedef 
+struct fixed_rule :
     seq_< 
         fixed_t, 
         spaces_, 
@@ -425,14 +436,13 @@ typedef
             '>' 
             > 
     > 
-    fixed_rule;
-
-typedef
+{};
+struct fixed_ :
     semantic_context < 
         fixed_rule,
         CONTEXT_FIXED
     >
-    fixed_;
+{};
 
 struct typedef_string_ : semantic_context< string_def, CONTEXT_STRING >
 {};
@@ -465,10 +475,12 @@ struct alias_ :
 {
 };
 
-typedef seq_ < 
+struct array_rule :
+    seq_ < 
             typedef_t, space_, type_rule, space_, identifier_, spaces_,
             plus_ < embrace_<'[', const_expr, ']' > >
-        > array_rule;
+        > 
+{};
 
 struct array_ :
     semantic_context < 
@@ -506,19 +518,23 @@ struct context_rule :
 
 // struct
 
-typedef 
+struct struct_field :
     semantic_context < 
             seq_ < type_rule, space_, pluslist_< literal_ > >, 
             CONTEXT_STRUCT_FIELD 
         > 
-    struct_field;
+{};
 
 typedef struct_field struct_body; 
-typedef context_rule< struct_t, struct_body, CONTEXT_STRUCT > struct_;
+struct struct_ : 
+    context_rule< struct_t, struct_body, CONTEXT_STRUCT > 
+{};
 
 // exception 
 
-typedef context_rule< exception_t, struct_field, CONTEXT_EXCEPTION > exception_;
+struct exception_ :
+    context_rule< exception_t, struct_field, CONTEXT_EXCEPTION > 
+{};
 
 // value type
 struct valuetype_body : struct_field 
@@ -529,7 +545,7 @@ struct valuetype_ :
 
 // union
 
-typedef 
+struct union_field :
     semantic_context < 
             seq_ < 
                 star_ < 
@@ -553,11 +569,13 @@ typedef
                 >, 
             CONTEXT_UNION_FIELD 
         > 
-    union_field;
+{};
 
 typedef union_field union_body; 
-typedef seq_< switch_t, spaces_, embrace_ < '(' , type_rule, ')' > > discriminator_;
-typedef context_rule< union_t, union_body, CONTEXT_UNION, discriminator_ > union_;
+struct discriminator_ : seq_< switch_t, spaces_, embrace_ < '(' , type_rule, ')' > > 
+{};
+struct union_ : context_rule< union_t, union_body, CONTEXT_UNION, discriminator_ > 
+{};
 
 template < typename Name, 
            typename Body, 
@@ -577,51 +595,56 @@ struct list_context :
     >
 {};
 
-typedef 
+struct enum_ :
     list_context < 
             enum_t, 
             literal_, 
             CONTEXT_ENUM
         > 
-    enum_;
+{};
 
 // Can it be an interface within an interface?
-typedef or_< const_, array_, alias_, exception_, struct_, union_, enum_ > contained_;
+struct contained_ : 
+    or_< const_, array_, alias_, exception_, struct_, union_, enum_ >
+{};
 
 typedef fqn_usage super_type;
 
-typedef or_< contained_, attribute_, operation_ > interface_body;
+struct interface_body : 
+    or_< contained_, attribute_, operation_ > 
+{};
 struct inheritance_ : opt_ < seq_< char_ < ':' >, pluslist_ < super_type > > >
 {};
-typedef 
+struct interface_ :
     context_rule< 
             interface_t, 
             interface_body, 
             CONTEXT_INTERFACE,
             inheritance_
         > 
-    interface_;
+{};
 
-typedef 
+struct interface_fwd_ :
     semantic_context< 
             seq_ < interface_t, space_, identifier_ >, 
             CONTEXT_INTERFACE_FWD
         > 
-    interface_fwd_;
+{};
 
 struct module_;
-typedef or_< module_, interface_, contained_ > module_body;
+struct module_body : or_< module_, interface_, contained_ >
+{};
 struct module_ : context_rule < module_t, module_body, CONTEXT_MODULE >
 {};
 
-typedef 
+struct statement_ :
     seq_ < 
             spaces_, 
             or_ < module_, interface_, interface_fwd_, contained_ >, 
             spaces_, 
             semicol 
         > 
-    statement_;
+{};
 
 struct gram :
     semantic_context < 
