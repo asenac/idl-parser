@@ -284,8 +284,11 @@ struct fqn_usage :
     }
 };
 
+struct fqn_usages : pluslist_ < fqn_usage >
+{};
+
 struct raises_ : 
-    seq_ < raises_t, embrace_< '(', pluslist_ < fqn_usage  >, ')' > >
+    seq_ < raises_t, embrace_< '(', fqn_usages, ')' > >
 {};
 
 struct operation_rule :
@@ -404,17 +407,19 @@ struct const_ : semantic_context< const_rule, CONTEXT_CONST >
 {};
 
 // sequence
-
+struct sequence_internals : 
+    seq_ <
+        spaces_, 
+        type_rule, 
+        spaces_, 
+        opt_< seq_ < comma, spaces_, const_expr, spaces_ > >
+    >
+{};
 struct sequence_rule :
     seq_< 
         sequence_t, 
         spaces_, 
-        char_ < '<' >, 
-        spaces_, 
-        type_rule, 
-        spaces_, 
-        opt_< seq_ < comma, spaces_, const_expr, spaces_ > >,
-        char_ < '>' > 
+        embrace_ < '<', sequence_internals, '>' >
     > 
 {};
 
@@ -426,15 +431,14 @@ struct sequence_ :
 {};
 
 // fixed 
+struct fixed_internals :
+    seq_ < const_expr, spaces_, comma, spaces_, const_expr >
+{};
 struct fixed_rule :
     seq_< 
         fixed_t, 
         spaces_, 
-        embrace_ < 
-            '<',  
-            seq_ < const_expr, spaces_,   comma, spaces_, const_expr >,
-            '>' 
-            > 
+        embrace_ < '<', fixed_internals, '>' > 
     > 
 {};
 struct fixed_ :
@@ -450,6 +454,9 @@ struct typedef_string_ : semantic_context< string_def, CONTEXT_STRING >
 struct typedef_wstring_ : semantic_context< wstring_def, CONTEXT_WSTRING >
 {};
 
+struct declarators_ : pluslist_ < literal_ >
+{};
+
 // typedefs
 
 struct typedef_type_rule : 
@@ -463,7 +470,7 @@ struct alias_rule :
     seq_ < 
         typedef_t, space_, 
         typedef_type_rule, space_, 
-        pluslist_ < literal_  > 
+        declarators_
     >
 {};
 
@@ -478,7 +485,7 @@ struct alias_ :
 struct array_rule :
     seq_ < 
             typedef_t, space_, type_rule, space_, identifier_, spaces_,
-            plus_ < embrace_<'[', const_expr, ']' > >
+            plus_ < embrace_ < '[', const_expr, ']' > >
         > 
 {};
 
@@ -493,12 +500,13 @@ struct array_ :
 // contexts
 
 template < typename Statements, typename Sep = semicol >
+struct statements_list :
+    star_< seq_ < spaces_, Statements, spaces_, Sep > >
+{};
+
+template < typename Statements, typename Sep = semicol >
 struct context_: 
-    embrace_ < 
-            '{', 
-                star_< seq_ < spaces_, Statements, spaces_, Sep > >,
-            '}' 
-        > 
+    embrace_ < '{', statements_list < Statements, Sep >, '}' > 
 {};
 
 template < typename Name, 
@@ -520,7 +528,7 @@ struct context_rule :
 
 struct struct_field :
     semantic_context < 
-            seq_ < type_rule, space_, pluslist_< literal_ > >, 
+            seq_ < type_rule, space_, declarators_ >, 
             CONTEXT_STRUCT_FIELD 
         > 
 {};
@@ -545,24 +553,28 @@ struct valuetype_ :
 
 // union
 
+struct union_cases :
+    star_ < 
+        seq_ < 
+            or_ <
+                seq_ <
+                    case_t, 
+                    space_, 
+                    const_expr 
+                    >,
+                flag_< default_t, FLAG_DEFAULT >
+                >,
+            spaces_, 
+            colon,
+            spaces_ 
+            > 
+        >
+{};
+
 struct union_field :
     semantic_context < 
             seq_ < 
-                star_ < 
-                    seq_ < 
-                        or_ <
-                            seq_ <
-                                case_t, 
-                                space_, 
-                                const_expr 
-                                >,
-                            flag_< default_t, FLAG_DEFAULT >
-                            >,
-                        spaces_, 
-                        char_ < ':' >, 
-                        spaces_ 
-                        > 
-                    >, 
+                union_cases, 
                 type_rule, 
                 space_, 
                 identifier_ 
@@ -608,12 +620,10 @@ struct contained_ :
     or_< const_, array_, alias_, exception_, struct_, union_, enum_ >
 {};
 
-typedef fqn_usage super_type;
-
 struct interface_body : 
     or_< contained_, attribute_, operation_ > 
 {};
-struct inheritance_ : opt_ < seq_< char_ < ':' >, pluslist_ < super_type > > >
+struct inheritance_ : opt_ < seq_< colon, fqn_usages > >
 {};
 struct interface_ :
     context_rule< 
@@ -638,19 +648,14 @@ struct module_ : context_rule < module_t, module_body, CONTEXT_MODULE >
 {};
 
 struct statement_ :
-    seq_ < 
-            spaces_, 
-            or_ < module_, interface_, interface_fwd_, contained_ >, 
-            spaces_, 
-            semicol 
-        > 
+    or_ < module_, interface_, interface_fwd_, contained_ > 
 {};
 
 struct gram :
     semantic_context < 
             seq_ < 
                 ::preprocessor::preprocessor_, 
-                star_ < statement_ >, 
+                statements_list < statement_ >, 
                 spaces_, 
                 eof_ 
             >, 

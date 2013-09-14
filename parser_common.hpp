@@ -6,15 +6,17 @@
 namespace parser 
 {
 
-typedef char_ < ';' > semicol;
-typedef char_ < ',' > comma;
-typedef char_ < '.' > point;
+struct colon : char_ < ':' > {};
+struct semicol : char_ < ';' > {};
+struct comma : char_ < ',' > {};
+struct point : char_ < '.' > {};
 
-typedef cirange_ < '0', '9'> digit_;
+struct digit_ : cirange_ < '0', '9'> {};
 // TODO allow scientific notation
-typedef seq_ < plus_< digit_ >, opt_ < seq_ < point, plus_ < digit_ > > > > 
-    number_;
-typedef plus_< digit_ > positive_;
+struct number_ : 
+    seq_ < plus_< digit_ >, opt_ < seq_ < point, plus_ < digit_ > > > > 
+{};
+struct positive_ : plus_< digit_ > {};
 
 struct string_ :
     seq_< char_< '"' >,
