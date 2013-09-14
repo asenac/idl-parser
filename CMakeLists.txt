@@ -40,21 +40,21 @@ target_link_libraries(test_read
 macro(valgrind_test TEST EXEC)
     add_test(NAME ${TEST}-valgrind 
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-        COMMAND valgrind --leak-check=full --error-exitcode=1 --log-file=${TEST}.valgrind.out ./${EXEC} ${ARGN})
+        COMMAND valgrind --leak-check=full --error-exitcode=1 --log-file=${TEST}.valgrind.out ${EXEC} ${ARGN})
 endmacro(valgrind_test)
 
-foreach(idl scope.idl test.idl test2.idl test3.idl)
+foreach(idl scope.idl test.idl test3.idl)
     add_test(NAME read-${idl} 
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMAND test_read ${CMAKE_CURRENT_SOURCE_DIR}/examples/${idl})
-    valgrind_test(read-${idl} test_read ${CMAKE_CURRENT_SOURCE_DIR}/examples/${idl})
+    valgrind_test(read-${idl} $<TARGET_FILE:test_read> ${CMAKE_CURRENT_SOURCE_DIR}/examples/${idl})
 endforeach(idl)
 
-foreach(idl error.idl error2.idl)
+foreach(idl test2.idl error.idl error2.idl)
     add_test(NAME read-${idl} 
         WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
         COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/utils/test_runner.py 1 $<TARGET_FILE:test_read> ${CMAKE_CURRENT_SOURCE_DIR}/examples/${idl})
-    valgrind_test(read-${idl} test_read ${CMAKE_CURRENT_SOURCE_DIR}/examples/${idl})
+    valgrind_test(read-${idl} $<TARGET_FILE:test_read> ${CMAKE_CURRENT_SOURCE_DIR}/examples/${idl})
 endforeach(idl)
 
 add_subdirectory(test)
