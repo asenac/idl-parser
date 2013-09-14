@@ -190,6 +190,7 @@ struct SemanticState
     };
 
     ecore::EObject * result;
+    bool errors; // semantic errors
 
     typedef boost::shared_ptr< Context > Context_ptr;
     typedef std::deque< Context_ptr > contexts_t; 
@@ -200,7 +201,7 @@ struct SemanticState
     typedef std::vector< std::string > literals_t;
     literals_t literals;
 
-    SemanticState() : result (NULL) {}
+    SemanticState() : result (NULL), errors(false) {}
 
     void push_identifier(const std::string& id)
     {
@@ -397,6 +398,8 @@ struct SemanticState
         {
             std::cerr << "  " << it->first << std::endl;
         }
+
+        errors = true;
 
         return NULL;
     }

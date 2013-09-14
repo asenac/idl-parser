@@ -50,5 +50,12 @@ foreach(idl scope.idl test.idl test2.idl test3.idl)
     valgrind_test(read-${idl} test_read ${CMAKE_CURRENT_SOURCE_DIR}/examples/${idl})
 endforeach(idl)
 
+foreach(idl error.idl error2.idl)
+    add_test(NAME read-${idl} 
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/utils/test_runner.py 1 $<TARGET_FILE:test_read> ${CMAKE_CURRENT_SOURCE_DIR}/examples/${idl})
+    valgrind_test(read-${idl} test_read ${CMAKE_CURRENT_SOURCE_DIR}/examples/${idl})
+endforeach(idl)
+
 add_subdirectory(test)
 
