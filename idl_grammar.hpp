@@ -327,11 +327,11 @@ struct value_expr :
 {};
 
 struct primary_expr :
-or_ < 
-                value_expr, 
-                constant_ref_expr,  
-                embrace_ < '(', const_expr, ')' >
-            > 
+    or_ < 
+        value_expr, 
+        constant_ref_expr,  
+        embrace_ < '(', const_expr, ')' >
+        > 
 {};
 
 struct unary_expr :
@@ -479,8 +479,7 @@ struct alias_ :
         alias_rule,
         CONTEXT_ALIAS
     >
-{
-};
+{};
 
 struct array_rule :
     seq_ < 
@@ -494,8 +493,7 @@ struct array_ :
         array_rule,
         CONTEXT_ARRAY
     >
-{
-};
+{};
 
 // contexts
 
