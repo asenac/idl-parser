@@ -24,8 +24,7 @@
 #include <ecorecpp/mapping_forward.hpp>
 
 #include <ecore_forward.hpp>
-
-#include <ecore/EObject.hpp>
+#include <idlmm/ModelElement.hpp>
 
 /*PROTECTED REGION ID(Include_pre) START*/
 // Please, enable the protected region if you add manually written code.
@@ -35,8 +34,7 @@
 namespace idlmm
 {
 
-    class Include: public virtual ::ecore::EObject
-
+    class Include: public virtual ::idlmm::ModelElement
     {
     public:
         Include();

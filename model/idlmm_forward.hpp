@@ -59,6 +59,10 @@ namespace idlmm
 
     // EClass
 
+    // ModelElement
+    class ModelElement;
+    typedef ModelElement* ModelElement_ptr;
+
     // Container
     class Container;
     typedef Container* Container_ptr;

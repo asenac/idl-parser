@@ -18,6 +18,7 @@
  */
 
 #include "Typed.hpp"
+#include <idlmm/ModelElement.hpp>
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
 #include <ecore/EObject.hpp>

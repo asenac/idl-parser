@@ -19,6 +19,7 @@
 
 #include "Include.hpp"
 #include <idlmm/IdlmmPackage.hpp>
+#include <idlmm/ModelElement.hpp>
 #include <idlmm/TranslationUnit.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
@@ -37,6 +38,7 @@ using namespace ::idlmm;
 void Include::_initialize()
 {
     // Supertypes
+    ::idlmm::ModelElement::_initialize();
 
     // Rerefences
 

@@ -27,6 +27,7 @@
 
 
 // EClass
+#include "idlmm/ModelElement.hpp"
 #include "idlmm/Container.hpp"
 #include "idlmm/Contained.hpp"
 #include "idlmm/InterfaceDef.hpp"

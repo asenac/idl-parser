@@ -19,6 +19,7 @@
 
 #include <idlmm/IdlmmFactory.hpp>
 #include <idlmm/IdlmmPackage.hpp>
+#include <idlmm/ModelElement.hpp>
 #include <idlmm/Container.hpp>
 #include <idlmm/Contained.hpp>
 #include <idlmm/InterfaceDef.hpp>
@@ -70,6 +71,8 @@ IdlmmFactory::IdlmmFactory()
 {
     switch (_eClass->getClassifierID())
     {
+    case IdlmmPackage::MODELELEMENT:
+        return createModelElement();
     case IdlmmPackage::CONTAINER:
         return createContainer();
     case IdlmmPackage::CONTAINED:
@@ -213,6 +216,10 @@ IdlmmFactory::IdlmmFactory()
     }
 }
 
+ModelElement_ptr IdlmmFactory::createModelElement()
+{
+    return new ModelElement();
+}
 Container_ptr IdlmmFactory::createContainer()
 {
     return new Container();

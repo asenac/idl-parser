@@ -1,6 +1,6 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
- * idlmm/Expression.hpp
+ * idlmm/ModelElement.hpp
  * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -17,15 +17,15 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef IDLMM_EXPRESSION_HPP
-#define IDLMM_EXPRESSION_HPP
+#ifndef IDLMM_MODELELEMENT_HPP
+#define IDLMM_MODELELEMENT_HPP
 
 #include <idlmm_forward.hpp>
 #include <ecorecpp/mapping_forward.hpp>
 
-#include <idlmm/ModelElement.hpp>
+#include <ecore/EObject.hpp>
 
-/*PROTECTED REGION ID(Expression_pre) START*/
+/*PROTECTED REGION ID(ModelElement_pre) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/
@@ -33,12 +33,13 @@
 namespace idlmm
 {
 
-    class Expression: public virtual ::idlmm::ModelElement
+    class ModelElement: public virtual ::ecore::EObject
+
     {
     public:
-        Expression();
+        ModelElement();
 
-        virtual ~Expression();
+        virtual ~ModelElement();
 
         virtual void _initialize();
 
@@ -50,7 +51,7 @@ namespace idlmm
         // References
 
 
-        /*PROTECTED REGION ID(Expression) START*/
+        /*PROTECTED REGION ID(ModelElement) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
@@ -64,7 +65,7 @@ namespace idlmm
         virtual void eUnset(::ecore::EInt _featureID);
         virtual ::ecore::EClass_ptr _eClass();
 
-        /*PROTECTED REGION ID(ExpressionImpl) START*/
+        /*PROTECTED REGION ID(ModelElementImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
@@ -79,4 +80,4 @@ namespace idlmm
 
 } // idlmm
 
-#endif // IDLMM_EXPRESSION_HPP
+#endif // IDLMM_MODELELEMENT_HPP

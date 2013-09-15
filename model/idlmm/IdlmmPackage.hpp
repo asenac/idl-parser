@@ -78,41 +78,43 @@ namespace idlmm
 
         static const int LITERALEXPRESSION = 21;
 
-        static const int MODULEDEF = 22;
+        static const int MODELELEMENT = 22;
 
-        static const int NAMEDELEMENT = 23;
+        static const int MODULEDEF = 23;
 
-        static const int OPERATIONDEF = 24;
+        static const int NAMEDELEMENT = 24;
 
-        static const int PARAMETERDEF = 25;
+        static const int OPERATIONDEF = 25;
 
-        static const int PARAMETERMODE = 26;
+        static const int PARAMETERDEF = 26;
 
-        static const int PRIMITIVEDEF = 27;
+        static const int PARAMETERMODE = 27;
 
-        static const int PRIMITIVEKIND = 28;
+        static const int PRIMITIVEDEF = 28;
 
-        static const int SEQUENCEDEF = 29;
+        static const int PRIMITIVEKIND = 29;
 
-        static const int STRINGDEF = 30;
+        static const int SEQUENCEDEF = 30;
 
-        static const int STRUCTDEF = 31;
+        static const int STRINGDEF = 31;
 
-        static const int TRANSLATIONUNIT = 32;
+        static const int STRUCTDEF = 32;
 
-        static const int TYPED = 33;
+        static const int TRANSLATIONUNIT = 33;
 
-        static const int TYPEDEFDEF = 34;
+        static const int TYPED = 34;
 
-        static const int UNARYEXPRESSION = 35;
+        static const int TYPEDEFDEF = 35;
 
-        static const int UNIONDEF = 36;
+        static const int UNARYEXPRESSION = 36;
 
-        static const int UNIONFIELD = 37;
+        static const int UNIONDEF = 37;
 
-        static const int VALUEEXPRESSION = 38;
+        static const int UNIONFIELD = 38;
 
-        static const int WSTRINGDEF = 39;
+        static const int VALUEEXPRESSION = 39;
+
+        static const int WSTRINGDEF = 40;
 
         static const int CONTAINER__CONTAINS = 0;
 
@@ -408,6 +410,9 @@ namespace idlmm
         // IDs for classifiers for class LiteralExpression 
 
 
+        // IDs for classifiers for class ModelElement 
+
+
         // IDs for classifiers for class ModuleDef 
 
         static const int MODULEDEF__IDENTIFIER = NAMEDELEMENT__IDENTIFIER;
@@ -528,6 +533,8 @@ namespace idlmm
         static const int WSTRINGDEF__TYPECODE = IDLTYPE__TYPECODE;
 
         // EClassifiers methods
+
+        virtual ::ecore::EClass_ptr getModelElement();
 
         virtual ::ecore::EClass_ptr getContainer();
 
@@ -732,6 +739,8 @@ namespace idlmm
         IdlmmPackage();
 
         // EClass instances 
+
+        ::ecore::EClass_ptr m_ModelElementEClass;
 
         ::ecore::EClass_ptr m_ContainerEClass;
 

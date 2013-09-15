@@ -47,6 +47,12 @@ IdlmmPackage::IdlmmPackage()
 
     // Create classes and their features
 
+    // ModelElement
+    m_ModelElementEClass = new ::ecore::EClass();
+    m_ModelElementEClass->setClassifierID(MODELELEMENT);
+    m_ModelElementEClass->setEPackage(this);
+    getEClassifiers().push_back(m_ModelElementEClass);
+
     // Container
     m_ContainerEClass = new ::ecore::EClass();
     m_ContainerEClass->setClassifierID(CONTAINER);
@@ -554,6 +560,7 @@ IdlmmPackage::IdlmmPackage()
     m_InterfaceDefEClass->getESuperTypes().push_back(m_ContainerEClass);
     m_InterfaceDefEClass->getESuperTypes().push_back(m_TypedefDefEClass);
     m_ModuleDefEClass->getESuperTypes().push_back(m_ContainerEClass);
+    m_IDLTypeEClass->getESuperTypes().push_back(m_ModelElementEClass);
     m_OperationDefEClass->getESuperTypes().push_back(m_ContainedEClass);
     m_OperationDefEClass->getESuperTypes().push_back(m_TypedEClass);
     m_AttributeDefEClass->getESuperTypes().push_back(m_ContainedEClass);
@@ -561,6 +568,7 @@ IdlmmPackage::IdlmmPackage()
     m_ConstantDefEClass->getESuperTypes().push_back(m_ContainedEClass);
     m_ConstantDefEClass->getESuperTypes().push_back(m_TypedEClass);
     m_ConstantDefEClass->getESuperTypes().push_back(m_ConstantEClass);
+    m_TypedEClass->getESuperTypes().push_back(m_ModelElementEClass);
     m_ParameterDefEClass->getESuperTypes().push_back(m_TypedEClass);
     m_PrimitiveDefEClass->getESuperTypes().push_back(m_IDLTypeEClass);
     m_ExceptionDefEClass->getESuperTypes().push_back(m_ContainedEClass);
@@ -580,6 +588,9 @@ IdlmmPackage::IdlmmPackage()
     m_UnionDefEClass->getESuperTypes().push_back(m_TypedefDefEClass);
     m_EnumDefEClass->getESuperTypes().push_back(m_TypedefDefEClass);
     m_StructDefEClass->getESuperTypes().push_back(m_TypedefDefEClass);
+    m_TranslationUnitEClass->getESuperTypes().push_back(m_ModelElementEClass);
+    m_IncludeEClass->getESuperTypes().push_back(m_ModelElementEClass);
+    m_ExpressionEClass->getESuperTypes().push_back(m_ModelElementEClass);
     m_BinaryExpressionEClass->getESuperTypes().push_back(m_ExpressionEClass);
     m_UnaryExpressionEClass->getESuperTypes().push_back(m_ExpressionEClass);
     m_LiteralExpressionEClass->getESuperTypes().push_back(m_ExpressionEClass);
@@ -590,9 +601,14 @@ IdlmmPackage::IdlmmPackage()
     m_ForwardDefEClass->getESuperTypes().push_back(m_ContainedEClass);
     m_EnumMemberEClass->getESuperTypes().push_back(m_ConstantEClass);
     m_ConstantEClass->getESuperTypes().push_back(m_ContainedEClass);
+    m_NamedElementEClass->getESuperTypes().push_back(m_ModelElementEClass);
 
     // TODO: Initialize classes and features; add operations and parameters
     // TODO: GenericTypes
+    // ModelElement
+    m_ModelElementEClass->setName("ModelElement");
+    m_ModelElementEClass->setAbstract(true);
+    m_ModelElementEClass->setInterface(false);
     // Container
     m_ContainerEClass->setName("Container");
     m_ContainerEClass->setAbstract(true);
@@ -1772,6 +1788,10 @@ IdlmmPackage::IdlmmPackage()
     _initialize();
 }
 
+::ecore::EClass_ptr IdlmmPackage::getModelElement()
+{
+    return m_ModelElementEClass;
+}
 ::ecore::EClass_ptr IdlmmPackage::getContainer()
 {
     return m_ContainerEClass;

@@ -23,7 +23,7 @@
 #include <idlmm_forward.hpp>
 #include <ecorecpp/mapping_forward.hpp>
 
-#include <ecore/EObject.hpp>
+#include <idlmm/ModelElement.hpp>
 
 /*PROTECTED REGION ID(IDLType_pre) START*/
 // Please, enable the protected region if you add manually written code.
@@ -33,8 +33,7 @@
 namespace idlmm
 {
 
-    class IDLType: public virtual ::ecore::EObject
-
+    class IDLType: public virtual ::idlmm::ModelElement
     {
     public:
         IDLType();

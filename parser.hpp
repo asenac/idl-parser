@@ -646,6 +646,34 @@ struct opt_
     }
 };
 
+struct token_base
+{
+    template <typename S>
+    static inline bool match (S& state, const char * t, std::size_t size)
+    {
+        state.push_state();
+        bool var = true;
+        for (std::size_t i = 0; var && i < size; i++) 
+        {
+            var = state.match_at_pos_advance (t[i]);
+        }
+        var ? state.commit() : state.rollback();
+        return var;
+    }
+};
+
+#define PTOKEN(token)                                       \
+    struct token ## _t                                      \
+    {                                                       \
+        template <typename S>                               \
+        static inline bool match (S& state)                 \
+        {                                                   \
+            static const char t[] = "" ## token;            \
+            return ::parser::token_base(s, t, sizeof(t));   \
+        }                                                   \
+    };                                                      \
+/***/
+
 template < char c >
 struct until_ : seq_ < star_ < notchar_ < c > >, char_ < c > >
 {

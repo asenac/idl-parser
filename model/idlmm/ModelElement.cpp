@@ -1,6 +1,6 @@
 // -*- mode: c++; c-basic-style: "bsd"; c-basic-offset: 4; -*-
 /*
- * idlmm/IDLType.cpp
+ * idlmm/ModelElement.cpp
  * Copyright (C) Cátedra SAES-UMU 2010 <andres.senac@um.es>
  *
  * EMF4CPP is free software: you can redistribute it and/or modify it
@@ -17,8 +17,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include "IDLType.hpp"
-#include <idlmm/ModelElement.hpp>
+#include "ModelElement.hpp"
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include "idlmm/IdlmmPackage.hpp"
@@ -31,10 +30,10 @@
 using namespace ::idlmm;
 
 // Default constructor
-IDLType::IDLType()
+ModelElement::ModelElement()
 {
 
-    /*PROTECTED REGION ID(IDLTypeImpl__IDLTypeImpl) START*/
+    /*PROTECTED REGION ID(ModelElementImpl__ModelElementImpl) START*/
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
     /*PROTECTED REGION END*/
@@ -44,42 +43,16 @@ IDLType::IDLType()
 #endif
 }
 
-IDLType::~IDLType()
+ModelElement::~ModelElement()
 {
 }
 
-/*PROTECTED REGION ID(IDLType.cpp) START*/
+/*PROTECTED REGION ID(ModelElement.cpp) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/
 
 // Attributes
-
-::idlmm::ETypeCode IDLType::getTypeCode() const
-{
-    return m_typeCode;
-}
-
-void IDLType::setTypeCode(::idlmm::ETypeCode _typeCode)
-{
-#ifdef ECORECPP_NOTIFICATION_API
-    ::idlmm::ETypeCode _old_typeCode = m_typeCode;
-#endif
-    m_typeCode = _typeCode;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getIDLType__typeCode(),
-                _old_typeCode,
-                m_typeCode
-        );
-        eNotify(&notification);
-    }
-#endif
-}
 
 // References
 

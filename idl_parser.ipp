@@ -147,7 +147,7 @@ struct lookupInto< idlmm::Constant >
 struct SemanticState
 {
     typedef grammar::semantic_context_type context_type_t;
-    typedef std::vector< ecore::EObject * > objects_t;
+    typedef std::vector< idlmm::ModelElement * > objects_t;
 
     struct Context
     {
@@ -189,7 +189,7 @@ struct SemanticState
         }
     };
 
-    ecore::EObject * result;
+    idlmm::ModelElement * result;
     bool errors; // semantic errors
 
     typedef boost::shared_ptr< Context > Context_ptr;

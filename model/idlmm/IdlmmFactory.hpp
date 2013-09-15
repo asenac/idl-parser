@@ -32,6 +32,7 @@ namespace idlmm
 
         static IdlmmFactory_ptr _instance();
 
+        virtual ModelElement_ptr createModelElement();
         virtual Container_ptr createContainer();
         virtual Contained_ptr createContained();
         virtual InterfaceDef_ptr createInterfaceDef();

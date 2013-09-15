@@ -19,6 +19,7 @@
 
 #include "TranslationUnit.hpp"
 #include <idlmm/IdlmmPackage.hpp>
+#include <idlmm/ModelElement.hpp>
 #include <idlmm/Contained.hpp>
 #include <idlmm/Include.hpp>
 #include <ecore/EObject.hpp>
@@ -38,6 +39,7 @@ using namespace ::idlmm;
 void TranslationUnit::_initialize()
 {
     // Supertypes
+    ::idlmm::ModelElement::_initialize();
 
     // Rerefences
     for (size_t i = 0; i < m_contains->size(); i++)

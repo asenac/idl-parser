@@ -19,6 +19,7 @@
 
 #include "Expression.hpp"
 #include <idlmm/IdlmmPackage.hpp>
+#include <idlmm/ModelElement.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>
 #include <ecore/EStructuralFeature.hpp>
@@ -36,6 +37,7 @@ using namespace ::idlmm;
 void Expression::_initialize()
 {
     // Supertypes
+    ::idlmm::ModelElement::_initialize();
 
     // Rerefences
 

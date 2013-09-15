@@ -19,6 +19,7 @@
 
 #include "Typed.hpp"
 #include <idlmm/IdlmmPackage.hpp>
+#include <idlmm/ModelElement.hpp>
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
 #include <ecore/EObject.hpp>
@@ -38,6 +39,7 @@ using namespace ::idlmm;
 void Typed::_initialize()
 {
     // Supertypes
+    ::idlmm::ModelElement::_initialize();
 
     // Rerefences
     if (m_containedType)

@@ -18,6 +18,7 @@
  */
 
 #include "Include.hpp"
+#include <idlmm/ModelElement.hpp>
 #include <idlmm/TranslationUnit.hpp>
 #include <ecore/EObject.hpp>
 #include <ecore/EClass.hpp>

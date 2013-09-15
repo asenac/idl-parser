@@ -27,6 +27,8 @@ set(idlmm_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/IdlmmFactory.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/IdlmmPackageImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/IdlmmFactoryImpl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/ModelElement.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/ModelElementImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/Container.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/ContainerImpl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/Contained.cpp
@@ -106,6 +108,7 @@ set(idlmm_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm_forward.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/IdlmmPackage.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/IdlmmFactory.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/ModelElement.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/Container.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/Contained.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/InterfaceDef.hpp
@@ -148,6 +151,7 @@ install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm.hpp DESTINATION include/emf4cpp/
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm_forward.hpp DESTINATION include/emf4cpp/)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/IdlmmFactory.hpp DESTINATION include/emf4cpp/idlmm)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/IdlmmPackage.hpp DESTINATION include/emf4cpp/idlmm)   
+install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/ModelElement.hpp DESTINATION include/emf4cpp/idlmm)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/Container.hpp DESTINATION include/emf4cpp/idlmm)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/Contained.hpp DESTINATION include/emf4cpp/idlmm)
 install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/InterfaceDef.hpp DESTINATION include/emf4cpp/idlmm)

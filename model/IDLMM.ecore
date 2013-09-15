@@ -3,6 +3,7 @@
     xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="idlmm"
     nsURI="http://idlmm/1.0" nsPrefix="idlmm">
+  <eClassifiers xsi:type="ecore:EClass" name="ModelElement" abstract="true"/>
   <eClassifiers xsi:type="ecore:EClass" name="Container" abstract="true" eSuperTypes="#//Contained">
     <eStructuralFeatures xsi:type="ecore:EReference" name="contains" upperBound="-1"
         eType="#//Contained" containment="true" eOpposite="#//Contained/definedIn"/>
@@ -25,7 +26,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="ModuleDef" eSuperTypes="#//Container">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="prefix" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="IDLType" abstract="true">
+  <eClassifiers xsi:type="ecore:EClass" name="IDLType" abstract="true" eSuperTypes="#//ModelElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="typeCode" eType="#//ETypeCode"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OperationDef" eSuperTypes="#//Contained #//Typed">
@@ -48,7 +49,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="constValue" lowerBound="1"
         eType="#//Expression" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Typed" abstract="true">
+  <eClassifiers xsi:type="ecore:EClass" name="Typed" abstract="true" eSuperTypes="#//ModelElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="containedType" eType="#//IDLType"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="sharedType" eType="#//TypedefDef"/>
@@ -143,18 +144,18 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="members" upperBound="-1"
         eType="#//Field" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TranslationUnit">
+  <eClassifiers xsi:type="ecore:EClass" name="TranslationUnit" eSuperTypes="#//ModelElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="contains" upperBound="-1"
         eType="#//Contained" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="identifier" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="includes" upperBound="-1"
         eType="#//Include" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Include">
+  <eClassifiers xsi:type="ecore:EClass" name="Include" eSuperTypes="#//ModelElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importURI" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="translationUnit" eType="#//TranslationUnit"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Expression" abstract="true"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Expression" abstract="true" eSuperTypes="#//ModelElement"/>
   <eClassifiers xsi:type="ecore:EClass" name="BinaryExpression" eSuperTypes="#//Expression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="left" lowerBound="1" eType="#//Expression"
         containment="true"/>
@@ -185,7 +186,7 @@
         eOpposite="#//EnumDef/members"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Constant" abstract="true" eSuperTypes="#//Contained"/>
-  <eClassifiers xsi:type="ecore:EClass" name="NamedElement" abstract="true">
+  <eClassifiers xsi:type="ecore:EClass" name="NamedElement" abstract="true" eSuperTypes="#//ModelElement">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="identifier" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString">
       <eAnnotations source="http:///org/eclipse/emf/ecore/util/ExtendedMetaData">
         <details key="namespace" value=""/>
