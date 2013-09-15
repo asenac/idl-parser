@@ -18,13 +18,13 @@
  */
 
 #include "ModelElement.hpp"
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -39,7 +39,7 @@ ModelElement::ModelElement()
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
+    
 #endif
 }
 

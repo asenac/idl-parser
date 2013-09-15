@@ -9,7 +9,6 @@
 #include <deque>
 #include <cassert>
 #include "idl_grammar.hpp"
-#include <ecore.hpp>
 #include <idlmm.hpp>
 #include <boost/shared_ptr.hpp>
 
@@ -25,75 +24,58 @@ idlmm::ParameterMode get_direction(const Set& s)
 {
     using namespace grammar;
     using namespace idlmm;
-    using namespace ecore;
 
-    IdlmmPackage_ptr p = IdlmmPackage::_instance(); 
-    EEnum_ptr e = p->getParameterMode();
-    const char * str = NULL;
+    ParameterMode res = PARAM_IN;
 
     if (s.test(FLAG_OUT))
-        str = "PARAM_OUT";
+        res = PARAM_OUT;
     else if (s.test(FLAG_INOUT))
-        str = "PARAM_INOUT";
-    else
-        str = "PARAM_IN";
+        res = PARAM_INOUT;
 
-    EEnumLiteral_ptr l = e->getEEnumLiteral(str);
-    assert(l);
-    return l->getValue();
-}
-
-const char * to_string(idl::grammar::primitive_types t)
-{
-    using namespace grammar;
-    switch (t)
-    {
-        case PT_UNSIGNED_SHORT:
-            return "PK_USHORT";
-        case PT_UNSIGNED_LONG_LONG:
-            return "PK_ULONGLONG";
-        case PT_UNSIGNED_LONG:
-            return "PK_ULONG";
-        case PT_LONG_DOUBLE:
-            return "PK_LONGDOUBLE";
-        case PT_LONG_LONG:
-            return "PK_LONGLONG";
-        case PT_LONG:
-            return "PK_LONG";
-        case PT_OCTET:
-            return "PK_OCTET";
-        case PT_CHAR:
-            return "PK_CHAR";
-        case PT_SHORT:
-            return "PK_SHORT";
-        case PT_FLOAT:
-            return "PK_FLOAT";
-        case PT_DOUBLE:
-            return "PK_DOUBLE";
-        case PT_STRING:
-            return "PK_STRING";
-        case PT_WSTRING:
-            return "PK_WSTRING";
-        case PT_VOID:
-            return "PK_VOID";
-        case PT_NULL:
-        default:
-            return "PK_NULL";
-    }
-
-    return NULL;
+    return res;
 }
 
 idlmm::PrimitiveKind get_primitive_kind(idl::grammar::primitive_types t)
 {
-    using namespace ecore;
+    using namespace grammar;
     using namespace idlmm;
 
-    IdlmmPackage_ptr p = IdlmmPackage::_instance(); 
-    EEnum_ptr e = p->getPrimitiveKind();
-    EEnumLiteral_ptr l = e->getEEnumLiteral(to_string(t));
-    assert(l);
-    return l->getValue();
+    switch (t)
+    {
+        case PT_UNSIGNED_SHORT:
+            return PK_USHORT;
+        case PT_UNSIGNED_LONG_LONG:
+            return PK_ULONGLONG;
+        case PT_UNSIGNED_LONG:
+            return PK_ULONG;
+        case PT_LONG_DOUBLE:
+            return PK_LONGDOUBLE;
+        case PT_LONG_LONG:
+            return PK_LONGLONG;
+        case PT_LONG:
+            return PK_LONG;
+        case PT_OCTET:
+            return PK_OCTET;
+        case PT_CHAR:
+            return PK_CHAR;
+        case PT_SHORT:
+            return PK_SHORT;
+        case PT_FLOAT:
+            return PK_FLOAT;
+        case PT_DOUBLE:
+            return PK_DOUBLE;
+        case PT_STRING:
+            return PK_STRING;
+        case PT_WSTRING:
+            return PK_WSTRING;
+        case PT_VOID:
+            return PK_VOID;
+        case PT_NULL:
+        default:
+            return PK_NULL;
+    }
+
+    return PK_NULL;
 }
 
 template < typename T >
@@ -137,7 +119,7 @@ struct lookupInto< idlmm::Constant >
         {
             for (std::size_t i = 0; i < e->getMembers().size(); i++) 
             {
-                EnumMember_ptr m = e->getMembers()[i];
+                EnumMember_ptr m = &e->getMembers()[i];
                 s[prefix + m->getIdentifier()] = m;
             }
         }
@@ -229,13 +211,17 @@ struct SemanticState
     }
 
     template < class Contained, class Obj, typename Fn >
-    void populate(Context& c, Obj * o, Fn f)
+    void populate(Context& c, Obj * o, Fn f, void (Contained::*inverse)(Obj *) = NULL)
     {
         for (std::size_t i = c.objects_prev_size; i < objects.size(); i++) 
         {
             Contained * t = objects[i]->as< Contained >();
             assert(t);
-            if (t) (o->*f)().push_back(t);
+            if (t) 
+            {
+                (o->*f)().push_back(t);
+                if (inverse) (t->*inverse)(o);
+            }
         }
 
         // avoid double free
@@ -244,12 +230,16 @@ struct SemanticState
 
     // for those classes that can have more than one kind of children
     template < class Contained, class Obj, typename Fn >
-    std::size_t populate_while(Context& c, Obj * o, Fn f)
+    std::size_t populate_while(Context& c, Obj * o, Fn f, void (Contained::*inverse)(Obj *) = NULL)
     {
         for (std::size_t i = c.objects_prev_size; i < objects.size(); i++) 
         {
             Contained * t = objects[i]->as< Contained >();
-            if (t) (o->*f)().push_back(t);
+            if (t) 
+            {
+                (o->*f)().push_back(t);
+                if (inverse) (t->*inverse)(o);
+            }
             else return i;
         }
 
@@ -347,7 +337,7 @@ struct SemanticState
                 for (std::size_t j = 0; j < c->getContains().size(); j++) 
                 {
                     Type_ptr t = 
-                        c->getContains()[j]->as< Type  >(); 
+                        c->getContains()[j].as< Type  >(); 
 
                     if (t)
                     {
@@ -357,10 +347,10 @@ struct SemanticState
                         scope[prefix + t->getIdentifier()] = t;
                     }
 
-                    lookupInto< Type >::apply(scope, prefix, c->getContains()[j]);
+                    lookupInto< Type >::apply(scope, prefix, &c->getContains()[j]);
 
                     idlmm::Container_ptr r =
-                        c->getContains()[j]->as< idlmm::Container >();
+                        c->getContains()[j].as< idlmm::Container >();
 
                     if (r)
                         containers.push_back(std::make_pair(
@@ -498,7 +488,8 @@ struct SemanticState
                 ModuleDef_ptr o = f->createModuleDef();
                 o->setIdentifier(c.identifier);
 
-                populate< Contained >(c, o, &ModuleDef::getContains);
+                populate< Contained, Container >(c, o, &ModuleDef::getContains,
+                        &Contained::setDefinedIn);
 
                 objs.push_back(o);
             }
@@ -544,7 +535,8 @@ struct SemanticState
                 o->setIdentifier(c.identifier);
                 o->setIsAbstract(c.flags.test(FLAG_ABSTRACT));
 
-                populate< Contained >(c, o, &InterfaceDef::getContains);
+                populate< Contained, Container >(c, o, &InterfaceDef::getContains,
+                        &Contained::setDefinedIn);
 
                 for (std::size_t i = c.literals_prev_size; 
                         i < literals.size(); i++)

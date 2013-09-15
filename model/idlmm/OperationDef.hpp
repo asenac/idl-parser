@@ -21,9 +21,9 @@
 #define IDLMM_OPERATIONDEF_HPP
 
 #include <idlmm_forward.hpp>
-#include <ecorecpp/mapping_forward.hpp>
 
-#include <ecore_forward.hpp>
+
+
 #include <idlmm/Contained.hpp>
 #include <idlmm/Typed.hpp>
 
@@ -43,27 +43,19 @@ namespace idlmm
 
         virtual ~OperationDef();
 
-        virtual void _initialize();
+        
 
         // Operations
 
 
         // Attributes
-        ::ecore::EBoolean isIsOneway() const;
-        void setIsOneway(::ecore::EBoolean _isOneway);
-
-        std::vector< ::ecore::EString > const& getContexts() const;
-        void setContexts(std::vector< ::ecore::EString > const& _contexts);
-
-        void addContexts(::ecore::EString const& _new_element_in_contexts);
-        void setContextsAt(size_t _position,
-                ::ecore::EString const& _new_element_in_contexts);
-        void deleteContextsAt(size_t _position);
+        bool isIsOneway() const;
+        void setIsOneway(bool _isOneway);
 
         // References
-        ::ecorecpp::mapping::EList< ::idlmm::ParameterDef >& getParameters();
+        boost::ptr_vector< ::idlmm::ParameterDef >& getParameters();
 
-        ::ecorecpp::mapping::EList< ::idlmm::ExceptionDef >& getCanRaise();
+        boost::ptr_vector< ::idlmm::ExceptionDef >& getCanRaise();
 
         /*PROTECTED REGION ID(OperationDef) START*/
         // Please, enable the protected region if you add manually written code.
@@ -71,13 +63,13 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-        virtual ::ecore::EJavaObject eGet(::ecore::EInt _featureID,
-                ::ecore::EBoolean _resolve);
-        virtual void eSet(::ecore::EInt _featureID,
-                ::ecore::EJavaObject const& _newValue);
-        virtual ::ecore::EBoolean eIsSet(::ecore::EInt _featureID);
-        virtual void eUnset(::ecore::EInt _featureID);
-        virtual ::ecore::EClass_ptr _eClass();
+
+                
+
+                
+        
+        
+        
 
         /*PROTECTED REGION ID(OperationDefImpl) START*/
         // Please, enable the protected region if you add manually written code.
@@ -87,17 +79,15 @@ namespace idlmm
     protected:
         // Attributes
 
-        ::ecore::EBoolean m_isOneway;
-
-        std::vector< ::ecore::EString > m_contexts;
+        bool m_isOneway;
 
         // References
 
-        ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
-                ::idlmm::ParameterDef > > m_parameters;
+        boost::ptr_vector<
+                ::idlmm::ParameterDef > m_parameters;
 
-        ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
-                ::idlmm::ExceptionDef > > m_canRaise;
+        boost::ptr_vector<
+                ::idlmm::ExceptionDef > m_canRaise;
 
     };
 

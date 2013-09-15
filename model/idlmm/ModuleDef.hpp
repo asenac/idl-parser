@@ -21,9 +21,9 @@
 #define IDLMM_MODULEDEF_HPP
 
 #include <idlmm_forward.hpp>
-#include <ecorecpp/mapping_forward.hpp>
 
-#include <ecore_forward.hpp>
+
+
 #include <idlmm/Container.hpp>
 
 /*PROTECTED REGION ID(ModuleDef_pre) START*/
@@ -41,14 +41,14 @@ namespace idlmm
 
         virtual ~ModuleDef();
 
-        virtual void _initialize();
+        
 
         // Operations
 
 
         // Attributes
-        ::ecore::EString const& getPrefix() const;
-        void setPrefix(::ecore::EString const& _prefix);
+        std::string const& getPrefix() const;
+        void setPrefix(std::string const& _prefix);
 
         // References
 
@@ -59,13 +59,13 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-        virtual ::ecore::EJavaObject eGet(::ecore::EInt _featureID,
-                ::ecore::EBoolean _resolve);
-        virtual void eSet(::ecore::EInt _featureID,
-                ::ecore::EJavaObject const& _newValue);
-        virtual ::ecore::EBoolean eIsSet(::ecore::EInt _featureID);
-        virtual void eUnset(::ecore::EInt _featureID);
-        virtual ::ecore::EClass_ptr _eClass();
+
+                
+
+                
+        
+        
+        
 
         /*PROTECTED REGION ID(ModuleDefImpl) START*/
         // Please, enable the protected region if you add manually written code.
@@ -75,7 +75,7 @@ namespace idlmm
     protected:
         // Attributes
 
-        ::ecore::EString m_prefix;
+        std::string m_prefix;
 
         // References
 

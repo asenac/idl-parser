@@ -21,13 +21,13 @@
 #include <idlmm/Typed.hpp>
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -42,7 +42,7 @@ Field::Field()
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
+    
 #endif
 }
 
@@ -57,30 +57,14 @@ Field::~Field()
 
 // Attributes
 
-::ecore::EString const& Field::getIdentifier() const
+std::string const& Field::getIdentifier() const
 {
     return m_identifier;
 }
 
-void Field::setIdentifier(::ecore::EString const& _identifier)
+void Field::setIdentifier(std::string const& _identifier)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_identifier = m_identifier;
-#endif
     m_identifier = _identifier;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getField__identifier(),
-                _old_identifier,
-                m_identifier
-        );
-        eNotify(&notification);
-    }
-#endif
 }
 
 // References

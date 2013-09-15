@@ -22,33 +22,16 @@
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
 #include <idlmm/Expression.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
 
-#ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
-#endif
+
+
+
 
 using namespace ::idlmm;
 
 // Default constructor
 ArrayDef::ArrayDef()
 {
-
-    m_bounds.reset(
-            new ::ecorecpp::mapping::ReferenceEListImpl< ::idlmm::Expression,
-                    -1, true, false >(this, NULL));
-
-    /*PROTECTED REGION ID(ArrayDefImpl__ArrayDefImpl) START*/
-    // Please, enable the protected region if you add manually written code.
-    // To do this, add the keyword ENABLED before START.
-    /*PROTECTED REGION END*/
-
-#ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
-#endif
 }
 
 ArrayDef::~ArrayDef()
@@ -62,35 +45,19 @@ ArrayDef::~ArrayDef()
 
 // Attributes
 
-::ecore::EString const& ArrayDef::getName() const
+std::string const& ArrayDef::getName() const
 {
     return m_name;
 }
 
-void ArrayDef::setName(::ecore::EString const& _name)
+void ArrayDef::setName(std::string const& _name)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_name = m_name;
-#endif
     m_name = _name;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getArrayDef__name(),
-                _old_name,
-                m_name
-        );
-        eNotify(&notification);
-    }
-#endif
 }
 
 // References
-::ecorecpp::mapping::EList< ::idlmm::Expression >& ArrayDef::getBounds()
+boost::ptr_vector< ::idlmm::Expression >& ArrayDef::getBounds()
 {
-    return *m_bounds;
+    return m_bounds;
 }
 

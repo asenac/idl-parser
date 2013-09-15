@@ -21,7 +21,7 @@
 #define IDLMM_SEQUENCEDEF_HPP
 
 #include <idlmm_forward.hpp>
-#include <ecorecpp/mapping_forward.hpp>
+
 
 #include <idlmm/Typed.hpp>
 #include <idlmm/IDLType.hpp>
@@ -42,7 +42,7 @@ namespace idlmm
 
         virtual ~SequenceDef();
 
-        virtual void _initialize();
+        
 
         // Operations
 
@@ -59,13 +59,13 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-        virtual ::ecore::EJavaObject eGet(::ecore::EInt _featureID,
-                ::ecore::EBoolean _resolve);
-        virtual void eSet(::ecore::EInt _featureID,
-                ::ecore::EJavaObject const& _newValue);
-        virtual ::ecore::EBoolean eIsSet(::ecore::EInt _featureID);
-        virtual void eUnset(::ecore::EInt _featureID);
-        virtual ::ecore::EClass_ptr _eClass();
+
+                
+
+                
+        
+        
+        
 
         /*PROTECTED REGION ID(SequenceDefImpl) START*/
         // Please, enable the protected region if you add manually written code.

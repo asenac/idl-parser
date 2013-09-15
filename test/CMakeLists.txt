@@ -5,7 +5,5 @@ valgrind_test(grammar $<TARGET_FILE:test_grammar>)
 
 target_link_libraries(test_grammar
     idl_parser
-    emf4cpp-idlmm
-    emf4cpp-ecore
-    emf4cpp-ecorecpp
+    idlmm
 )

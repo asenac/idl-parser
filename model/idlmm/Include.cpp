@@ -20,13 +20,13 @@
 #include "Include.hpp"
 #include <idlmm/ModelElement.hpp>
 #include <idlmm/TranslationUnit.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -42,7 +42,7 @@ Include::Include() :
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
+    
 #endif
 }
 
@@ -57,30 +57,14 @@ Include::~Include()
 
 // Attributes
 
-::ecore::EString const& Include::getImportURI() const
+std::string const& Include::getImportURI() const
 {
     return m_importURI;
 }
 
-void Include::setImportURI(::ecore::EString const& _importURI)
+void Include::setImportURI(std::string const& _importURI)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_importURI = m_importURI;
-#endif
     m_importURI = _importURI;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getInclude__importURI(),
-                _old_importURI,
-                m_importURI
-        );
-        eNotify(&notification);
-    }
-#endif
 }
 
 // References
@@ -91,23 +75,6 @@ void Include::setImportURI(::ecore::EString const& _importURI)
 
 void Include::setTranslationUnit(::idlmm::TranslationUnit_ptr _translationUnit)
 {
-    ::idlmm::TranslationUnit_ptr _old_translationUnit = m_translationUnit;
-
     m_translationUnit = _translationUnit;
-
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getInclude__translationUnit(),
-                _old_translationUnit,
-                m_translationUnit
-        );
-        eNotify(&notification);
-    }
-#endif
-
 }
 

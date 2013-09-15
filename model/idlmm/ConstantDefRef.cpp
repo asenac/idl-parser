@@ -20,13 +20,13 @@
 #include "ConstantDefRef.hpp"
 #include <idlmm/LiteralExpression.hpp>
 #include <idlmm/Constant.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -42,7 +42,7 @@ ConstantDefRef::ConstantDefRef() :
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
+    
 #endif
 }
 
@@ -65,23 +65,6 @@ ConstantDefRef::~ConstantDefRef()
 
 void ConstantDefRef::setConstant(::idlmm::Constant_ptr _constant)
 {
-    ::idlmm::Constant_ptr _old_constant = m_constant;
-
     m_constant = _constant;
-
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getConstantDefRef__constant(),
-                _old_constant,
-                m_constant
-        );
-        eNotify(&notification);
-    }
-#endif
-
 }
 

@@ -20,13 +20,13 @@
 #include "Contained.hpp"
 #include <idlmm/NamedElement.hpp>
 #include <idlmm/Container.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -42,7 +42,7 @@ Contained::Contained() :
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
+    
 #endif
 }
 
@@ -57,82 +57,34 @@ Contained::~Contained()
 
 // Attributes
 
-::ecore::EString const& Contained::getRepositoryId() const
+std::string const& Contained::getRepositoryId() const
 {
     return m_repositoryId;
 }
 
-void Contained::setRepositoryId(::ecore::EString const& _repositoryId)
+void Contained::setRepositoryId(std::string const& _repositoryId)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_repositoryId = m_repositoryId;
-#endif
     m_repositoryId = _repositoryId;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getContained__repositoryId(),
-                _old_repositoryId,
-                m_repositoryId
-        );
-        eNotify(&notification);
-    }
-#endif
 }
 
-::ecore::EString const& Contained::getVersion() const
+std::string const& Contained::getVersion() const
 {
     return m_version;
 }
 
-void Contained::setVersion(::ecore::EString const& _version)
+void Contained::setVersion(std::string const& _version)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_version = m_version;
-#endif
     m_version = _version;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getContained__version(),
-                _old_version,
-                m_version
-        );
-        eNotify(&notification);
-    }
-#endif
 }
 
-::ecore::EString const& Contained::getAbsoluteName() const
+std::string const& Contained::getAbsoluteName() const
 {
     return m_absoluteName;
 }
 
-void Contained::setAbsoluteName(::ecore::EString const& _absoluteName)
+void Contained::setAbsoluteName(std::string const& _absoluteName)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_absoluteName = m_absoluteName;
-#endif
     m_absoluteName = _absoluteName;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getContained__absoluteName(),
-                _old_absoluteName,
-                m_absoluteName
-        );
-        eNotify(&notification);
-    }
-#endif
 }
 
 // References
@@ -143,23 +95,6 @@ void Contained::setAbsoluteName(::ecore::EString const& _absoluteName)
 
 void Contained::setDefinedIn(::idlmm::Container_ptr _definedIn)
 {
-    ::idlmm::Container_ptr _old_definedIn = m_definedIn;
-
     m_definedIn = _definedIn;
-
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getContained__definedIn(),
-                _old_definedIn,
-                m_definedIn
-        );
-        eNotify(&notification);
-    }
-#endif
-
 }
 

@@ -21,13 +21,13 @@
 #include <idlmm/ModelElement.hpp>
 #include <idlmm/Contained.hpp>
 #include <idlmm/Include.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -35,22 +35,6 @@ using namespace ::idlmm;
 // Default constructor
 TranslationUnit::TranslationUnit()
 {
-
-    m_contains.reset(
-            new ::ecorecpp::mapping::ReferenceEListImpl< ::idlmm::Contained,
-                    -1, true, false >(this, NULL));
-    m_includes.reset(
-            new ::ecorecpp::mapping::ReferenceEListImpl< ::idlmm::Include, -1,
-                    true, false >(this, NULL));
-
-    /*PROTECTED REGION ID(TranslationUnitImpl__TranslationUnitImpl) START*/
-    // Please, enable the protected region if you add manually written code.
-    // To do this, add the keyword ENABLED before START.
-    /*PROTECTED REGION END*/
-
-#ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
-#endif
 }
 
 TranslationUnit::~TranslationUnit()
@@ -64,40 +48,24 @@ TranslationUnit::~TranslationUnit()
 
 // Attributes
 
-::ecore::EString const& TranslationUnit::getIdentifier() const
+std::string const& TranslationUnit::getIdentifier() const
 {
     return m_identifier;
 }
 
-void TranslationUnit::setIdentifier(::ecore::EString const& _identifier)
+void TranslationUnit::setIdentifier(std::string const& _identifier)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_identifier = m_identifier;
-#endif
     m_identifier = _identifier;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getTranslationUnit__identifier(),
-                _old_identifier,
-                m_identifier
-        );
-        eNotify(&notification);
-    }
-#endif
 }
 
 // References
-::ecorecpp::mapping::EList< ::idlmm::Contained >& TranslationUnit::getContains()
+boost::ptr_vector< ::idlmm::Contained >& TranslationUnit::getContains()
 {
-    return *m_contains;
+    return m_contains;
 }
 
-::ecorecpp::mapping::EList< ::idlmm::Include >& TranslationUnit::getIncludes()
+boost::ptr_vector< ::idlmm::Include >& TranslationUnit::getIncludes()
 {
-    return *m_includes;
+    return m_includes;
 }
 

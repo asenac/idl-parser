@@ -20,7 +20,8 @@
 #ifndef _IDLMM_FORWARD_HPP
 #define _IDLMM_FORWARD_HPP
 
-#include <ecorecpp/mapping_forward.hpp>
+#include <string>
+#include <boost/ptr_container/ptr_vector.hpp>
 
 /*PROTECTED REGION ID(idlmm_forward) START*/
 // Please, enable the protected region if you add manually written code.
@@ -31,7 +32,6 @@
 // EPackage
 
 
-#include <ecore_forward.hpp> // for EDataTypes
 namespace idlmm
 {
 
@@ -39,12 +39,40 @@ namespace idlmm
     /*PROTECTED REGION ID(idlmm_ParameterMode) START*/
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
-    typedef int ParameterMode;
+    enum ParameterMode
+    {
+        PARAM_IN,
+        PARAM_OUT,
+        PARAM_INOUT
+    };
     /*PROTECTED REGION END*/
     /*PROTECTED REGION ID(idlmm_PrimitiveKind) START*/
     // Please, enable the protected region if you add manually written code.
     // To do this, add the keyword ENABLED before START.
-    typedef int PrimitiveKind;
+    enum PrimitiveKind
+    {
+        PK_NULL,
+        PK_VOID,
+        PK_SHORT,
+        PK_LONG,
+        PK_USHORT,
+        PK_ULONG,
+        PK_FLOAT,
+        PK_DOUBLE,
+        PK_BOOLEAN,
+        PK_CHAR,
+        PK_OCTET,
+        PK_ANY,
+        PK_LONGDOUBLE,
+        PK_WSTRING,
+        PK_TYPECODE,
+        PK_WCHAR,
+        PK_PRINCIPAL,
+        PK_STRING,
+        PK_ULONGLONG,
+        PK_OBJREF,
+        PK_LONGLONG
+    };
     /*PROTECTED REGION END*/
     /*PROTECTED REGION ID(idlmm_EAny) START*/
     // Please, enable the protected region if you add manually written code.

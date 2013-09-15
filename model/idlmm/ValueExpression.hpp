@@ -21,9 +21,9 @@
 #define IDLMM_VALUEEXPRESSION_HPP
 
 #include <idlmm_forward.hpp>
-#include <ecorecpp/mapping_forward.hpp>
 
-#include <ecore_forward.hpp>
+
+
 #include <idlmm/LiteralExpression.hpp>
 
 /*PROTECTED REGION ID(ValueExpression_pre) START*/
@@ -41,14 +41,14 @@ namespace idlmm
 
         virtual ~ValueExpression();
 
-        virtual void _initialize();
+        
 
         // Operations
 
 
         // Attributes
-        ::ecore::EString const& getValue() const;
-        void setValue(::ecore::EString const& _value);
+        std::string const& getValue() const;
+        void setValue(std::string const& _value);
 
         // References
 
@@ -59,13 +59,13 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-        virtual ::ecore::EJavaObject eGet(::ecore::EInt _featureID,
-                ::ecore::EBoolean _resolve);
-        virtual void eSet(::ecore::EInt _featureID,
-                ::ecore::EJavaObject const& _newValue);
-        virtual ::ecore::EBoolean eIsSet(::ecore::EInt _featureID);
-        virtual void eUnset(::ecore::EInt _featureID);
-        virtual ::ecore::EClass_ptr _eClass();
+
+                
+
+                
+        
+        
+        
 
         /*PROTECTED REGION ID(ValueExpressionImpl) START*/
         // Please, enable the protected region if you add manually written code.
@@ -75,7 +75,7 @@ namespace idlmm
     protected:
         // Attributes
 
-        ::ecore::EString m_value;
+        std::string m_value;
 
         // References
 

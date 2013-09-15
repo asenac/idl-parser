@@ -21,9 +21,9 @@
 #define IDLMM_STRUCTDEF_HPP
 
 #include <idlmm_forward.hpp>
-#include <ecorecpp/mapping_forward.hpp>
 
-#include <ecore_forward.hpp>
+
+
 #include <idlmm/TypedefDef.hpp>
 
 /*PROTECTED REGION ID(StructDef_pre) START*/
@@ -41,7 +41,7 @@ namespace idlmm
 
         virtual ~StructDef();
 
-        virtual void _initialize();
+        
 
         // Operations
 
@@ -49,7 +49,7 @@ namespace idlmm
         // Attributes
 
         // References
-        ::ecorecpp::mapping::EList< ::idlmm::Field >& getMembers();
+        boost::ptr_vector< ::idlmm::Field >& getMembers();
 
         /*PROTECTED REGION ID(StructDef) START*/
         // Please, enable the protected region if you add manually written code.
@@ -57,13 +57,13 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-        virtual ::ecore::EJavaObject eGet(::ecore::EInt _featureID,
-                ::ecore::EBoolean _resolve);
-        virtual void eSet(::ecore::EInt _featureID,
-                ::ecore::EJavaObject const& _newValue);
-        virtual ::ecore::EBoolean eIsSet(::ecore::EInt _featureID);
-        virtual void eUnset(::ecore::EInt _featureID);
-        virtual ::ecore::EClass_ptr _eClass();
+
+                
+
+                
+        
+        
+        
 
         /*PROTECTED REGION ID(StructDefImpl) START*/
         // Please, enable the protected region if you add manually written code.
@@ -76,8 +76,8 @@ namespace idlmm
 
         // References
 
-        ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
-                ::idlmm::Field > > m_members;
+        boost::ptr_vector<
+                ::idlmm::Field > m_members;
 
     };
 

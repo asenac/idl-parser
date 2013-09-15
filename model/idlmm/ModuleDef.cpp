@@ -20,13 +20,13 @@
 #include "ModuleDef.hpp"
 #include <idlmm/Container.hpp>
 #include <idlmm/Contained.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -41,7 +41,7 @@ ModuleDef::ModuleDef()
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
+    
 #endif
 }
 
@@ -56,30 +56,14 @@ ModuleDef::~ModuleDef()
 
 // Attributes
 
-::ecore::EString const& ModuleDef::getPrefix() const
+std::string const& ModuleDef::getPrefix() const
 {
     return m_prefix;
 }
 
-void ModuleDef::setPrefix(::ecore::EString const& _prefix)
+void ModuleDef::setPrefix(std::string const& _prefix)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_prefix = m_prefix;
-#endif
     m_prefix = _prefix;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getModuleDef__prefix(),
-                _old_prefix,
-                m_prefix
-        );
-        eNotify(&notification);
-    }
-#endif
 }
 
 // References

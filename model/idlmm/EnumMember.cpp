@@ -21,13 +21,13 @@
 #include <idlmm/Constant.hpp>
 #include <idlmm/Container.hpp>
 #include <idlmm/EnumDef.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -43,7 +43,7 @@ EnumMember::EnumMember() :
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
+    
 #endif
 }
 
@@ -66,23 +66,6 @@ EnumMember::~EnumMember()
 
 void EnumMember::setEnum(::idlmm::EnumDef_ptr _enum)
 {
-    ::idlmm::EnumDef_ptr _old_enum = m_enum;
-
     m_enum = _enum;
-
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getEnumMember__enum(),
-                _old_enum,
-                m_enum
-        );
-        eNotify(&notification);
-    }
-#endif
-
 }
 

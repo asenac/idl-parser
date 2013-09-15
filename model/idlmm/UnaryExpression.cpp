@@ -19,13 +19,13 @@
 
 #include "UnaryExpression.hpp"
 #include <idlmm/Expression.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -41,7 +41,7 @@ UnaryExpression::UnaryExpression() :
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
+    
 #endif
 }
 
@@ -60,30 +60,14 @@ UnaryExpression::~UnaryExpression()
 
 // Attributes
 
-::ecore::EString const& UnaryExpression::getOperator() const
+std::string const& UnaryExpression::getOperator() const
 {
     return m_operator;
 }
 
-void UnaryExpression::setOperator(::ecore::EString const& _operator)
+void UnaryExpression::setOperator(std::string const& _operator)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_operator = m_operator;
-#endif
     m_operator = _operator;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getUnaryExpression__operator(),
-                _old_operator,
-                m_operator
-        );
-        eNotify(&notification);
-    }
-#endif
 }
 
 // References
@@ -97,20 +81,6 @@ void UnaryExpression::setExpression(::idlmm::Expression_ptr _expression)
     ::idlmm::Expression_ptr _old_expression = m_expression;
 
     m_expression = _expression;
-
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getUnaryExpression__expression(),
-                _old_expression,
-                m_expression
-        );
-        eNotify(&notification);
-    }
-#endif
 
     delete _old_expression;
 }

@@ -19,13 +19,13 @@
 
 #include "PrimitiveDef.hpp"
 #include <idlmm/IDLType.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -40,7 +40,7 @@ PrimitiveDef::PrimitiveDef()
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
+    
 #endif
 }
 
@@ -62,23 +62,7 @@ PrimitiveDef::~PrimitiveDef()
 
 void PrimitiveDef::setKind(::idlmm::PrimitiveKind _kind)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::idlmm::PrimitiveKind _old_kind = m_kind;
-#endif
     m_kind = _kind;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getPrimitiveDef__kind(),
-                _old_kind,
-                m_kind
-        );
-        eNotify(&notification);
-    }
-#endif
 }
 
 // References

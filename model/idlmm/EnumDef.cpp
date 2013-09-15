@@ -21,13 +21,13 @@
 #include <idlmm/TypedefDef.hpp>
 #include <idlmm/Container.hpp>
 #include <idlmm/EnumMember.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -35,19 +35,6 @@ using namespace ::idlmm;
 // Default constructor
 EnumDef::EnumDef()
 {
-
-    m_members.reset(
-            new ::ecorecpp::mapping::ReferenceEListImpl< ::idlmm::EnumMember,
-                    -1, true, true >(this, NULL));
-
-    /*PROTECTED REGION ID(EnumDefImpl__EnumDefImpl) START*/
-    // Please, enable the protected region if you add manually written code.
-    // To do this, add the keyword ENABLED before START.
-    /*PROTECTED REGION END*/
-
-#ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
-#endif
 }
 
 EnumDef::~EnumDef()
@@ -62,8 +49,8 @@ EnumDef::~EnumDef()
 // Attributes
 
 // References
-::ecorecpp::mapping::EList< ::idlmm::EnumMember >& EnumDef::getMembers()
+boost::ptr_vector< ::idlmm::EnumMember >& EnumDef::getMembers()
 {
-    return *m_members;
+    return m_members;
 }
 

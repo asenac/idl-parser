@@ -19,13 +19,13 @@
 
 #include "IDLType.hpp"
 #include <idlmm/ModelElement.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -40,7 +40,7 @@ IDLType::IDLType()
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
+    
 #endif
 }
 
@@ -62,23 +62,7 @@ IDLType::~IDLType()
 
 void IDLType::setTypeCode(::idlmm::ETypeCode _typeCode)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::idlmm::ETypeCode _old_typeCode = m_typeCode;
-#endif
     m_typeCode = _typeCode;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getIDLType__typeCode(),
-                _old_typeCode,
-                m_typeCode
-        );
-        eNotify(&notification);
-    }
-#endif
 }
 
 // References

@@ -21,9 +21,9 @@
 #define IDLMM_CONTAINED_HPP
 
 #include <idlmm_forward.hpp>
-#include <ecorecpp/mapping_forward.hpp>
 
-#include <ecore_forward.hpp>
+
+
 #include <idlmm/NamedElement.hpp>
 
 /*PROTECTED REGION ID(Contained_pre) START*/
@@ -41,20 +41,20 @@ namespace idlmm
 
         virtual ~Contained();
 
-        virtual void _initialize();
+        
 
         // Operations
 
 
         // Attributes
-        ::ecore::EString const& getRepositoryId() const;
-        void setRepositoryId(::ecore::EString const& _repositoryId);
+        std::string const& getRepositoryId() const;
+        void setRepositoryId(std::string const& _repositoryId);
 
-        ::ecore::EString const& getVersion() const;
-        void setVersion(::ecore::EString const& _version);
+        std::string const& getVersion() const;
+        void setVersion(std::string const& _version);
 
-        ::ecore::EString const& getAbsoluteName() const;
-        void setAbsoluteName(::ecore::EString const& _absoluteName);
+        std::string const& getAbsoluteName() const;
+        void setAbsoluteName(std::string const& _absoluteName);
 
         // References
         ::idlmm::Container_ptr getDefinedIn();
@@ -66,13 +66,13 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-        virtual ::ecore::EJavaObject eGet(::ecore::EInt _featureID,
-                ::ecore::EBoolean _resolve);
-        virtual void eSet(::ecore::EInt _featureID,
-                ::ecore::EJavaObject const& _newValue);
-        virtual ::ecore::EBoolean eIsSet(::ecore::EInt _featureID);
-        virtual void eUnset(::ecore::EInt _featureID);
-        virtual ::ecore::EClass_ptr _eClass();
+
+                
+
+                
+        
+        
+        
 
         /*PROTECTED REGION ID(ContainedImpl) START*/
         // Please, enable the protected region if you add manually written code.
@@ -82,11 +82,11 @@ namespace idlmm
     protected:
         // Attributes
 
-        ::ecore::EString m_repositoryId;
+        std::string m_repositoryId;
 
-        ::ecore::EString m_version;
+        std::string m_version;
 
-        ::ecore::EString m_absoluteName;
+        std::string m_absoluteName;
 
         // References
 

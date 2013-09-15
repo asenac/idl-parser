@@ -21,9 +21,9 @@
 #define IDLMM_ATTRIBUTEDEF_HPP
 
 #include <idlmm_forward.hpp>
-#include <ecorecpp/mapping_forward.hpp>
 
-#include <ecore_forward.hpp>
+
+
 #include <idlmm/Contained.hpp>
 #include <idlmm/Typed.hpp>
 
@@ -43,19 +43,19 @@ namespace idlmm
 
         virtual ~AttributeDef();
 
-        virtual void _initialize();
+        
 
         // Operations
 
 
         // Attributes
-        ::ecore::EBoolean isIsReadonly() const;
-        void setIsReadonly(::ecore::EBoolean _isReadonly);
+        bool isIsReadonly() const;
+        void setIsReadonly(bool _isReadonly);
 
         // References
-        ::ecorecpp::mapping::EList< ::idlmm::ExceptionDef >& getGetRaises();
+        boost::ptr_vector< ::idlmm::ExceptionDef >& getGetRaises();
 
-        ::ecorecpp::mapping::EList< ::idlmm::ExceptionDef >& getSetRaises();
+        boost::ptr_vector< ::idlmm::ExceptionDef >& getSetRaises();
 
         /*PROTECTED REGION ID(AttributeDef) START*/
         // Please, enable the protected region if you add manually written code.
@@ -63,13 +63,13 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-        virtual ::ecore::EJavaObject eGet(::ecore::EInt _featureID,
-                ::ecore::EBoolean _resolve);
-        virtual void eSet(::ecore::EInt _featureID,
-                ::ecore::EJavaObject const& _newValue);
-        virtual ::ecore::EBoolean eIsSet(::ecore::EInt _featureID);
-        virtual void eUnset(::ecore::EInt _featureID);
-        virtual ::ecore::EClass_ptr _eClass();
+
+                
+
+                
+        
+        
+        
 
         /*PROTECTED REGION ID(AttributeDefImpl) START*/
         // Please, enable the protected region if you add manually written code.
@@ -79,15 +79,15 @@ namespace idlmm
     protected:
         // Attributes
 
-        ::ecore::EBoolean m_isReadonly;
+        bool m_isReadonly;
 
         // References
 
-        ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
-                ::idlmm::ExceptionDef > > m_getRaises;
+        boost::ptr_vector<
+                ::idlmm::ExceptionDef > m_getRaises;
 
-        ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
-                ::idlmm::ExceptionDef > > m_setRaises;
+        boost::ptr_vector<
+                ::idlmm::ExceptionDef > m_setRaises;
 
     };
 

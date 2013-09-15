@@ -21,12 +21,9 @@
 
 using namespace ::idlmm;
 
-std::auto_ptr< ::idlmm::IdlmmFactory > IdlmmFactory::s_instance;
-
 ::idlmm::IdlmmFactory_ptr IdlmmFactory::_instance()
 {
-    if (!s_instance.get())
-        new IdlmmFactory();
+    static std::auto_ptr< ::idlmm::IdlmmFactory > s_instance(new ::idlmm::IdlmmFactory());
     return s_instance.get();
 }
 

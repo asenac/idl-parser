@@ -22,13 +22,13 @@
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
 #include <idlmm/Expression.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -44,7 +44,7 @@ SequenceDef::SequenceDef() :
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
+    
 #endif
 }
 
@@ -74,20 +74,6 @@ void SequenceDef::setBound(::idlmm::Expression_ptr _bound)
     ::idlmm::Expression_ptr _old_bound = m_bound;
 
     m_bound = _bound;
-
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getSequenceDef__bound(),
-                _old_bound,
-                m_bound
-        );
-        eNotify(&notification);
-    }
-#endif
 
     delete _old_bound;
 }

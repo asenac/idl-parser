@@ -21,13 +21,13 @@
 #include <idlmm/Typed.hpp>
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -42,7 +42,7 @@ ParameterDef::ParameterDef()
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
+    
 #endif
 }
 
@@ -57,30 +57,14 @@ ParameterDef::~ParameterDef()
 
 // Attributes
 
-::ecore::EString const& ParameterDef::getIdentifier() const
+std::string const& ParameterDef::getIdentifier() const
 {
     return m_identifier;
 }
 
-void ParameterDef::setIdentifier(::ecore::EString const& _identifier)
+void ParameterDef::setIdentifier(std::string const& _identifier)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_identifier = m_identifier;
-#endif
     m_identifier = _identifier;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getParameterDef__identifier(),
-                _old_identifier,
-                m_identifier
-        );
-        eNotify(&notification);
-    }
-#endif
 }
 
 ::idlmm::ParameterMode ParameterDef::getDirection() const
@@ -90,23 +74,7 @@ void ParameterDef::setIdentifier(::ecore::EString const& _identifier)
 
 void ParameterDef::setDirection(::idlmm::ParameterMode _direction)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::idlmm::ParameterMode _old_direction = m_direction;
-#endif
     m_direction = _direction;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getParameterDef__direction(),
-                _old_direction,
-                m_direction
-        );
-        eNotify(&notification);
-    }
-#endif
 }
 
 // References

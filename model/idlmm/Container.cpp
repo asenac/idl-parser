@@ -20,13 +20,13 @@
 #include "Container.hpp"
 #include <idlmm/Contained.hpp>
 #include <idlmm/Container.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -34,19 +34,6 @@ using namespace ::idlmm;
 // Default constructor
 Container::Container()
 {
-
-    m_contains.reset(
-            new ::ecorecpp::mapping::ReferenceEListImpl< ::idlmm::Contained,
-                    -1, true, true >(this, NULL));
-
-    /*PROTECTED REGION ID(ContainerImpl__ContainerImpl) START*/
-    // Please, enable the protected region if you add manually written code.
-    // To do this, add the keyword ENABLED before START.
-    /*PROTECTED REGION END*/
-
-#ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
-#endif
 }
 
 Container::~Container()
@@ -61,8 +48,8 @@ Container::~Container()
 // Attributes
 
 // References
-::ecorecpp::mapping::EList< ::idlmm::Contained >& Container::getContains()
+boost::ptr_vector< ::idlmm::Contained >& Container::getContains()
 {
-    return *m_contains;
+    return m_contains;
 }
 

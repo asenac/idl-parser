@@ -25,13 +25,13 @@
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
 #include <idlmm/Expression.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -47,7 +47,7 @@ ConstantDef::ConstantDef() :
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
+    
 #endif
 }
 
@@ -77,20 +77,6 @@ void ConstantDef::setConstValue(::idlmm::Expression_ptr _constValue)
     ::idlmm::Expression_ptr _old_constValue = m_constValue;
 
     m_constValue = _constValue;
-
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getConstantDef__constValue(),
-                _old_constValue,
-                m_constValue
-        );
-        eNotify(&notification);
-    }
-#endif
 
     delete _old_constValue;
 }

@@ -21,9 +21,9 @@
 #define IDLMM_UNIONDEF_HPP
 
 #include <idlmm_forward.hpp>
-#include <ecorecpp/mapping_forward.hpp>
 
-#include <ecore_forward.hpp>
+
+
 #include <idlmm/TypedefDef.hpp>
 
 /*PROTECTED REGION ID(UnionDef_pre) START*/
@@ -41,7 +41,7 @@ namespace idlmm
 
         virtual ~UnionDef();
 
-        virtual void _initialize();
+        
 
         // Operations
 
@@ -49,7 +49,7 @@ namespace idlmm
         // Attributes
 
         // References
-        ::ecorecpp::mapping::EList< ::idlmm::UnionField >& getUnionMembers();
+        boost::ptr_vector< ::idlmm::UnionField >& getUnionMembers();
 
         ::idlmm::IDLType_ptr getContainedDiscrim();
         void setContainedDiscrim(::idlmm::IDLType_ptr _containedDiscrim);
@@ -63,13 +63,13 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-        virtual ::ecore::EJavaObject eGet(::ecore::EInt _featureID,
-                ::ecore::EBoolean _resolve);
-        virtual void eSet(::ecore::EInt _featureID,
-                ::ecore::EJavaObject const& _newValue);
-        virtual ::ecore::EBoolean eIsSet(::ecore::EInt _featureID);
-        virtual void eUnset(::ecore::EInt _featureID);
-        virtual ::ecore::EClass_ptr _eClass();
+
+                
+
+                
+        
+        
+        
 
         /*PROTECTED REGION ID(UnionDefImpl) START*/
         // Please, enable the protected region if you add manually written code.
@@ -82,8 +82,8 @@ namespace idlmm
 
         // References
 
-        ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
-                ::idlmm::UnionField > > m_unionMembers;
+        boost::ptr_vector<
+                ::idlmm::UnionField > m_unionMembers;
 
         ::idlmm::IDLType_ptr m_containedDiscrim;
 

@@ -19,13 +19,13 @@
 
 #include "NamedElement.hpp"
 #include <idlmm/ModelElement.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -40,7 +40,7 @@ NamedElement::NamedElement()
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
+    
 #endif
 }
 
@@ -55,30 +55,14 @@ NamedElement::~NamedElement()
 
 // Attributes
 
-::ecore::EString const& NamedElement::getIdentifier() const
+std::string const& NamedElement::getIdentifier() const
 {
     return m_identifier;
 }
 
-void NamedElement::setIdentifier(::ecore::EString const& _identifier)
+void NamedElement::setIdentifier(std::string const& _identifier)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_identifier = m_identifier;
-#endif
     m_identifier = _identifier;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getNamedElement__identifier(),
-                _old_identifier,
-                m_identifier
-        );
-        eNotify(&notification);
-    }
-#endif
 }
 
 // References

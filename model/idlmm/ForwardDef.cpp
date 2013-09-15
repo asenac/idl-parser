@@ -21,13 +21,13 @@
 #include <idlmm/Contained.hpp>
 #include <idlmm/Container.hpp>
 #include <idlmm/InterfaceDef.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -43,7 +43,7 @@ ForwardDef::ForwardDef() :
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
+    
 #endif
 }
 
@@ -66,23 +66,6 @@ ForwardDef::~ForwardDef()
 
 void ForwardDef::setDefinition(::idlmm::InterfaceDef_ptr _definition)
 {
-    ::idlmm::InterfaceDef_ptr _old_definition = m_definition;
-
     m_definition = _definition;
-
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getForwardDef__definition(),
-                _old_definition,
-                m_definition
-        );
-        eNotify(&notification);
-    }
-#endif
-
 }
 

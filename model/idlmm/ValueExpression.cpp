@@ -19,13 +19,13 @@
 
 #include "ValueExpression.hpp"
 #include <idlmm/LiteralExpression.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -40,7 +40,7 @@ ValueExpression::ValueExpression()
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
+    
 #endif
 }
 
@@ -55,30 +55,14 @@ ValueExpression::~ValueExpression()
 
 // Attributes
 
-::ecore::EString const& ValueExpression::getValue() const
+std::string const& ValueExpression::getValue() const
 {
     return m_value;
 }
 
-void ValueExpression::setValue(::ecore::EString const& _value)
+void ValueExpression::setValue(std::string const& _value)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_value = m_value;
-#endif
     m_value = _value;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getValueExpression__value(),
-                _old_value,
-                m_value
-        );
-        eNotify(&notification);
-    }
-#endif
 }
 
 // References

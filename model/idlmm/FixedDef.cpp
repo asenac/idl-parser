@@ -20,13 +20,13 @@
 #include "FixedDef.hpp"
 #include <idlmm/IDLType.hpp>
 #include <idlmm/Expression.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -42,7 +42,7 @@ FixedDef::FixedDef() :
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
+    
 #endif
 }
 
@@ -77,20 +77,6 @@ void FixedDef::setDigits(::idlmm::Expression_ptr _digits)
 
     m_digits = _digits;
 
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getFixedDef__digits(),
-                _old_digits,
-                m_digits
-        );
-        eNotify(&notification);
-    }
-#endif
-
     delete _old_digits;
 }
 
@@ -104,20 +90,6 @@ void FixedDef::setScale(::idlmm::Expression_ptr _scale)
     ::idlmm::Expression_ptr _old_scale = m_scale;
 
     m_scale = _scale;
-
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getFixedDef__scale(),
-                _old_scale,
-                m_scale
-        );
-        eNotify(&notification);
-    }
-#endif
 
     delete _old_scale;
 }

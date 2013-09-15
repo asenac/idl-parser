@@ -21,9 +21,9 @@
 #define IDLMM_EXCEPTIONDEF_HPP
 
 #include <idlmm_forward.hpp>
-#include <ecorecpp/mapping_forward.hpp>
 
-#include <ecore_forward.hpp>
+
+
 #include <idlmm/Contained.hpp>
 
 /*PROTECTED REGION ID(ExceptionDef_pre) START*/
@@ -41,7 +41,7 @@ namespace idlmm
 
         virtual ~ExceptionDef();
 
-        virtual void _initialize();
+        
 
         // Operations
 
@@ -51,7 +51,7 @@ namespace idlmm
         void setTypeCode(::idlmm::ETypeCode _typeCode);
 
         // References
-        ::ecorecpp::mapping::EList< ::idlmm::Field >& getMembers();
+        boost::ptr_vector< ::idlmm::Field >& getMembers();
 
         /*PROTECTED REGION ID(ExceptionDef) START*/
         // Please, enable the protected region if you add manually written code.
@@ -59,13 +59,13 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-        virtual ::ecore::EJavaObject eGet(::ecore::EInt _featureID,
-                ::ecore::EBoolean _resolve);
-        virtual void eSet(::ecore::EInt _featureID,
-                ::ecore::EJavaObject const& _newValue);
-        virtual ::ecore::EBoolean eIsSet(::ecore::EInt _featureID);
-        virtual void eUnset(::ecore::EInt _featureID);
-        virtual ::ecore::EClass_ptr _eClass();
+
+                
+
+                
+        
+        
+        
 
         /*PROTECTED REGION ID(ExceptionDefImpl) START*/
         // Please, enable the protected region if you add manually written code.
@@ -79,8 +79,8 @@ namespace idlmm
 
         // References
 
-        ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
-                ::idlmm::Field > > m_members;
+        boost::ptr_vector<
+                ::idlmm::Field > m_members;
 
     };
 

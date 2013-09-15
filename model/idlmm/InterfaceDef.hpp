@@ -21,9 +21,9 @@
 #define IDLMM_INTERFACEDEF_HPP
 
 #include <idlmm_forward.hpp>
-#include <ecorecpp/mapping_forward.hpp>
 
-#include <ecore_forward.hpp>
+
+
 #include <idlmm/Container.hpp>
 #include <idlmm/TypedefDef.hpp>
 
@@ -43,23 +43,23 @@ namespace idlmm
 
         virtual ~InterfaceDef();
 
-        virtual void _initialize();
+        
 
         // Operations
 
 
         // Attributes
-        ::ecore::EBoolean isIsAbstract() const;
-        void setIsAbstract(::ecore::EBoolean _isAbstract);
+        bool isIsAbstract() const;
+        void setIsAbstract(bool _isAbstract);
 
-        ::ecore::EBoolean isIsCustom() const;
-        void setIsCustom(::ecore::EBoolean _isCustom);
+        bool isIsCustom() const;
+        void setIsCustom(bool _isCustom);
 
-        ::ecore::EBoolean isIsTruncatable() const;
-        void setIsTruncatable(::ecore::EBoolean _isTruncatable);
+        bool isIsTruncatable() const;
+        void setIsTruncatable(bool _isTruncatable);
 
         // References
-        ::ecorecpp::mapping::EList< ::idlmm::InterfaceDef >& getDerivesFrom();
+        boost::ptr_vector< ::idlmm::InterfaceDef >& getDerivesFrom();
 
         ::idlmm::ForwardDef_ptr getForward();
         void setForward(::idlmm::ForwardDef_ptr _forward);
@@ -70,13 +70,13 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-        virtual ::ecore::EJavaObject eGet(::ecore::EInt _featureID,
-                ::ecore::EBoolean _resolve);
-        virtual void eSet(::ecore::EInt _featureID,
-                ::ecore::EJavaObject const& _newValue);
-        virtual ::ecore::EBoolean eIsSet(::ecore::EInt _featureID);
-        virtual void eUnset(::ecore::EInt _featureID);
-        virtual ::ecore::EClass_ptr _eClass();
+
+                
+
+                
+        
+        
+        
 
         /*PROTECTED REGION ID(InterfaceDefImpl) START*/
         // Please, enable the protected region if you add manually written code.
@@ -86,16 +86,16 @@ namespace idlmm
     protected:
         // Attributes
 
-        ::ecore::EBoolean m_isAbstract;
+        bool m_isAbstract;
 
-        ::ecore::EBoolean m_isCustom;
+        bool m_isCustom;
 
-        ::ecore::EBoolean m_isTruncatable;
+        bool m_isTruncatable;
 
         // References
 
-        ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
-                ::idlmm::InterfaceDef > > m_derivesFrom;
+        boost::ptr_vector<
+                ::idlmm::InterfaceDef > m_derivesFrom;
 
         ::idlmm::ForwardDef_ptr m_forward;
 

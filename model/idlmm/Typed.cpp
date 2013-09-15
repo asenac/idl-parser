@@ -21,13 +21,13 @@
 #include <idlmm/ModelElement.hpp>
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -43,7 +43,7 @@ Typed::Typed() :
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
+    
 #endif
 }
 
@@ -74,20 +74,6 @@ void Typed::setContainedType(::idlmm::IDLType_ptr _containedType)
 
     m_containedType = _containedType;
 
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getTyped__containedType(),
-                _old_containedType,
-                m_containedType
-        );
-        eNotify(&notification);
-    }
-#endif
-
     delete _old_containedType;
 }
 
@@ -98,23 +84,6 @@ void Typed::setContainedType(::idlmm::IDLType_ptr _containedType)
 
 void Typed::setSharedType(::idlmm::TypedefDef_ptr _sharedType)
 {
-    ::idlmm::TypedefDef_ptr _old_sharedType = m_sharedType;
-
     m_sharedType = _sharedType;
-
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getTyped__sharedType(),
-                _old_sharedType,
-                m_sharedType
-        );
-        eNotify(&notification);
-    }
-#endif
-
 }
 

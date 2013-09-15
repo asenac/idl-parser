@@ -31,7 +31,7 @@ idlmm::TranslationUnit_ptr doParse(State& s)
 
     if (idl::grammar::gram::match(s))
     {
-        ecore::EObject * obj = s.semantic_state().result;
+        idlmm::ModelElement_ptr obj = s.semantic_state().result;
 
         if (s.semantic_state().errors)
             delete obj;
@@ -39,9 +39,6 @@ idlmm::TranslationUnit_ptr doParse(State& s)
         {
             res = obj->as< idlmm::TranslationUnit > ();
             assert(res);
-
-            // emf4cpp stuff
-            res->_initialize();
         }
     }
     else

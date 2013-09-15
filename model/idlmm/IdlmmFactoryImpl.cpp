@@ -18,7 +18,6 @@
  */
 
 #include <idlmm/IdlmmFactory.hpp>
-#include <idlmm/IdlmmPackage.hpp>
 #include <idlmm/ModelElement.hpp>
 #include <idlmm/Container.hpp>
 #include <idlmm/Contained.hpp>
@@ -57,163 +56,10 @@
 #include <idlmm/Constant.hpp>
 #include <idlmm/NamedElement.hpp>
 
-#include <ecore.hpp>
-#include <ecorecpp/mapping.hpp>
-
 using namespace ::idlmm;
 
 IdlmmFactory::IdlmmFactory()
 {
-    s_instance.reset(this);
-}
-
-::ecore::EObject_ptr IdlmmFactory::create(::ecore::EClass_ptr _eClass)
-{
-    switch (_eClass->getClassifierID())
-    {
-    case IdlmmPackage::MODELELEMENT:
-        return createModelElement();
-    case IdlmmPackage::CONTAINER:
-        return createContainer();
-    case IdlmmPackage::CONTAINED:
-        return createContained();
-    case IdlmmPackage::INTERFACEDEF:
-        return createInterfaceDef();
-    case IdlmmPackage::MODULEDEF:
-        return createModuleDef();
-    case IdlmmPackage::IDLTYPE:
-        return createIDLType();
-    case IdlmmPackage::OPERATIONDEF:
-        return createOperationDef();
-    case IdlmmPackage::ATTRIBUTEDEF:
-        return createAttributeDef();
-    case IdlmmPackage::CONSTANTDEF:
-        return createConstantDef();
-    case IdlmmPackage::TYPED:
-        return createTyped();
-    case IdlmmPackage::PARAMETERDEF:
-        return createParameterDef();
-    case IdlmmPackage::PRIMITIVEDEF:
-        return createPrimitiveDef();
-    case IdlmmPackage::EXCEPTIONDEF:
-        return createExceptionDef();
-    case IdlmmPackage::FIELD:
-        return createField();
-    case IdlmmPackage::FIXEDDEF:
-        return createFixedDef();
-    case IdlmmPackage::WSTRINGDEF:
-        return createWstringDef();
-    case IdlmmPackage::STRINGDEF:
-        return createStringDef();
-    case IdlmmPackage::ALIASDEF:
-        return createAliasDef();
-    case IdlmmPackage::ARRAYDEF:
-        return createArrayDef();
-    case IdlmmPackage::SEQUENCEDEF:
-        return createSequenceDef();
-    case IdlmmPackage::UNIONFIELD:
-        return createUnionField();
-    case IdlmmPackage::TYPEDEFDEF:
-        return createTypedefDef();
-    case IdlmmPackage::UNIONDEF:
-        return createUnionDef();
-    case IdlmmPackage::ENUMDEF:
-        return createEnumDef();
-    case IdlmmPackage::STRUCTDEF:
-        return createStructDef();
-    case IdlmmPackage::TRANSLATIONUNIT:
-        return createTranslationUnit();
-    case IdlmmPackage::INCLUDE:
-        return createInclude();
-    case IdlmmPackage::EXPRESSION:
-        return createExpression();
-    case IdlmmPackage::BINARYEXPRESSION:
-        return createBinaryExpression();
-    case IdlmmPackage::UNARYEXPRESSION:
-        return createUnaryExpression();
-    case IdlmmPackage::LITERALEXPRESSION:
-        return createLiteralExpression();
-    case IdlmmPackage::CONSTANTDEFREF:
-        return createConstantDefRef();
-    case IdlmmPackage::VALUEEXPRESSION:
-        return createValueExpression();
-    case IdlmmPackage::FORWARDDEF:
-        return createForwardDef();
-    case IdlmmPackage::ENUMMEMBER:
-        return createEnumMember();
-    case IdlmmPackage::CONSTANT:
-        return createConstant();
-    case IdlmmPackage::NAMEDELEMENT:
-        return createNamedElement();
-    default:
-        throw "IllegalArgumentException";
-    }
-}
-
-::ecore::EJavaObject IdlmmFactory::createFromString(
-        ::ecore::EDataType_ptr _eDataType,
-        ::ecore::EString const& _literalValue)
-{
-    switch (_eDataType->getClassifierID())
-    {
-    case IdlmmPackage::PARAMETERMODE:
-    {
-        ::ecore::EJavaObject _any;
-        IdlmmPackage_ptr _epkg =
-                dynamic_cast< ::idlmm::IdlmmPackage_ptr > (getEPackage());
-        return _epkg->getParameterMode()->getEEnumLiteralByLiteral(
-                _literalValue)->getValue();
-    }
-    case IdlmmPackage::PRIMITIVEKIND:
-    {
-        ::ecore::EJavaObject _any;
-        IdlmmPackage_ptr _epkg =
-                dynamic_cast< ::idlmm::IdlmmPackage_ptr > (getEPackage());
-        return _epkg->getPrimitiveKind()->getEEnumLiteralByLiteral(
-                _literalValue)->getValue();
-    }
-    case IdlmmPackage::EANY:
-        return ::ecorecpp::mapping::string_traits< ::idlmm::EAny >::fromString(
-                _literalValue);
-    case IdlmmPackage::ETYPECODE:
-        return ::ecorecpp::mapping::string_traits< ::idlmm::ETypeCode >::fromString(
-                _literalValue);
-    default:
-        throw "IllegalArgumentException";
-    }
-}
-
-::ecore::EString IdlmmFactory::convertToString(
-        ::ecore::EDataType_ptr _eDataType,
-        ::ecore::EJavaObject const& _instanceValue)
-{
-    switch (_eDataType->getClassifierID())
-    {
-    case IdlmmPackage::PARAMETERMODE:
-    {
-        IdlmmPackage_ptr _epkg = ::idlmm::instanceOf< ::idlmm::IdlmmPackage >(
-                getEPackage());
-        ::ecore::EInt _value = ::ecorecpp::mapping::any::any_cast<
-                ::ecore::EInt >(_instanceValue);
-        return _epkg->getParameterMode()->getEEnumLiteral(_value)->getName();
-    }
-    case IdlmmPackage::PRIMITIVEKIND:
-    {
-        IdlmmPackage_ptr _epkg = ::idlmm::instanceOf< ::idlmm::IdlmmPackage >(
-                getEPackage());
-        ::ecore::EInt _value = ::ecorecpp::mapping::any::any_cast<
-                ::ecore::EInt >(_instanceValue);
-        return _epkg->getPrimitiveKind()->getEEnumLiteral(_value)->getName();
-    }
-    case IdlmmPackage::EANY:
-        return ::ecorecpp::mapping::string_traits< ::idlmm::EAny >::toString(
-                _instanceValue);
-    case IdlmmPackage::ETYPECODE:
-        return ::ecorecpp::mapping::string_traits< ::idlmm::ETypeCode >::toString(
-                _instanceValue);
-    default:
-        throw "IllegalArgumentException";
-    }
 }
 
 ModelElement_ptr IdlmmFactory::createModelElement()

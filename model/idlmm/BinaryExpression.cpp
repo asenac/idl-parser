@@ -19,13 +19,13 @@
 
 #include "BinaryExpression.hpp"
 #include <idlmm/Expression.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -41,7 +41,7 @@ BinaryExpression::BinaryExpression() :
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
+    
 #endif
 }
 
@@ -64,30 +64,14 @@ BinaryExpression::~BinaryExpression()
 
 // Attributes
 
-::ecore::EString const& BinaryExpression::getOperator() const
+std::string const& BinaryExpression::getOperator() const
 {
     return m_operator;
 }
 
-void BinaryExpression::setOperator(::ecore::EString const& _operator)
+void BinaryExpression::setOperator(std::string const& _operator)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_operator = m_operator;
-#endif
     m_operator = _operator;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getBinaryExpression__operator(),
-                _old_operator,
-                m_operator
-        );
-        eNotify(&notification);
-    }
-#endif
 }
 
 // References
@@ -102,20 +86,6 @@ void BinaryExpression::setLeft(::idlmm::Expression_ptr _left)
 
     m_left = _left;
 
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getBinaryExpression__left(),
-                _old_left,
-                m_left
-        );
-        eNotify(&notification);
-    }
-#endif
-
     delete _old_left;
 }
 
@@ -129,20 +99,6 @@ void BinaryExpression::setRight(::idlmm::Expression_ptr _right)
     ::idlmm::Expression_ptr _old_right = m_right;
 
     m_right = _right;
-
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getBinaryExpression__right(),
-                _old_right,
-                m_right
-        );
-        eNotify(&notification);
-    }
-#endif
 
     delete _old_right;
 }

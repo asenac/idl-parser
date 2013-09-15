@@ -22,13 +22,13 @@
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
 #include <idlmm/Expression.hpp>
-#include <ecore/EObject.hpp>
-#include <ecore/EClass.hpp>
-#include "idlmm/IdlmmPackage.hpp"
-#include <ecorecpp/mapping.hpp>
+
+
+
+
 
 #ifdef ECORECPP_NOTIFICATION_API
-#include <ecorecpp/notify.hpp>
+
 #endif
 
 using namespace ::idlmm;
@@ -36,19 +36,6 @@ using namespace ::idlmm;
 // Default constructor
 UnionField::UnionField()
 {
-
-    m_label.reset(
-            new ::ecorecpp::mapping::ReferenceEListImpl< ::idlmm::Expression,
-                    -1, true, false >(this, NULL));
-
-    /*PROTECTED REGION ID(UnionFieldImpl__UnionFieldImpl) START*/
-    // Please, enable the protected region if you add manually written code.
-    // To do this, add the keyword ENABLED before START.
-    /*PROTECTED REGION END*/
-
-#ifdef ECORECPP_NOTIFICATION_API
-    m_eDeliver = false;
-#endif
 }
 
 UnionField::~UnionField()
@@ -62,35 +49,19 @@ UnionField::~UnionField()
 
 // Attributes
 
-::ecore::EString const& UnionField::getIdentifier() const
+std::string const& UnionField::getIdentifier() const
 {
     return m_identifier;
 }
 
-void UnionField::setIdentifier(::ecore::EString const& _identifier)
+void UnionField::setIdentifier(std::string const& _identifier)
 {
-#ifdef ECORECPP_NOTIFICATION_API
-    ::ecore::EString _old_identifier = m_identifier;
-#endif
     m_identifier = _identifier;
-#ifdef ECORECPP_NOTIFICATION_API
-    if (eNotificationRequired())
-    {
-        ::ecorecpp::notify::Notification notification(
-                ::ecorecpp::notify::Notification::SET,
-                (::ecore::EObject_ptr) this,
-                (::ecore::EStructuralFeature_ptr) ::idlmm::IdlmmPackage::_instance()->getUnionField__identifier(),
-                _old_identifier,
-                m_identifier
-        );
-        eNotify(&notification);
-    }
-#endif
 }
 
 // References
-::ecorecpp::mapping::EList< ::idlmm::Expression >& UnionField::getLabel()
+boost::ptr_vector< ::idlmm::Expression >& UnionField::getLabel()
 {
-    return *m_label;
+    return m_label;
 }
 

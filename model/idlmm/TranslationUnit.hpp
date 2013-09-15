@@ -21,9 +21,9 @@
 #define IDLMM_TRANSLATIONUNIT_HPP
 
 #include <idlmm_forward.hpp>
-#include <ecorecpp/mapping_forward.hpp>
 
-#include <ecore_forward.hpp>
+
+
 #include <idlmm/ModelElement.hpp>
 
 /*PROTECTED REGION ID(TranslationUnit_pre) START*/
@@ -41,19 +41,19 @@ namespace idlmm
 
         virtual ~TranslationUnit();
 
-        virtual void _initialize();
+        
 
         // Operations
 
 
         // Attributes
-        ::ecore::EString const& getIdentifier() const;
-        void setIdentifier(::ecore::EString const& _identifier);
+        std::string const& getIdentifier() const;
+        void setIdentifier(std::string const& _identifier);
 
         // References
-        ::ecorecpp::mapping::EList< ::idlmm::Contained >& getContains();
+        boost::ptr_vector< ::idlmm::Contained >& getContains();
 
-        ::ecorecpp::mapping::EList< ::idlmm::Include >& getIncludes();
+        boost::ptr_vector< ::idlmm::Include >& getIncludes();
 
         /*PROTECTED REGION ID(TranslationUnit) START*/
         // Please, enable the protected region if you add manually written code.
@@ -61,13 +61,13 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-        virtual ::ecore::EJavaObject eGet(::ecore::EInt _featureID,
-                ::ecore::EBoolean _resolve);
-        virtual void eSet(::ecore::EInt _featureID,
-                ::ecore::EJavaObject const& _newValue);
-        virtual ::ecore::EBoolean eIsSet(::ecore::EInt _featureID);
-        virtual void eUnset(::ecore::EInt _featureID);
-        virtual ::ecore::EClass_ptr _eClass();
+
+                
+
+                
+        
+        
+        
 
         /*PROTECTED REGION ID(TranslationUnitImpl) START*/
         // Please, enable the protected region if you add manually written code.
@@ -77,15 +77,15 @@ namespace idlmm
     protected:
         // Attributes
 
-        ::ecore::EString m_identifier;
+        std::string m_identifier;
 
         // References
 
-        ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
-                ::idlmm::Contained > > m_contains;
+        boost::ptr_vector<
+                ::idlmm::Contained > m_contains;
 
-        ::ecorecpp::mapping::out_ptr< ::ecorecpp::mapping::EList<
-                ::idlmm::Include > > m_includes;
+        boost::ptr_vector<
+                ::idlmm::Include > m_includes;
 
     };
 

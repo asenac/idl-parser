@@ -21,9 +21,9 @@
 #define IDLMM_INCLUDE_HPP
 
 #include <idlmm_forward.hpp>
-#include <ecorecpp/mapping_forward.hpp>
 
-#include <ecore_forward.hpp>
+
+
 #include <idlmm/ModelElement.hpp>
 
 /*PROTECTED REGION ID(Include_pre) START*/
@@ -41,14 +41,14 @@ namespace idlmm
 
         virtual ~Include();
 
-        virtual void _initialize();
+        
 
         // Operations
 
 
         // Attributes
-        ::ecore::EString const& getImportURI() const;
-        void setImportURI(::ecore::EString const& _importURI);
+        std::string const& getImportURI() const;
+        void setImportURI(std::string const& _importURI);
 
         // References
         ::idlmm::TranslationUnit_ptr getTranslationUnit();
@@ -60,13 +60,13 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-        virtual ::ecore::EJavaObject eGet(::ecore::EInt _featureID,
-                ::ecore::EBoolean _resolve);
-        virtual void eSet(::ecore::EInt _featureID,
-                ::ecore::EJavaObject const& _newValue);
-        virtual ::ecore::EBoolean eIsSet(::ecore::EInt _featureID);
-        virtual void eUnset(::ecore::EInt _featureID);
-        virtual ::ecore::EClass_ptr _eClass();
+
+                
+
+                
+        
+        
+        
 
         /*PROTECTED REGION ID(IncludeImpl) START*/
         // Please, enable the protected region if you add manually written code.
@@ -76,7 +76,7 @@ namespace idlmm
     protected:
         // Attributes
 
-        ::ecore::EString m_importURI;
+        std::string m_importURI;
 
         // References
 

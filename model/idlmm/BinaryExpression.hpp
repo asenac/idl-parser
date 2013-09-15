@@ -21,9 +21,9 @@
 #define IDLMM_BINARYEXPRESSION_HPP
 
 #include <idlmm_forward.hpp>
-#include <ecorecpp/mapping_forward.hpp>
 
-#include <ecore_forward.hpp>
+
+
 #include <idlmm/Expression.hpp>
 
 /*PROTECTED REGION ID(BinaryExpression_pre) START*/
@@ -41,14 +41,14 @@ namespace idlmm
 
         virtual ~BinaryExpression();
 
-        virtual void _initialize();
+        
 
         // Operations
 
 
         // Attributes
-        ::ecore::EString const& getOperator() const;
-        void setOperator(::ecore::EString const& _operator);
+        std::string const& getOperator() const;
+        void setOperator(std::string const& _operator);
 
         // References
         ::idlmm::Expression_ptr getLeft();
@@ -63,13 +63,13 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-        virtual ::ecore::EJavaObject eGet(::ecore::EInt _featureID,
-                ::ecore::EBoolean _resolve);
-        virtual void eSet(::ecore::EInt _featureID,
-                ::ecore::EJavaObject const& _newValue);
-        virtual ::ecore::EBoolean eIsSet(::ecore::EInt _featureID);
-        virtual void eUnset(::ecore::EInt _featureID);
-        virtual ::ecore::EClass_ptr _eClass();
+
+                
+
+                
+        
+        
+        
 
         /*PROTECTED REGION ID(BinaryExpressionImpl) START*/
         // Please, enable the protected region if you add manually written code.
@@ -79,7 +79,7 @@ namespace idlmm
     protected:
         // Attributes
 
-        ::ecore::EString m_operator;
+        std::string m_operator;
 
         // References
 

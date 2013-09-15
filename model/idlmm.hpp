@@ -21,7 +21,6 @@
 #define IDLMM_HPP
 
 #include "idlmm_forward.hpp"
-#include <ecorecpp/mapping.hpp>
 
 // EPackage
 
@@ -66,7 +65,6 @@
 #include "idlmm/NamedElement.hpp"
 
 // Package & Factory
-#include "idlmm/IdlmmPackage.hpp"
 #include "idlmm/IdlmmFactory.hpp"
 
 #endif // IDLMM_HPP
