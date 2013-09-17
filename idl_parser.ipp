@@ -675,6 +675,7 @@ struct SemanticState
                     EnumMember_ptr m = f->createEnumMember();
                     m->setIdentifier(literals[i]);
                     o->getMembers().push_back(m);
+                    m->setEnum(o);
                 }
 
                 objs.push_back(o);
