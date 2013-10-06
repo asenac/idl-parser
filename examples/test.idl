@@ -58,6 +58,8 @@ module C
         attribute long at2;
         B::C::H operation(in ssss h1);
         B::C::H operation2(in B::C::H h1, inout long caca );
+
+        typedef A Z;
     };
 
     struct J {

@@ -142,6 +142,7 @@ struct SemanticState
         std::string identifier;
         std::string data;
         std::bitset< sizeof(void *) * 8 > flags; 
+        std::auto_ptr< idlmm::TypedefDef > type;
 
         Context(SemanticState& ss_,
                 context_type_t context_type_) : 
@@ -187,7 +188,21 @@ struct SemanticState
 
     void push_identifier(const std::string& id)
     {
-        contexts.back()->identifier = id;
+        using namespace idlmm;
+        using namespace grammar;
+
+        Context& c = *contexts.back();
+        c.identifier = id;
+
+        switch (c.context_type)
+        {
+        case CONTEXT_INTERFACE:
+            c.type.reset(IdlmmFactory::_instance()->createInterfaceDef());
+            c.type->setIdentifier(id);
+            break;
+        default:
+            break;
+        }
     }
 
     void push_literal(const std::string& l)
@@ -211,7 +226,8 @@ struct SemanticState
     }
 
     template < class Contained, class Obj, typename Fn >
-    void populate(Context& c, Obj * o, Fn f, void (Contained::*inverse)(Obj *) = NULL)
+    void populate(Context& c, Obj * o, Fn f, 
+            void (Contained::*inverse)(Obj *) = NULL)
     {
         for (std::size_t i = c.objects_prev_size; i < objects.size(); i++) 
         {
@@ -230,7 +246,8 @@ struct SemanticState
 
     // for those classes that can have more than one kind of children
     template < class Contained, class Obj, typename Fn >
-    std::size_t populate_while(Context& c, Obj * o, Fn f, void (Contained::*inverse)(Obj *) = NULL)
+    std::size_t populate_while(Context& c, Obj * o, Fn f, 
+            void (Contained::*inverse)(Obj *) = NULL)
     {
         for (std::size_t i = c.objects_prev_size; i < objects.size(); i++) 
         {
@@ -247,10 +264,11 @@ struct SemanticState
     }
 
     template < typename scope_t >
-    static inline void transform_scope(scope_t& scope, const std::string& prefix)
+    static inline void transform_scope(scope_t& scope, 
+            const std::string& prefix)
     {
-        scope_t old (scope);
-        scope.clear();
+        scope_t old;
+        std::swap(old, scope);
 
         for (typename scope_t::iterator jt = old.begin(); 
                 jt != old.end(); ++jt) 
@@ -283,28 +301,36 @@ struct SemanticState
     {
         typedef Type* Type_ptr;
         typedef std::map< std::string, Type_ptr > scope_t;
+        typedef lookupInto< Type > lookup_t;
+        typedef std::vector< std::pair< std::string, idlmm::Container_ptr > > 
+            containers_t;
 
         scope_t scope;
         std::string fqn;
         std::size_t size = objects.size();
         const std::size_t pos = f.find(':');
         const bool compare_identifier = pos == std::string::npos;
+        Type_ptr t = NULL; // aux
 
         for (contexts_t::reverse_iterator it = contexts.rbegin(); 
                 it != contexts.rend(); it++) 
         {
-            if (!is_scope((*it)->context_type))
+            Context& context = **it;
+            if (!is_scope(context.context_type))
                 continue;
 
-            typedef std::vector< std::pair< std::string, idlmm::Container_ptr > > 
-                containers_t;
+            // InterfaceDef case
+            if (compare_identifier && context.type.get() && 
+                    (t = context.type->as< Type >()) &&
+                    f == context.type->getIdentifier())
+                return t;
+
             containers_t containers;
 
             // current objects
-            for (std::size_t i = (*it)->objects_prev_size; i < size; i++) 
+            for (std::size_t i = context.objects_prev_size; i < size; i++) 
             {
-                Type_ptr t = 
-                    objects[i]->as< Type >(); 
+                t = objects[i]->as< Type >(); 
 
                 if (t)
                 {
@@ -313,16 +339,17 @@ struct SemanticState
                     scope[t->getIdentifier()] = t;
                 }
 
-                lookupInto< Type >::apply(scope, "", objects[i]);
+                lookup_t::apply(scope, "", objects[i]);
 
                 idlmm::Container_ptr c =
                     objects[i]->as< idlmm::Container >();
 
                 if (c)
-                    containers.push_back(std::make_pair(c->getIdentifier(), c));
+                    containers.push_back(
+                            std::make_pair(c->getIdentifier(), c));
             }
             // next iteration
-            size = (*it)->objects_prev_size;
+            size = context.objects_prev_size;
 
             // Recurse into the containers
             for (std::size_t i = 0; i < containers.size(); i++) 
@@ -336,8 +363,7 @@ struct SemanticState
 
                 for (std::size_t j = 0; j < c->getContains().size(); j++) 
                 {
-                    Type_ptr t = 
-                        c->getContains()[j].as< Type  >(); 
+                    t = c->getContains()[j].as< Type  >(); 
 
                     if (t)
                     {
@@ -347,7 +373,7 @@ struct SemanticState
                         scope[prefix + t->getIdentifier()] = t;
                     }
 
-                    lookupInto< Type >::apply(scope, prefix, &c->getContains()[j]);
+                    lookup_t::apply(scope, prefix, &c->getContains()[j]);
 
                     idlmm::Container_ptr r =
                         c->getContains()[j].as< idlmm::Container >();
@@ -360,16 +386,21 @@ struct SemanticState
  
             if (pos > 0)
             {
-                Type_ptr t = look_in_scope< Type >(scope, fqn, f);
+                t = look_in_scope< Type >(scope, fqn, f);
                 if (t) return t;
             }
 
             // scope transformation
-            if (!(*it)->identifier.empty() && !scope.empty())
-                transform_scope(scope, (*it)->identifier);
+            if (!context.identifier.empty() && !scope.empty())
+                transform_scope(scope, context.identifier);
+
+            // InterfaceDef case: add itself after scope transformation
+            // but only if it matches with the required type
+            if (context.type.get() && (t = context.type->as< Type >()))
+                scope[t->getIdentifier()] = t;
 
             if (!fqn.empty()) fqn.insert(0, NSS, 2);
-            fqn.insert(0, (*it)->identifier);
+            fqn.insert(0, context.identifier);
         }
 
         if (pos == 0)
@@ -378,7 +409,7 @@ struct SemanticState
             transform_scope(scope, "");
         }
 
-        Type_ptr t = look_in_scope< Type >(scope, fqn, f);
+        t = look_in_scope< Type >(scope, fqn, f);
         if (t) return t;
 
         std::cerr << "Error: undefined reference to " << f << std::endl;
@@ -531,11 +562,13 @@ struct SemanticState
             break;
         case CONTEXT_INTERFACE:
             {
-                InterfaceDef_ptr o = f->createInterfaceDef();
-                o->setIdentifier(c.identifier);
+                InterfaceDef_ptr o = c.type->as< InterfaceDef >();
+                assert(o);
+                //o->setIdentifier(c.identifier);
                 o->setIsAbstract(c.flags.test(FLAG_ABSTRACT));
 
-                populate< Contained, Container >(c, o, &InterfaceDef::getContains,
+                populate< Contained, Container >(c, o, 
+                        &InterfaceDef::getContains,
                         &Contained::setDefinedIn);
 
                 for (std::size_t i = c.literals_prev_size; 
@@ -546,7 +579,7 @@ struct SemanticState
                         o->getDerivesFrom().push_back(t);
                 }
 
-                objs.push_back(o);
+                objs.push_back(c.type.release());
             }
             break;
         case CONTEXT_INTERFACE_FWD:
