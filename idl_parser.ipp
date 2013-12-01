@@ -12,9 +12,9 @@
 #include <idlmm.hpp>
 #include <boost/shared_ptr.hpp>
 
-namespace idl 
+namespace idl
 {
-namespace parser 
+namespace parser
 {
 
 const char * NSS = "::"; // namespace separator
@@ -117,7 +117,7 @@ struct lookupInto< idlmm::Constant >
 
         if (e)
         {
-            for (std::size_t i = 0; i < e->getMembers().size(); i++) 
+            for (std::size_t i = 0; i < e->getMembers().size(); i++)
             {
                 EnumMember_ptr m = &e->getMembers()[i];
                 s[prefix + m->getIdentifier()] = m;
@@ -141,11 +141,11 @@ struct SemanticState
 
         std::string identifier;
         std::string data;
-        std::bitset< sizeof(void *) * 8 > flags; 
+        std::bitset< sizeof(void *) * 8 > flags;
         std::auto_ptr< idlmm::TypedefDef > type;
 
         Context(SemanticState& ss_,
-                context_type_t context_type_) : 
+                context_type_t context_type_) :
             ss(ss_),
             context_type(context_type_),
             objects_prev_size(ss.objects.size()),
@@ -162,7 +162,7 @@ struct SemanticState
         ~Context()
         {
             // No memory leaks due to rollback
-            for (std::size_t i = objects_prev_size; i < ss.objects.size(); i++) 
+            for (std::size_t i = objects_prev_size; i < ss.objects.size(); i++)
             {
                 delete ss.objects[i];
             }
@@ -176,7 +176,7 @@ struct SemanticState
     bool errors; // semantic errors
 
     typedef boost::shared_ptr< Context > Context_ptr;
-    typedef std::deque< Context_ptr > contexts_t; 
+    typedef std::deque< Context_ptr > contexts_t;
     contexts_t contexts;
 
     objects_t objects;
@@ -226,14 +226,14 @@ struct SemanticState
     }
 
     template < class Contained, class Obj, typename Fn >
-    void populate(Context& c, Obj * o, Fn f, 
+    void populate(Context& c, Obj * o, Fn f,
             void (Contained::*inverse)(Obj *) = NULL)
     {
-        for (std::size_t i = c.objects_prev_size; i < objects.size(); i++) 
+        for (std::size_t i = c.objects_prev_size; i < objects.size(); i++)
         {
             Contained * t = objects[i]->as< Contained >();
             assert(t);
-            if (t) 
+            if (t)
             {
                 (o->*f)().push_back(t);
                 if (inverse) (t->*inverse)(o);
@@ -246,13 +246,13 @@ struct SemanticState
 
     // for those classes that can have more than one kind of children
     template < class Contained, class Obj, typename Fn >
-    std::size_t populate_while(Context& c, Obj * o, Fn f, 
+    std::size_t populate_while(Context& c, Obj * o, Fn f,
             void (Contained::*inverse)(Obj *) = NULL)
     {
-        for (std::size_t i = c.objects_prev_size; i < objects.size(); i++) 
+        for (std::size_t i = c.objects_prev_size; i < objects.size(); i++)
         {
             Contained * t = objects[i]->as< Contained >();
-            if (t) 
+            if (t)
             {
                 (o->*f)().push_back(t);
                 if (inverse) (t->*inverse)(o);
@@ -264,21 +264,21 @@ struct SemanticState
     }
 
     template < typename scope_t >
-    static inline void transform_scope(scope_t& scope, 
+    static inline void transform_scope(scope_t& scope,
             const std::string& prefix)
     {
         scope_t old;
         std::swap(old, scope);
 
-        for (typename scope_t::iterator jt = old.begin(); 
-                jt != old.end(); ++jt) 
+        for (typename scope_t::iterator jt = old.begin();
+                jt != old.end(); ++jt)
         {
             scope[prefix + NSS + jt->first] = jt->second;
         }
     }
 
     template < typename Type, typename scope_t >
-    static inline Type * look_in_scope(scope_t& scope, const std::string& fqn, 
+    static inline Type * look_in_scope(scope_t& scope, const std::string& fqn,
             const std::string& f)
     {
         typename scope_t::iterator i = scope.find(f);
@@ -302,7 +302,7 @@ struct SemanticState
         typedef Type* Type_ptr;
         typedef std::map< std::string, Type_ptr > scope_t;
         typedef lookupInto< Type > lookup_t;
-        typedef std::vector< std::pair< std::string, idlmm::Container_ptr > > 
+        typedef std::vector< std::pair< std::string, idlmm::Container_ptr > >
             containers_t;
 
         scope_t scope;
@@ -312,15 +312,15 @@ struct SemanticState
         const bool compare_identifier = pos == std::string::npos;
         Type_ptr t = NULL; // aux
 
-        for (contexts_t::reverse_iterator it = contexts.rbegin(); 
-                it != contexts.rend(); it++) 
+        for (contexts_t::reverse_iterator it = contexts.rbegin();
+                it != contexts.rend(); it++)
         {
             Context& context = **it;
             if (!is_scope(context.context_type))
                 continue;
 
             // InterfaceDef case
-            if (compare_identifier && context.type.get() && 
+            if (compare_identifier && context.type.get() &&
                     (t = context.type->as< Type >()) &&
                     f == context.type->getIdentifier())
                 return t;
@@ -328,9 +328,9 @@ struct SemanticState
             containers_t containers;
 
             // current objects
-            for (std::size_t i = context.objects_prev_size; i < size; i++) 
+            for (std::size_t i = context.objects_prev_size; i < size; i++)
             {
-                t = objects[i]->as< Type >(); 
+                t = objects[i]->as< Type >();
 
                 if (t)
                 {
@@ -352,22 +352,22 @@ struct SemanticState
             size = context.objects_prev_size;
 
             // Recurse into the containers
-            for (std::size_t i = 0; i < containers.size(); i++) 
+            for (std::size_t i = 0; i < containers.size(); i++)
             {
                 idlmm::Container_ptr c = containers[i].second;
                 const std::string& first = containers[i].first;
-                const std::string prefix = 
-                    (first.empty())? first: first + NSS; 
+                const std::string prefix =
+                    (first.empty())? first: first + NSS;
 
                 const bool equivalent_scope = !fqn.empty() && fqn == first;
 
-                for (std::size_t j = 0; j < c->getContains().size(); j++) 
+                for (std::size_t j = 0; j < c->getContains().size(); j++)
                 {
-                    t = c->getContains()[j].as< Type  >(); 
+                    t = c->getContains()[j].as< Type  >();
 
                     if (t)
                     {
-                        if (equivalent_scope && compare_identifier 
+                        if (equivalent_scope && compare_identifier
                                 && t->getIdentifier() == f)
                             return t;
                         scope[prefix + t->getIdentifier()] = t;
@@ -383,7 +383,7 @@ struct SemanticState
                                     prefix + r->getIdentifier(), r));
                 }
             }
- 
+
             if (pos > 0)
             {
                 t = look_in_scope< Type >(scope, fqn, f);
@@ -414,8 +414,8 @@ struct SemanticState
 
         std::cerr << "Error: undefined reference to " << f << std::endl;
         std::cerr << "Current scope:" << std::endl;
-        for (typename scope_t::const_iterator it = scope.begin(); 
-                it != scope.end(); ++it) 
+        for (typename scope_t::const_iterator it = scope.begin();
+                it != scope.end(); ++it)
         {
             std::cerr << "  " << it->first << std::endl;
         }
@@ -426,10 +426,10 @@ struct SemanticState
     }
 
     template < typename Typed >
-    bool try_to_set_type(Typed * typed, 
-            void (Typed::*setContainedType)(idlmm::IDLType_ptr) = 
+    bool try_to_set_type(Typed * typed,
+            void (Typed::*setContainedType)(idlmm::IDLType_ptr) =
                 &Typed::setContainedType,
-            void (Typed::*setSharedType)(idlmm::TypedefDef_ptr) = 
+            void (Typed::*setSharedType)(idlmm::TypedefDef_ptr) =
                 &Typed::setSharedType)
     {
         using namespace idlmm;
@@ -439,7 +439,7 @@ struct SemanticState
 
         if (c.primitive_type != grammar::PT_NULL)
         {
-            IdlmmFactory_ptr f = IdlmmFactory::_instance(); 
+            IdlmmFactory_ptr f = IdlmmFactory::_instance();
             PrimitiveDef * p = f->createPrimitiveDef();
             p->setKind(get_primitive_kind(c.primitive_type));
             (typed->*setContainedType)(p);
@@ -465,7 +465,7 @@ struct SemanticState
         {
             assert(objects.size() == c.objects_prev_size + 1);
 
-            idlmm::IDLType_ptr t = 
+            idlmm::IDLType_ptr t =
                 objects[c.objects_prev_size]->as< idlmm::IDLType >();
             assert(t);
             typed->setContainedType(t);
@@ -476,7 +476,7 @@ struct SemanticState
         }
         return try_to_set_type< idlmm::Typed >(typed);
     }
-    
+
     template < typename S, typename match_pair >
     void set_context_data(S& state, match_pair const& mp)
     {
@@ -493,7 +493,7 @@ struct SemanticState
         using namespace idlmm;
         using namespace grammar;
 
-        IdlmmFactory_ptr f = IdlmmFactory::_instance(); 
+        IdlmmFactory_ptr f = IdlmmFactory::_instance();
 
         Context& c = *contexts.back();
         const std::size_t diff = objects.size() - c.objects_prev_size;
@@ -508,7 +508,7 @@ struct SemanticState
                 TranslationUnit_ptr o = f->createTranslationUnit();
                 o->setIdentifier(c.identifier);
 
-                populate< Contained >(c, o, 
+                populate< Contained >(c, o,
                         &TranslationUnit::getContains);
 
                 objs.push_back(o);
@@ -553,7 +553,7 @@ struct SemanticState
                 populate< UnionField >(c, o, &UnionDef::getUnionMembers);
 
                 // discriminator
-                try_to_set_type< UnionDef >(o, 
+                try_to_set_type< UnionDef >(o,
                         &UnionDef::setContainedDiscrim,
                         &UnionDef::setSharedDiscrim);
 
@@ -567,15 +567,15 @@ struct SemanticState
                 //o->setIdentifier(c.identifier);
                 o->setIsAbstract(c.flags.test(FLAG_ABSTRACT));
 
-                populate< Contained, Container >(c, o, 
+                populate< Contained, Container >(c, o,
                         &InterfaceDef::getContains,
                         &Contained::setDefinedIn);
 
-                for (std::size_t i = c.literals_prev_size; 
+                for (std::size_t i = c.literals_prev_size;
                         i < literals.size(); i++)
                 {
                     InterfaceDef_ptr t = lookup< InterfaceDef >(literals[i]);
-                    if (t) 
+                    if (t)
                         o->getDerivesFrom().push_back(t);
                 }
 
@@ -586,7 +586,7 @@ struct SemanticState
             {
                 ForwardDef_ptr o = f->createForwardDef();
                 o->setIdentifier(c.identifier);
-                // Error in the model 
+                // Error in the model
                 // o->setIsAbstract(c.flags.test(FLAG_ABSTRACT));
 
                 objs.push_back(o);
@@ -598,16 +598,16 @@ struct SemanticState
                 o->setIdentifier(c.identifier);
                 o->setIsOneway(c.flags.test(FLAG_ONEWAY));
 
-                populate< ParameterDef >(c, o, 
+                populate< ParameterDef >(c, o,
                         &OperationDef::getParameters);
 
                 try_to_set_type< Typed >(o);
 
-                for (std::size_t i = c.literals_prev_size; 
+                for (std::size_t i = c.literals_prev_size;
                         i < literals.size(); i++)
                 {
                     ExceptionDef_ptr t = lookup< ExceptionDef >(literals[i]);
-                    if (t) 
+                    if (t)
                         o->getCanRaise().push_back(t);
                 }
 
@@ -638,7 +638,7 @@ struct SemanticState
             break;
         case CONTEXT_STRUCT_FIELD:
             {
-                for (std::size_t i = c.literals_prev_size; 
+                for (std::size_t i = c.literals_prev_size;
                         i < literals.size(); i++)
                 {
                     Field_ptr o = f->createField();
@@ -656,7 +656,7 @@ struct SemanticState
                 o->setIdentifier(c.identifier);
 
                 try_to_set_type< Typed >(o);
-                
+
                 populate< Expression >(c, o, &UnionField::getLabel);
 
                 objs.push_back(o);
@@ -664,7 +664,7 @@ struct SemanticState
             break;
         case CONTEXT_ALIAS:
             {
-                for (std::size_t i = c.literals_prev_size; 
+                for (std::size_t i = c.literals_prev_size;
                         i < literals.size(); i++)
                 {
                     AliasDef_ptr o = f->createAliasDef();
@@ -687,8 +687,8 @@ struct SemanticState
 
                 // bounds
                 assert(diff > 0);
-                for (std::size_t i = c.objects_prev_size; 
-                        i < objects.size(); i++) 
+                for (std::size_t i = c.objects_prev_size;
+                        i < objects.size(); i++)
                 {
                     a->getBounds().push_back(objects[i]->as< Expression >());
                 }
@@ -702,7 +702,7 @@ struct SemanticState
                 EnumDef_ptr o = f->createEnumDef();
                 o->setIdentifier(c.identifier);
 
-                for (std::size_t i = c.literals_prev_size; 
+                for (std::size_t i = c.literals_prev_size;
                         i < literals.size(); i++)
                 {
                     EnumMember_ptr m = f->createEnumMember();
@@ -842,12 +842,12 @@ struct SemanticState
 
         if (!contexts.empty())
         {
-            assert (!objs.empty()); 
+            assert (!objs.empty());
             objects.insert(objects.end(), objs.begin(), objs.end());
         }
         else
         {
-            assert (objs.size() == 1); 
+            assert (objs.size() == 1);
             result = objs[0];
         }
     }

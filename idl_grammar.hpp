@@ -4,9 +4,9 @@
 #include "parser.hpp"
 #include "idl_tokens.hpp"
 
-namespace idl 
+namespace idl
 {
-namespace grammar 
+namespace grammar
 {
 
 using namespace ::parser;
@@ -32,7 +32,7 @@ enum primitive_types
 };
 
 template < typename Name, primitive_types type >
-struct primitive_type : 
+struct primitive_type :
     semantic_rule < primitive_type < Name, type >, Name >
 {
     template <typename S, typename match_pair>
@@ -44,10 +44,10 @@ struct primitive_type :
 
 
 struct const_expr;
-struct string_def : 
+struct string_def :
     seq_< string_t, opt_ < seq_ < spaces_, embrace_< '<', const_expr, '>' > > > >
 {};
-struct wstring_def : 
+struct wstring_def :
     seq_< wstring_t, opt_ < seq_ < spaces_, embrace_< '<', const_expr, '>' > > > >
 {};
 
@@ -70,7 +70,7 @@ struct primitive_types_rule :
            primitive_type < string_t, PT_STRING >,
            primitive_type < wstring_t, PT_WSTRING >
        >
-    > 
+    >
 {};
 
 enum flags
@@ -100,7 +100,7 @@ struct optflag_ : opt_< seq_< flag_ < Name, flag >, space_ > >
 };
 
 template < typename rule >
-struct data_ : 
+struct data_ :
     semantic_rule < data_ < rule >, rule >
 {
     template <typename S, typename match_pair>
@@ -152,8 +152,8 @@ struct semantic_context
         state.semantic_state().new_context(type);
 
         bool res = rule_t::match(state);
-        res ? 
-            state.semantic_state().commit() : 
+        res ?
+            state.semantic_state().commit() :
             state.semantic_state().rollback();
 
         return res;
@@ -167,7 +167,7 @@ struct semantic_context
 };
 
 struct identifier_ :
-    semantic_rule < 
+    semantic_rule <
         identifier_,
         identifier_rule
     >
@@ -181,7 +181,7 @@ struct identifier_ :
 };
 
 struct literal_ :
-    semantic_rule < 
+    semantic_rule <
         literal_,
         identifier_rule
     >
@@ -195,7 +195,7 @@ struct literal_ :
 };
 
 struct type_fqn_ :
-    data_< 
+    data_<
         fqn_rule
     >
 {};
@@ -207,17 +207,17 @@ struct type_rule :
 // attribute
 
 struct attribute_rule :
-    seq_ < 
+    seq_ <
             optflag_<  readonly_t, FLAG_READONLY >,
             attribute_t,
             space_,
             type_rule,
             space_,
             identifier_
-        > 
+        >
 {};
 struct attribute_ :
-    semantic_context < 
+    semantic_context <
         attribute_rule,
         CONTEXT_ATTRIBUTE
     >
@@ -226,20 +226,20 @@ struct attribute_ :
 // operation
 
 struct direction_rule :
-    or_ < 
-            flag_ < inout_t, FLAG_INOUT >,   
-            flag_ < in_t, FLAG_IN >, 
-            flag_ < out_t, FLAG_OUT > 
+    or_ <
+            flag_ < inout_t, FLAG_INOUT >,
+            flag_ < in_t, FLAG_IN >,
+            flag_ < out_t, FLAG_OUT >
         >
 {};
 struct parameter_rule :
-    seq_ < 
-            direction_rule, 
+    seq_ <
+            direction_rule,
             space_,
-            type_rule , 
-            space_, 
+            type_rule ,
+            space_,
             identifier_
-         > 
+         >
 {};
 struct parameter_ : semantic_context< parameter_rule, CONTEXT_PARAMETER >
 {};
@@ -260,20 +260,20 @@ struct pluslist_ :
     seq_ <
             item_ < Item >,
             star_ < seq_ < Sep, item_ < Item > > >
-         > 
+         >
 {};
 
 template < typename Item, typename Sep = comma >
 struct list_ :
     or_ <
         pluslist_< Item, Sep >,
-        spaces_ 
+        spaces_
     >
 {};
 
 struct parameter_list : list_ < parameter_ > {};
 
-struct fqn_usage : 
+struct fqn_usage :
     semantic_rule < fqn_usage, fqn_rule >
 {
     template <typename S, typename match_pair>
@@ -287,22 +287,22 @@ struct fqn_usage :
 struct fqn_usages : pluslist_ < fqn_usage >
 {};
 
-struct raises_ : 
+struct raises_ :
     seq_ < raises_t, embrace_< '(', fqn_usages, ')' > >
 {};
 
 struct operation_rule :
-    seq_ < 
+    seq_ <
             optflag_< oneway_t, FLAG_ONEWAY >,
             type_rule,
             space_,
             identifier_,
             embrace_ < '(', parameter_list, ')' >,
             opt_ < seq_ < spaces_, raises_ > >
-        > 
+        >
 {};
 struct operation_ :
-    semantic_context < 
+    semantic_context <
         operation_rule,
         CONTEXT_OPERATION
     >
@@ -314,135 +314,135 @@ struct mult_expr;
 struct add_expr;
 
 struct constant_ref_expr :
-    semantic_context< data_ < fqn_rule >, CONTEXT_CONSTANT_REF > 
+    semantic_context< data_ < fqn_rule >, CONTEXT_CONSTANT_REF >
 {};
 
-struct value_rule : or_ < string_rule, bool_, number_ > {}; 
+struct value_rule : or_ < string_rule, bool_, number_ > {};
 
 struct value_expr :
-    semantic_context< 
+    semantic_context<
                 data_ < value_rule >,
-                CONTEXT_VALUE_EXPRESSION 
-            > 
+                CONTEXT_VALUE_EXPRESSION
+            >
 {};
 
 struct primary_expr :
-    or_ < 
-        value_expr, 
-        constant_ref_expr,  
+    or_ <
+        value_expr,
+        constant_ref_expr,
         embrace_ < '(', const_expr, ')' >
-        > 
+        >
 {};
 
 struct unary_expr :
-    semantic_context< 
-                seq_ <  
-                        data_ < unary_operator >, spaces_, primary_expr 
-                    >, 
-                    CONTEXT_UNARY_EXPRESSION 
-                > 
+    semantic_context<
+                seq_ <
+                        data_ < unary_operator >, spaces_, primary_expr
+                    >,
+                    CONTEXT_UNARY_EXPRESSION
+                >
 {};
 
 template < typename Operator, typename Left, typename Right = Left >
 struct binary_expr :
-    semantic_context< 
-        seq_ <  
-            Left, 
+    semantic_context<
+        seq_ <
+            Left,
             opt_ <
                 seq_ <
-                    spaces_, 
-                    data_ < Operator >, 
-                    spaces_, 
+                    spaces_,
+                    data_ < Operator >,
+                    spaces_,
                     Right
                 >
             >
-        >, 
+        >,
         CONTEXT_BINARY_EXPRESSION >
 {};
 
-struct mult_expr :  
-    binary_expr < mult_operator, primary_expr, mult_expr > 
+struct mult_expr :
+    binary_expr < mult_operator, primary_expr, mult_expr >
 {};
 
-struct add_expr :  
-    binary_expr < add_operator, mult_expr > 
+struct add_expr :
+    binary_expr < add_operator, mult_expr >
 {};
 
-struct shift_expr :  
-    binary_expr < shift_operator, add_expr > 
+struct shift_expr :
+    binary_expr < shift_operator, add_expr >
 {};
 
-struct and_expr :  
-    binary_expr < and_operator, shift_expr > 
+struct and_expr :
+    binary_expr < and_operator, shift_expr >
 {};
 
-struct xor_expr :  
-    binary_expr < xor_operator, and_expr > 
+struct xor_expr :
+    binary_expr < xor_operator, and_expr >
 {};
 
-struct or_expr :  
-    binary_expr < or_operator, xor_expr > 
+struct or_expr :
+    binary_expr < or_operator, xor_expr >
 {};
 
 struct const_expr : or_expr
 {};
 
 struct const_rule :
-    seq_ < 
-                const_t, 
-                space_, 
-                type_rule, 
-                space_, 
-                identifier_, 
+    seq_ <
+                const_t,
+                space_,
+                type_rule,
+                space_,
+                identifier_,
                 spaces_,
-                seq_ < 
-                        char_ < '=' >, 
-                        spaces_, 
+                seq_ <
+                        char_ < '=' >,
+                        spaces_,
                         const_expr
-                > 
-        > 
+                >
+        >
 {};
 
 struct const_ : semantic_context< const_rule, CONTEXT_CONST >
 {};
 
 // sequence
-struct sequence_internals : 
+struct sequence_internals :
     seq_ <
-        spaces_, 
-        type_rule, 
-        spaces_, 
+        spaces_,
+        type_rule,
+        spaces_,
         opt_< seq_ < comma, spaces_, const_expr, spaces_ > >
     >
 {};
 struct sequence_rule :
-    seq_< 
-        sequence_t, 
-        spaces_, 
+    seq_<
+        sequence_t,
+        spaces_,
         embrace_ < '<', sequence_internals, '>' >
-    > 
+    >
 {};
 
 struct sequence_ :
-    semantic_context < 
+    semantic_context <
         sequence_rule,
         CONTEXT_SEQUENCE
     >
 {};
 
-// fixed 
+// fixed
 struct fixed_internals :
     seq_ < const_expr, spaces_, comma, spaces_, const_expr >
 {};
 struct fixed_rule :
-    seq_< 
-        fixed_t, 
-        spaces_, 
-        embrace_ < '<', fixed_internals, '>' > 
-    > 
+    seq_<
+        fixed_t,
+        spaces_,
+        embrace_ < '<', fixed_internals, '>' >
+    >
 {};
 struct fixed_ :
-    semantic_context < 
+    semantic_context <
         fixed_rule,
         CONTEXT_FIXED
     >
@@ -459,37 +459,37 @@ struct declarators_ : pluslist_ < literal_ >
 
 // typedefs
 
-struct typedef_type_rule : 
-    or_ < 
-        typedef_string_, typedef_wstring_, 
-        sequence_, fixed_, type_rule 
-    > 
+struct typedef_type_rule :
+    or_ <
+        typedef_string_, typedef_wstring_,
+        sequence_, fixed_, type_rule
+    >
 {};
 
-struct alias_rule : 
-    seq_ < 
-        typedef_t, space_, 
-        typedef_type_rule, space_, 
+struct alias_rule :
+    seq_ <
+        typedef_t, space_,
+        typedef_type_rule, space_,
         declarators_
     >
 {};
 
 struct alias_ :
-    semantic_context < 
+    semantic_context <
         alias_rule,
         CONTEXT_ALIAS
     >
 {};
 
 struct array_rule :
-    seq_ < 
+    seq_ <
             typedef_t, space_, type_rule, space_, identifier_, spaces_,
             plus_ < embrace_ < '[', const_expr, ']' > >
-        > 
+        >
 {};
 
 struct array_ :
-    semantic_context < 
+    semantic_context <
         array_rule,
         CONTEXT_ARRAY
     >
@@ -503,21 +503,21 @@ struct statements_list :
 {};
 
 template < typename Statements, typename Sep = semicol >
-struct context_: 
-    embrace_ < '{', statements_list < Statements, Sep >, '}' > 
+struct context_:
+    embrace_ < '{', statements_list < Statements, Sep >, '}' >
 {};
 
-template < typename Name, 
-           typename Body, 
+template < typename Name,
+           typename Body,
            semantic_context_type type,
            typename PreContext = true_,
            typename Sep = semicol >
-struct context_rule : 
-    seq_< 
-        Name, space_, 
-        semantic_context < 
-            seq_ < identifier_, spaces_, PreContext, spaces_, context_ < Body, Sep > >, 
-            type 
+struct context_rule :
+    seq_<
+        Name, space_,
+        semantic_context <
+            seq_ < identifier_, spaces_, PreContext, spaces_, context_ < Body, Sep > >,
+            type
         >
     >
 {};
@@ -525,118 +525,118 @@ struct context_rule :
 // struct
 
 struct struct_field :
-    semantic_context < 
-            seq_ < type_rule, space_, declarators_ >, 
-            CONTEXT_STRUCT_FIELD 
-        > 
+    semantic_context <
+            seq_ < type_rule, space_, declarators_ >,
+            CONTEXT_STRUCT_FIELD
+        >
 {};
 
-typedef struct_field struct_body; 
-struct struct_ : 
-    context_rule< struct_t, struct_body, CONTEXT_STRUCT > 
+typedef struct_field struct_body;
+struct struct_ :
+    context_rule< struct_t, struct_body, CONTEXT_STRUCT >
 {};
 
-// exception 
+// exception
 
 struct exception_ :
-    context_rule< exception_t, struct_field, CONTEXT_EXCEPTION > 
+    context_rule< exception_t, struct_field, CONTEXT_EXCEPTION >
 {};
 
 // value type
-struct valuetype_body : struct_field 
+struct valuetype_body : struct_field
 {};
-struct valuetype_ : 
+struct valuetype_ :
     context_rule < valuetype_t, valuetype_body, CONTEXT_VALUETYPE >
 {};
 
 // union
 
 struct union_cases :
-    star_ < 
-        seq_ < 
+    star_ <
+        seq_ <
             or_ <
                 seq_ <
-                    case_t, 
-                    space_, 
-                    const_expr 
+                    case_t,
+                    space_,
+                    const_expr
                     >,
                 flag_< default_t, FLAG_DEFAULT >
                 >,
-            spaces_, 
+            spaces_,
             colon,
-            spaces_ 
-            > 
+            spaces_
+            >
         >
 {};
 
 struct union_field :
-    semantic_context < 
-            seq_ < 
-                union_cases, 
-                type_rule, 
-                space_, 
-                identifier_ 
-                >, 
-            CONTEXT_UNION_FIELD 
-        > 
+    semantic_context <
+            seq_ <
+                union_cases,
+                type_rule,
+                space_,
+                identifier_
+                >,
+            CONTEXT_UNION_FIELD
+        >
 {};
 
-typedef union_field union_body; 
-struct discriminator_ : seq_< switch_t, spaces_, embrace_ < '(' , type_rule, ')' > > 
+typedef union_field union_body;
+struct discriminator_ : seq_< switch_t, spaces_, embrace_ < '(' , type_rule, ')' > >
 {};
-struct union_ : context_rule< union_t, union_body, CONTEXT_UNION, discriminator_ > 
+struct union_ : context_rule< union_t, union_body, CONTEXT_UNION, discriminator_ >
 {};
 
-template < typename Name, 
-           typename Body, 
+template < typename Name,
+           typename Body,
            semantic_context_type type,
            typename Sep = comma >
-struct list_context : 
-    seq_< 
-        Name, space_, 
-        semantic_context < 
-            seq_ < 
-                identifier_, 
-                spaces_, 
-                embrace_ < '{', list_ < Body, Sep >, '}' > 
-                >, 
-            type 
+struct list_context :
+    seq_<
+        Name, space_,
+        semantic_context <
+            seq_ <
+                identifier_,
+                spaces_,
+                embrace_ < '{', list_ < Body, Sep >, '}' >
+                >,
+            type
         >
     >
 {};
 
 struct enum_ :
-    list_context < 
-            enum_t, 
-            literal_, 
+    list_context <
+            enum_t,
+            literal_,
             CONTEXT_ENUM
-        > 
+        >
 {};
 
 // Can it be an interface within an interface?
-struct contained_ : 
+struct contained_ :
     or_< const_, array_, alias_, exception_, struct_, union_, enum_ >
 {};
 
-struct interface_body : 
-    or_< contained_, attribute_, operation_ > 
+struct interface_body :
+    or_< contained_, attribute_, operation_ >
 {};
 struct inheritance_ : opt_ < seq_< colon, fqn_usages > >
 {};
 struct interface_ :
-    context_rule< 
-            interface_t, 
-            interface_body, 
+    context_rule<
+            interface_t,
+            interface_body,
             CONTEXT_INTERFACE,
             inheritance_
-        > 
+        >
 {};
 
 struct interface_fwd_ :
-    semantic_context< 
-            seq_ < interface_t, space_, identifier_ >, 
+    semantic_context<
+            seq_ < interface_t, space_, identifier_ >,
             CONTEXT_INTERFACE_FWD
-        > 
+        >
 {};
 
 struct module_;
@@ -646,18 +646,18 @@ struct module_ : context_rule < module_t, module_body, CONTEXT_MODULE >
 {};
 
 struct statement_ :
-    or_ < module_, interface_, interface_fwd_, contained_ > 
+    or_ < module_, interface_, interface_fwd_, contained_ >
 {};
 
 struct gram :
-    semantic_context < 
-            seq_ < 
-                ::preprocessor::preprocessor_, 
-                statements_list < statement_ >, 
-                spaces_, 
-                eof_ 
-            >, 
-            CONTEXT_TRANSLATION_UNIT 
+    semantic_context <
+            seq_ <
+                ::preprocessor::preprocessor_,
+                statements_list < statement_ >,
+                spaces_,
+                eof_
+            >,
+            CONTEXT_TRANSLATION_UNIT
         >
 {};
 

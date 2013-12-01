@@ -4,8 +4,7 @@
 #include <string>
 #include <utility>
 #include <vector>
-//#include <exception> // Exceptions
-//#include <stdexcept>
+#include <istream>
 
 namespace parser
 {
@@ -23,7 +22,7 @@ struct Reader
     std::size_t len_;
 
     Reader(const char* b, std::size_t l)
-        : buf_ (b), pos_ (b),  len_(l) 
+        : buf_ (b), pos_ (b),  len_(l)
     {
     }
 
@@ -51,7 +50,7 @@ struct Reader
         return pos_;
     }
 
-    inline void 
+    inline void
     set_pos(PositionType p)
     {
         pos_ = p;
@@ -70,7 +69,7 @@ struct Reader
 
         if (init > buf_)
         {
-            do 
+            do
             {
                 init--;
             }
@@ -95,7 +94,7 @@ struct IStreamReader
     std::istream& in_;
 
     IStreamReader(std::istream& in)
-        : in_ (in) 
+        : in_ (in)
     {
     }
 
@@ -123,7 +122,7 @@ struct IStreamReader
         return in_.tellg();
     }
 
-    inline void 
+    inline void
     set_pos(PositionType p)
     {
         in_.seekg(p);
@@ -149,7 +148,7 @@ struct IStreamReader
         // Begining
         if (init > 0)
         {
-            do 
+            do
             {
                 in_.seekg(init);
                 in_.seekg(-1, in_.cur);
@@ -324,7 +323,7 @@ struct ReaderState
 
             // marker
             const std::size_t diff = max_pos_ - p.first;
-            for (std::size_t i = 0; i < diff; i++) 
+            for (std::size_t i = 0; i < diff; i++)
                 ss << ' ';
             ss << '^' << std::endl;
         }
@@ -653,7 +652,7 @@ struct token_base
     {
         state.push_state();
         bool var = true;
-        for (std::size_t i = 0; var && i < size; i++) 
+        for (std::size_t i = 0; var && i < size; i++)
         {
             var = state.match_at_pos_advance (t[i]);
         }
@@ -682,7 +681,7 @@ struct until_ : seq_ < star_ < notchar_ < c > >, char_ < c > >
 // apply C0 until C1
 template <typename C0,
           typename C1>
-struct apply_until_ 
+struct apply_until_
 {
     template <typename S>
     static inline bool match (S& state)
@@ -701,7 +700,7 @@ struct apply_until_
     }
 };
 
-struct new_line 
+struct new_line
 {
     template <typename S>
     static inline bool match(S& state)

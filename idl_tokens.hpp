@@ -5,9 +5,9 @@
 #include "parser_common.hpp"
 #include "preprocessor.hpp"
 
-namespace idl 
+namespace idl
 {
-namespace tokens 
+namespace tokens
 {
 
 using namespace ::parser;
@@ -28,7 +28,7 @@ struct unary_operator :
             char_ < '+' >,
             char_ < '-' >,
             char_ < '~' >
-        > 
+        >
 {};
 
 struct mult_operator : or_< char_ < '*' >, char_ < '/' >, char_ < '%' > > {};
@@ -37,13 +37,13 @@ struct add_operator : or_< char_ < '+' >, char_ < '-' > > {};
 struct integer_ : seq_ < opt_ < add_operator >, plus_< digit_ > > {};
 
 struct identifier_rule :
-    seq_< 
-            or_ < 
+    seq_<
+            or_ <
                 cirange_ < 'A', 'Z' >,
                 cirange_ < 'a', 'z' >
                 >,
             star_ <
-                or_ < 
+                or_ <
                     cirange_ < 'A', 'Z' >,
                     cirange_ < 'a', 'z' >,
                     digit_,
@@ -59,51 +59,51 @@ typedef string_ string_rule;
 struct scope_sep : seq_< char_ < ':' >, char_ < ':' > > {};
 
 struct fqn_rule :
-    seq_ < 
+    seq_ <
             opt_< scope_sep >,
-            identifier_rule, 
-            star_< seq_ < scope_sep, identifier_rule > > 
-        > 
+            identifier_rule,
+            star_< seq_ < scope_sep, identifier_rule > >
+        >
 {};
 
 // spaces
 
 struct ccomment_end : seq_ < char_ < '*' >, char_ < '/' > > {};
 struct ccomment_ :
-    seq_ < 
-            char_ < '/' >, 
-            char_ < '*' >, 
-            apply_until_ < 
+    seq_ <
+            char_ < '/' >,
+            char_ < '*' >,
+            apply_until_ <
                 // to be or not to be
                 or_ < new_line, not_new_line >,
-                ccomment_end 
+                ccomment_end
             >
-        > 
+        >
 {};
 
 struct comment_ :
-    seq_ < char_ < '/' >, char_ < '/' >, 
-        ::preprocessor::pp_until_new_line > 
+    seq_ < char_ < '/' >, char_ < '/' >,
+        ::preprocessor::pp_until_new_line >
 {};
 
 // space
 struct space :
-    or_ < 
-            char_<' '>, char_<'\t'>, 
-            ::preprocessor::pp_new_line, char_<'\r'>, 
+    or_ <
+            char_<' '>, char_<'\t'>,
+            ::preprocessor::pp_new_line, char_<'\r'>,
             comment_, ccomment_
-        > 
+        >
 {};
 
 // chars not allowed to be in tokens
-struct rspace : seq_ < 
+struct rspace : seq_ <
             req_not_cirange_ < 'a', 'z' >,
             req_not_cirange_ < 'A', 'Z' >,
             req_not_cirange_ < '0', '9' >
-            > 
+            >
 {};
 
-// token: requires an space at the end 
+// token: requires an space at the end
 template <typename C0,
           typename C1,
           typename C2 = true_,
@@ -225,25 +225,25 @@ template< char i, typename Rule, char e >
 struct embrace_ : seq_ < char_ < i >, spaces_, Rule, spaces_, char_ < e > >
 {};
 
-struct bool_ : or_ < true_t, false_t > {}; 
+struct bool_ : or_ < true_t, false_t > {};
 
 // expressions
 //struct exp_item;
 
-//struct exp_item : 
-    //or_ < 
-        //number_, 
-        //identifier_rule,  
+//struct exp_item :
+    //or_ <
+        //number_,
+        //identifier_rule,
         //bool_,
         //embrace_ < '(', exp_item, ')' >
         //>
 //{};
 
-//typedef seq_< 
+//typedef seq_<
             //spaces_,
-            //exp_item, 
+            //exp_item,
             //spaces_,
-            //star_ < seq_ < operator_, spaces_, exp_item, spaces_ > > 
+            //star_ < seq_ < operator_, spaces_, exp_item, spaces_ > >
             //> expression_rule;
 
 } // namespace tokens

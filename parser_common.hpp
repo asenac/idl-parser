@@ -3,7 +3,7 @@
 
 #include "parser.hpp"
 
-namespace parser 
+namespace parser
 {
 
 struct colon : char_ < ':' > {};
@@ -13,8 +13,8 @@ struct point : char_ < '.' > {};
 
 struct digit_ : cirange_ < '0', '9'> {};
 // TODO allow scientific notation
-struct number_ : 
-    seq_ < plus_< digit_ >, opt_ < seq_ < point, plus_ < digit_ > > > > 
+struct number_ :
+    seq_ < plus_< digit_ >, opt_ < seq_ < point, plus_ < digit_ > > > >
 {};
 struct positive_ : plus_< digit_ > {};
 
