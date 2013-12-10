@@ -1,7 +1,7 @@
 #ifndef PARSER_COMMON_HPP
 #define PARSER_COMMON_HPP
 
-#include "parser.hpp"
+#include <parser/parser.hpp>
 
 namespace parser
 {

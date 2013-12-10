@@ -1,6 +1,6 @@
 #include <cassert>
-#include "idl_parser.hpp"
-#include "idl_parser.ipp"
+#include <parser/idl_parser.hpp>
+#include <parser/idl_parser.ipp>
 
 using namespace idl::parser;
 

@@ -1,8 +1,6 @@
 #include <iostream>
 #include <idlmm.hpp>
-#include <ecorecpp.hpp> // EMF4CPP utils
-
-#include "idl_parser.hpp"
+#include <parser/idl_parser.hpp>
 
 int main(int argc, char **argv)
 {
@@ -17,12 +15,6 @@ int main(int argc, char **argv)
 
     if (err)
         std::cerr << "Error!" << std::endl;
-    else
-    {
-        std::ofstream ofs("model.xmi");
-        ecorecpp::serializer::serializer ser(ofs); 
-        ser.serialize(res);
-    }
 
     delete res;
     return err;

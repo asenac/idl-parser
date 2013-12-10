@@ -1,8 +1,8 @@
 #ifndef IDL_GRAMMAR_HPP
 #define IDL_GRAMMAR_HPP
 
-#include "parser.hpp"
-#include "idl_tokens.hpp"
+#include <parser/parser.hpp>
+#include <parser/idl_tokens.hpp>
 
 namespace idl
 {

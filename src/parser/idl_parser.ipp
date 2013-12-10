@@ -8,7 +8,7 @@
 #include <vector>
 #include <deque>
 #include <cassert>
-#include "idl_grammar.hpp"
+#include <parser/idl_grammar.hpp>
 #include <idlmm.hpp>
 #include <boost/shared_ptr.hpp>
 

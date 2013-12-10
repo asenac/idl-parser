@@ -1,9 +1,9 @@
 #ifndef IDL_TOKENS_HPP
 #define IDL_TOKENS_HPP
 
-#include "parser.hpp"
-#include "parser_common.hpp"
-#include "preprocessor.hpp"
+#include <parser/parser.hpp>
+#include <parser/parser_common.hpp>
+#include <parser/preprocessor.hpp>
 
 namespace idl
 {

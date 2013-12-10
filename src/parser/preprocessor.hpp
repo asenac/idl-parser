@@ -1,8 +1,8 @@
 #ifndef PREPROCESSOR_HPP
 #define PREPROCESSOR_HPP
 
-#include "parser.hpp"
-#include "parser_common.hpp"
+#include <parser/parser.hpp>
+#include <parser/parser_common.hpp>
 
 namespace preprocessor
 {
