@@ -13,5 +13,5 @@ include_directories(
 )
 
 add_subdirectory(src)
-add_subdirectory(test)
+add_subdirectory(test EXCLUDE_FROM_ALL)
 
