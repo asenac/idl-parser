@@ -22,8 +22,6 @@
 
 #include <idlmm_forward.hpp>
 
-
-
 #include <idlmm/Typed.hpp>
 #include <idlmm/IDLType.hpp>
 
@@ -43,11 +41,7 @@ namespace idlmm
 
         virtual ~ArrayDef();
 
-
-
         // Operations
-
-
         // Attributes
         std::string const& getName() const;
         void setName(std::string const& _name);
@@ -61,14 +55,6 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(ArrayDefImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.

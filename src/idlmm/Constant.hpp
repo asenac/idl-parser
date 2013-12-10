@@ -22,8 +22,6 @@
 
 #include <idlmm_forward.hpp>
 
-
-
 #include <idlmm/Contained.hpp>
 
 /*PROTECTED REGION ID(Constant_pre) START*/
@@ -41,30 +39,16 @@ namespace idlmm
 
         virtual ~Constant();
 
-
-
         // Operations
-
-
         // Attributes
 
         // References
-
-
         /*PROTECTED REGION ID(Constant) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(ConstantImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
@@ -72,8 +56,6 @@ namespace idlmm
 
     protected:
         // Attributes
-
-
         // References
 
     };

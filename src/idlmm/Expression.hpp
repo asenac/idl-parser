@@ -21,8 +21,6 @@
 #define IDLMM_EXPRESSION_HPP
 
 #include <idlmm_forward.hpp>
-
-
 #include <idlmm/ModelElement.hpp>
 
 /*PROTECTED REGION ID(Expression_pre) START*/
@@ -40,30 +38,16 @@ namespace idlmm
 
         virtual ~Expression();
 
-
-
         // Operations
-
-
         // Attributes
 
         // References
-
-
         /*PROTECTED REGION ID(Expression) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(ExpressionImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
@@ -71,8 +55,6 @@ namespace idlmm
 
     protected:
         // Attributes
-
-
         // References
 
     };

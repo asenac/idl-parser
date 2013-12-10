@@ -21,10 +21,6 @@
 #include <idlmm/ModelElement.hpp>
 #include <idlmm/TranslationUnit.hpp>
 
-
-
-
-
 #ifdef ECORECPP_NOTIFICATION_API
 
 #endif

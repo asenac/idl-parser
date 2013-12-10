@@ -21,8 +21,6 @@
 #define IDLMM_CONSTANTDEFREF_HPP
 
 #include <idlmm_forward.hpp>
-
-
 #include <idlmm/LiteralExpression.hpp>
 
 /*PROTECTED REGION ID(ConstantDefRef_pre) START*/
@@ -40,11 +38,7 @@ namespace idlmm
 
         virtual ~ConstantDefRef();
 
-
-
         // Operations
-
-
         // Attributes
 
         // References
@@ -57,14 +51,6 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(ConstantDefRefImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
@@ -72,8 +58,6 @@ namespace idlmm
 
     protected:
         // Attributes
-
-
         // References
 
         ::idlmm::Constant_ptr m_constant;

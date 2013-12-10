@@ -22,8 +22,6 @@
 
 #include <idlmm_forward.hpp>
 
-
-
 #include <idlmm/Container.hpp>
 #include <idlmm/TypedefDef.hpp>
 
@@ -43,11 +41,7 @@ namespace idlmm
 
         virtual ~InterfaceDef();
 
-
-
         // Operations
-
-
         // Attributes
         bool isIsAbstract() const;
         void setIsAbstract(bool _isAbstract);
@@ -70,14 +64,6 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(InterfaceDefImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.

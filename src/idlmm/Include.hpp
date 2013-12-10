@@ -22,8 +22,6 @@
 
 #include <idlmm_forward.hpp>
 
-
-
 #include <idlmm/ModelElement.hpp>
 
 /*PROTECTED REGION ID(Include_pre) START*/
@@ -41,11 +39,7 @@ namespace idlmm
 
         virtual ~Include();
 
-
-
         // Operations
-
-
         // Attributes
         std::string const& getImportURI() const;
         void setImportURI(std::string const& _importURI);
@@ -60,14 +54,6 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(IncludeImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.

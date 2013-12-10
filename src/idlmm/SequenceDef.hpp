@@ -21,8 +21,6 @@
 #define IDLMM_SEQUENCEDEF_HPP
 
 #include <idlmm_forward.hpp>
-
-
 #include <idlmm/Typed.hpp>
 #include <idlmm/IDLType.hpp>
 
@@ -42,11 +40,7 @@ namespace idlmm
 
         virtual ~SequenceDef();
 
-
-
         // Operations
-
-
         // Attributes
 
         // References
@@ -59,14 +53,6 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(SequenceDefImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
@@ -74,8 +60,6 @@ namespace idlmm
 
     protected:
         // Attributes
-
-
         // References
 
         ::idlmm::Expression_ptr m_bound;

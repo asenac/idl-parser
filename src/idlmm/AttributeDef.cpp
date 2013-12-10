@@ -24,10 +24,6 @@
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
 #include <idlmm/ExceptionDef.hpp>
-
-
-
-
 using namespace ::idlmm;
 
 // Default constructor

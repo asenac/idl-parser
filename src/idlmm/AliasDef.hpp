@@ -22,8 +22,6 @@
 
 #include <idlmm_forward.hpp>
 
-
-
 #include <idlmm/Typed.hpp>
 #include <idlmm/TypedefDef.hpp>
 
@@ -43,30 +41,16 @@ namespace idlmm
 
         virtual ~AliasDef();
 
-
-
         // Operations
-
-
         // Attributes
 
         // References
-
-
         /*PROTECTED REGION ID(AliasDef) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(AliasDefImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
@@ -74,8 +58,6 @@ namespace idlmm
 
     protected:
         // Attributes
-
-
         // References
 
     };

@@ -20,10 +20,6 @@
 #include "Expression.hpp"
 #include <idlmm/ModelElement.hpp>
 
-
-
-
-
 #ifdef ECORECPP_NOTIFICATION_API
 
 #endif

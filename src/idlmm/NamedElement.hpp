@@ -22,8 +22,6 @@
 
 #include <idlmm_forward.hpp>
 
-
-
 #include <idlmm/ModelElement.hpp>
 
 /*PROTECTED REGION ID(NamedElement_pre) START*/
@@ -41,32 +39,18 @@ namespace idlmm
 
         virtual ~NamedElement();
 
-
-
         // Operations
-
-
         // Attributes
         std::string const& getIdentifier() const;
         void setIdentifier(std::string const& _identifier);
 
         // References
-
-
         /*PROTECTED REGION ID(NamedElement) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(NamedElementImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.

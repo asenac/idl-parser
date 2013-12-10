@@ -22,10 +22,6 @@
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
 
-
-
-
-
 #ifdef ECORECPP_NOTIFICATION_API
 
 #endif

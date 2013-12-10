@@ -23,10 +23,6 @@
 #include <idlmm/TypedefDef.hpp>
 #include <idlmm/Expression.hpp>
 
-
-
-
-
 using namespace ::idlmm;
 
 // Default constructor

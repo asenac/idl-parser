@@ -22,8 +22,6 @@
 
 #include <idlmm_forward.hpp>
 
-
-
 #include <idlmm/Contained.hpp>
 #include <idlmm/Typed.hpp>
 
@@ -43,11 +41,7 @@ namespace idlmm
 
         virtual ~AttributeDef();
 
-
-
         // Operations
-
-
         // Attributes
         bool isIsReadonly() const;
         void setIsReadonly(bool _isReadonly);
@@ -63,14 +57,6 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(AttributeDefImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.

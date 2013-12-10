@@ -22,8 +22,6 @@
 
 #include <idlmm_forward.hpp>
 
-
-
 #include <idlmm/Typed.hpp>
 
 /*PROTECTED REGION ID(ParameterDef_pre) START*/
@@ -41,11 +39,7 @@ namespace idlmm
 
         virtual ~ParameterDef();
 
-
-
         // Operations
-
-
         // Attributes
         std::string const& getIdentifier() const;
         void setIdentifier(std::string const& _identifier);
@@ -54,22 +48,12 @@ namespace idlmm
         void setDirection(::idlmm::ParameterMode _direction);
 
         // References
-
-
         /*PROTECTED REGION ID(ParameterDef) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(ParameterDefImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.

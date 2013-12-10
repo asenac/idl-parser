@@ -22,8 +22,6 @@
 
 #include <idlmm_forward.hpp>
 
-
-
 #include <idlmm/Expression.hpp>
 
 /*PROTECTED REGION ID(UnaryExpression_pre) START*/
@@ -41,11 +39,7 @@ namespace idlmm
 
         virtual ~UnaryExpression();
 
-
-
         // Operations
-
-
         // Attributes
         std::string const& getOperator() const;
         void setOperator(std::string const& _operator);
@@ -60,14 +54,6 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(UnaryExpressionImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.

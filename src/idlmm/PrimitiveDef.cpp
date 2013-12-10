@@ -20,10 +20,6 @@
 #include "PrimitiveDef.hpp"
 #include <idlmm/IDLType.hpp>
 
-
-
-
-
 #ifdef ECORECPP_NOTIFICATION_API
 
 #endif

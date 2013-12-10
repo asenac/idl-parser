@@ -21,10 +21,6 @@
 #include <idlmm/NamedElement.hpp>
 #include <idlmm/Container.hpp>
 
-
-
-
-
 #ifdef ECORECPP_NOTIFICATION_API
 
 #endif

@@ -21,10 +21,6 @@
 #include <idlmm/LiteralExpression.hpp>
 #include <idlmm/Constant.hpp>
 
-
-
-
-
 #ifdef ECORECPP_NOTIFICATION_API
 
 #endif

@@ -22,8 +22,6 @@
 
 #include <idlmm_forward.hpp>
 
-
-
 #include <idlmm/LiteralExpression.hpp>
 
 /*PROTECTED REGION ID(ValueExpression_pre) START*/
@@ -41,32 +39,18 @@ namespace idlmm
 
         virtual ~ValueExpression();
 
-
-
         // Operations
-
-
         // Attributes
         std::string const& getValue() const;
         void setValue(std::string const& _value);
 
         // References
-
-
         /*PROTECTED REGION ID(ValueExpression) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(ValueExpressionImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.

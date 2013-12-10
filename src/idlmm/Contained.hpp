@@ -22,8 +22,6 @@
 
 #include <idlmm_forward.hpp>
 
-
-
 #include <idlmm/NamedElement.hpp>
 
 /*PROTECTED REGION ID(Contained_pre) START*/
@@ -41,11 +39,7 @@ namespace idlmm
 
         virtual ~Contained();
 
-
-
         // Operations
-
-
         // Attributes
         std::string const& getRepositoryId() const;
         void setRepositoryId(std::string const& _repositoryId);
@@ -66,14 +60,6 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(ContainedImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.

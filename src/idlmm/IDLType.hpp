@@ -21,8 +21,6 @@
 #define IDLMM_IDLTYPE_HPP
 
 #include <idlmm_forward.hpp>
-
-
 #include <idlmm/ModelElement.hpp>
 
 /*PROTECTED REGION ID(IDLType_pre) START*/
@@ -40,32 +38,18 @@ namespace idlmm
 
         virtual ~IDLType();
 
-
-
         // Operations
-
-
         // Attributes
         ::idlmm::ETypeCode getTypeCode() const;
         void setTypeCode(::idlmm::ETypeCode _typeCode);
 
         // References
-
-
         /*PROTECTED REGION ID(IDLType) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(IDLTypeImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.

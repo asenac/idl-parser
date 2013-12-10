@@ -22,8 +22,6 @@
 
 #include <idlmm_forward.hpp>
 
-
-
 #include <idlmm/Container.hpp>
 
 /*PROTECTED REGION ID(ModuleDef_pre) START*/
@@ -41,32 +39,18 @@ namespace idlmm
 
         virtual ~ModuleDef();
 
-
-
         // Operations
-
-
         // Attributes
         std::string const& getPrefix() const;
         void setPrefix(std::string const& _prefix);
 
         // References
-
-
         /*PROTECTED REGION ID(ModuleDef) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(ModuleDefImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.

@@ -21,8 +21,6 @@
 #define IDLMM_TYPED_HPP
 
 #include <idlmm_forward.hpp>
-
-
 #include <idlmm/ModelElement.hpp>
 
 /*PROTECTED REGION ID(Typed_pre) START*/
@@ -40,11 +38,7 @@ namespace idlmm
 
         virtual ~Typed();
 
-
-
         // Operations
-
-
         // Attributes
 
         // References
@@ -60,14 +54,6 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(TypedImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
@@ -75,8 +61,6 @@ namespace idlmm
 
     protected:
         // Attributes
-
-
         // References
 
         ::idlmm::IDLType_ptr m_containedType;

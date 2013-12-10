@@ -21,8 +21,6 @@
 #define IDLMM_PRIMITIVEDEF_HPP
 
 #include <idlmm_forward.hpp>
-
-
 #include <idlmm/IDLType.hpp>
 
 /*PROTECTED REGION ID(PrimitiveDef_pre) START*/
@@ -40,32 +38,18 @@ namespace idlmm
 
         virtual ~PrimitiveDef();
 
-
-
         // Operations
-
-
         // Attributes
         ::idlmm::PrimitiveKind getKind() const;
         void setKind(::idlmm::PrimitiveKind _kind);
 
         // References
-
-
         /*PROTECTED REGION ID(PrimitiveDef) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(PrimitiveDefImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.

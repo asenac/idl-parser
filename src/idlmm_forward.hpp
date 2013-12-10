@@ -30,8 +30,6 @@
 /*PROTECTED REGION END*/
 
 // EPackage
-
-
 namespace idlmm
 {
 
@@ -248,6 +246,4 @@ namespace idlmm
     }
 
 } // idlmm
-
-
 #endif // _IDLMM_FORWARD_HPP

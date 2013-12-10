@@ -22,8 +22,6 @@
 
 #include <idlmm_forward.hpp>
 
-
-
 #include <idlmm/Contained.hpp>
 
 /*PROTECTED REGION ID(ForwardDef_pre) START*/
@@ -41,11 +39,7 @@ namespace idlmm
 
         virtual ~ForwardDef();
 
-
-
         // Operations
-
-
         // Attributes
 
         // References
@@ -58,14 +52,6 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(ForwardDefImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
@@ -73,8 +59,6 @@ namespace idlmm
 
     protected:
         // Attributes
-
-
         // References
 
         ::idlmm::InterfaceDef_ptr m_definition;

@@ -22,8 +22,6 @@
 
 #include <idlmm_forward.hpp>
 
-
-
 #include <idlmm/Contained.hpp>
 
 /*PROTECTED REGION ID(ExceptionDef_pre) START*/
@@ -41,11 +39,7 @@ namespace idlmm
 
         virtual ~ExceptionDef();
 
-
-
         // Operations
-
-
         // Attributes
         ::idlmm::ETypeCode getTypeCode() const;
         void setTypeCode(::idlmm::ETypeCode _typeCode);
@@ -59,14 +53,6 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(ExceptionDefImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.

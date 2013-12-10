@@ -22,10 +22,6 @@
 #include <idlmm/Container.hpp>
 #include <idlmm/InterfaceDef.hpp>
 
-
-
-
-
 #ifdef ECORECPP_NOTIFICATION_API
 
 #endif

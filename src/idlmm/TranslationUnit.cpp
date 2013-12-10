@@ -22,10 +22,6 @@
 #include <idlmm/Contained.hpp>
 #include <idlmm/Include.hpp>
 
-
-
-
-
 #ifdef ECORECPP_NOTIFICATION_API
 
 #endif

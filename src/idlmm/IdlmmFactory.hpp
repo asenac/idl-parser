@@ -19,8 +19,6 @@
 
 #ifndef _IDLMMFACTORY_HPP
 #define _IDLMMFACTORY_HPP
-
-
 #include <idlmm.hpp>
 
 namespace idlmm
@@ -77,6 +75,4 @@ namespace idlmm
     };
 
 } // idlmm
-
-
 #endif // _IDLMMFACTORY_HPP

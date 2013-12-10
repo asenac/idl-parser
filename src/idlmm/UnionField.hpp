@@ -22,8 +22,6 @@
 
 #include <idlmm_forward.hpp>
 
-
-
 #include <idlmm/Typed.hpp>
 
 /*PROTECTED REGION ID(UnionField_pre) START*/
@@ -41,11 +39,7 @@ namespace idlmm
 
         virtual ~UnionField();
 
-
-
         // Operations
-
-
         // Attributes
         std::string const& getIdentifier() const;
         void setIdentifier(std::string const& _identifier);
@@ -59,14 +53,6 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-
-
-
-
-
-
-
-
         /*PROTECTED REGION ID(UnionFieldImpl) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.

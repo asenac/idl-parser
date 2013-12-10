@@ -21,10 +21,6 @@
 #define IDLMM_MODELELEMENT_HPP
 
 #include <idlmm_forward.hpp>
-
-
-
-
 /*PROTECTED REGION ID(ModelElement_pre) START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
@@ -41,16 +37,10 @@ namespace idlmm
 
         virtual ~ModelElement();
 
-
-
         // Operations
-
-
         // Attributes
 
         // References
-
-
         /*PROTECTED REGION ID(ModelElement) START*/
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
@@ -71,8 +61,6 @@ namespace idlmm
 
     protected:
         // Attributes
-
-
         // References
 
     };

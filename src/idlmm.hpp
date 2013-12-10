@@ -23,8 +23,6 @@
 #include "idlmm_forward.hpp"
 
 // EPackage
-
-
 // EClass
 #include "idlmm/ModelElement.hpp"
 #include "idlmm/Container.hpp"
