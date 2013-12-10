@@ -40,7 +40,7 @@ namespace idlmm
 
         virtual ~IDLType();
 
-        
+
 
         // Operations
 
@@ -59,12 +59,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(IDLTypeImpl) START*/
         // Please, enable the protected region if you add manually written code.

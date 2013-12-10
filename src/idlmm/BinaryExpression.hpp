@@ -41,7 +41,7 @@ namespace idlmm
 
         virtual ~BinaryExpression();
 
-        
+
 
         // Operations
 
@@ -64,12 +64,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(BinaryExpressionImpl) START*/
         // Please, enable the protected region if you add manually written code.

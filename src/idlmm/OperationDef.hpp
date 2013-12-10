@@ -43,7 +43,7 @@ namespace idlmm
 
         virtual ~OperationDef();
 
-        
+
 
         // Operations
 
@@ -64,12 +64,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(OperationDefImpl) START*/
         // Please, enable the protected region if you add manually written code.

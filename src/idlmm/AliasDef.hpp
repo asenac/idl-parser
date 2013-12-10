@@ -43,7 +43,7 @@ namespace idlmm
 
         virtual ~AliasDef();
 
-        
+
 
         // Operations
 
@@ -60,12 +60,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(AliasDefImpl) START*/
         // Please, enable the protected region if you add manually written code.

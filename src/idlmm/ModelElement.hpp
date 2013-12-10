@@ -41,7 +41,7 @@ namespace idlmm
 
         virtual ~ModelElement();
 
-        
+
 
         // Operations
 

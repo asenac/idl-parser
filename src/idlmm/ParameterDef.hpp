@@ -41,7 +41,7 @@ namespace idlmm
 
         virtual ~ParameterDef();
 
-        
+
 
         // Operations
 
@@ -63,12 +63,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(ParameterDefImpl) START*/
         // Please, enable the protected region if you add manually written code.

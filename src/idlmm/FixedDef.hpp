@@ -40,7 +40,7 @@ namespace idlmm
 
         virtual ~FixedDef();
 
-        
+
 
         // Operations
 
@@ -61,12 +61,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(FixedDefImpl) START*/
         // Please, enable the protected region if you add manually written code.

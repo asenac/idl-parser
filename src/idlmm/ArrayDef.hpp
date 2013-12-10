@@ -43,7 +43,7 @@ namespace idlmm
 
         virtual ~ArrayDef();
 
-        
+
 
         // Operations
 
@@ -62,12 +62,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(ArrayDefImpl) START*/
         // Please, enable the protected region if you add manually written code.

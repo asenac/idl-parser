@@ -40,7 +40,7 @@ namespace idlmm
 
         virtual ~Expression();
 
-        
+
 
         // Operations
 
@@ -57,12 +57,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(ExpressionImpl) START*/
         // Please, enable the protected region if you add manually written code.

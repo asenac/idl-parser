@@ -41,7 +41,7 @@ namespace idlmm
 
         virtual ~NamedElement();
 
-        
+
 
         // Operations
 
@@ -60,12 +60,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(NamedElementImpl) START*/
         // Please, enable the protected region if you add manually written code.

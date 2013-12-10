@@ -45,7 +45,7 @@ namespace idlmm
 
         virtual ~ConstantDef();
 
-        
+
 
         // Operations
 
@@ -63,12 +63,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(ConstantDefImpl) START*/
         // Please, enable the protected region if you add manually written code.

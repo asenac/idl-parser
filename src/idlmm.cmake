@@ -40,7 +40,7 @@ set(idlmm_SOURCES
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/Constant.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm/NamedElement.cpp
    )
-   
+
 set(idlmm_HEADERS
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/idlmm_forward.hpp

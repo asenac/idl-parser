@@ -41,7 +41,7 @@ namespace idlmm
 
         virtual ~Container();
 
-        
+
 
         // Operations
 
@@ -58,12 +58,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(ContainerImpl) START*/
         // Please, enable the protected region if you add manually written code.

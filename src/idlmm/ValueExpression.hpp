@@ -41,7 +41,7 @@ namespace idlmm
 
         virtual ~ValueExpression();
 
-        
+
 
         // Operations
 
@@ -60,12 +60,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(ValueExpressionImpl) START*/
         // Please, enable the protected region if you add manually written code.

@@ -41,7 +41,7 @@ namespace idlmm
 
         virtual ~TranslationUnit();
 
-        
+
 
         // Operations
 
@@ -62,12 +62,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(TranslationUnitImpl) START*/
         // Please, enable the protected region if you add manually written code.

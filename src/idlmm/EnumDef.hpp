@@ -41,7 +41,7 @@ namespace idlmm
 
         virtual ~EnumDef();
 
-        
+
 
         // Operations
 
@@ -58,12 +58,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(EnumDefImpl) START*/
         // Please, enable the protected region if you add manually written code.

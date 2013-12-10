@@ -43,7 +43,7 @@ AliasDef::AliasDef()
     /*PROTECTED REGION END*/
 
 #ifdef ECORECPP_NOTIFICATION_API
-    
+
 #endif
 }
 

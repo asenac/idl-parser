@@ -42,7 +42,7 @@ namespace idlmm
 
         virtual ~SequenceDef();
 
-        
+
 
         // Operations
 
@@ -60,12 +60,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(SequenceDefImpl) START*/
         // Please, enable the protected region if you add manually written code.

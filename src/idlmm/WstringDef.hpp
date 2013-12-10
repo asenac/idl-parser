@@ -40,7 +40,7 @@ namespace idlmm
 
         virtual ~WstringDef();
 
-        
+
 
         // Operations
 
@@ -58,12 +58,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(WstringDefImpl) START*/
         // Please, enable the protected region if you add manually written code.

@@ -40,7 +40,7 @@ namespace idlmm
 
         virtual ~Typed();
 
-        
+
 
         // Operations
 
@@ -61,12 +61,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(TypedImpl) START*/
         // Please, enable the protected region if you add manually written code.

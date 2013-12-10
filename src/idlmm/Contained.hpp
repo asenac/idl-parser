@@ -41,7 +41,7 @@ namespace idlmm
 
         virtual ~Contained();
 
-        
+
 
         // Operations
 
@@ -67,12 +67,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(ContainedImpl) START*/
         // Please, enable the protected region if you add manually written code.

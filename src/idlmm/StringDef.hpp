@@ -40,7 +40,7 @@ namespace idlmm
 
         virtual ~StringDef();
 
-        
+
 
         // Operations
 
@@ -58,12 +58,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(StringDefImpl) START*/
         // Please, enable the protected region if you add manually written code.

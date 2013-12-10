@@ -41,7 +41,7 @@ namespace idlmm
 
         virtual ~UnaryExpression();
 
-        
+
 
         // Operations
 
@@ -61,12 +61,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(UnaryExpressionImpl) START*/
         // Please, enable the protected region if you add manually written code.

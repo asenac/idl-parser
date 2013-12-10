@@ -41,7 +41,7 @@ namespace idlmm
 
         virtual ~ForwardDef();
 
-        
+
 
         // Operations
 
@@ -59,12 +59,12 @@ namespace idlmm
 
         // EObjectImpl
 
-                
 
-                
-        
-        
-        
+
+
+
+
+
 
         /*PROTECTED REGION ID(ForwardDefImpl) START*/
         // Please, enable the protected region if you add manually written code.
