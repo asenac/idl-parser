@@ -30,43 +30,43 @@ namespace idlmm
     public:
         virtual ~IdlmmVisitor() {}
 
-        virtual void visit(AliasDef * e) = 0;
-        virtual void visit(ArrayDef * e) = 0;
-        virtual void visit(AttributeDef * e) = 0;
-        virtual void visit(BinaryExpression * e) = 0;
-        virtual void visit(ConstantDef * e) = 0;
-        virtual void visit(ConstantDefRef * e) = 0;
-        virtual void visit(Constant * e) = 0;
-        virtual void visit(Contained * e) = 0;
-        virtual void visit(Container * e) = 0;
-        virtual void visit(EnumDef * e) = 0;
-        virtual void visit(EnumMember * e) = 0;
-        virtual void visit(ExceptionDef * e) = 0;
-        virtual void visit(Expression * e) = 0;
-        virtual void visit(Field * e) = 0;
-        virtual void visit(FixedDef * e) = 0;
-        virtual void visit(ForwardDef * e) = 0;
-        virtual void visit(IDLType * e) = 0;
-        virtual void visit(Include * e) = 0;
-        virtual void visit(InterfaceDef * e) = 0;
-        virtual void visit(LiteralExpression * e) = 0;
-        virtual void visit(ModelElement * e) = 0;
-        virtual void visit(ModuleDef * e) = 0;
-        virtual void visit(NamedElement * e) = 0;
-        virtual void visit(OperationDef * e) = 0;
-        virtual void visit(ParameterDef * e) = 0;
-        virtual void visit(PrimitiveDef * e) = 0;
-        virtual void visit(SequenceDef * e) = 0;
-        virtual void visit(StringDef * e) = 0;
-        virtual void visit(StructDef * e) = 0;
-        virtual void visit(TranslationUnit * e) = 0;
-        virtual void visit(TypedefDef * e) = 0;
-        virtual void visit(Typed * e) = 0;
-        virtual void visit(UnaryExpression * e) = 0;
-        virtual void visit(UnionDef * e) = 0;
-        virtual void visit(UnionField * e) = 0;
-        virtual void visit(ValueExpression * e) = 0;
-        virtual void visit(WstringDef * e) = 0;
+        virtual void visit(AliasDef * e) {}
+        virtual void visit(ArrayDef * e) {}
+        virtual void visit(AttributeDef * e) {}
+        virtual void visit(BinaryExpression * e) {}
+        virtual void visit(ConstantDef * e) {}
+        virtual void visit(ConstantDefRef * e) {}
+        virtual void visit(Constant * e) {}
+        virtual void visit(Contained * e) {}
+        virtual void visit(Container * e) {}
+        virtual void visit(EnumDef * e) {}
+        virtual void visit(EnumMember * e) {}
+        virtual void visit(ExceptionDef * e) {}
+        virtual void visit(Expression * e) {}
+        virtual void visit(Field * e) {}
+        virtual void visit(FixedDef * e) {}
+        virtual void visit(ForwardDef * e) {}
+        virtual void visit(IDLType * e) {}
+        virtual void visit(Include * e) {}
+        virtual void visit(InterfaceDef * e) {}
+        virtual void visit(LiteralExpression * e) {}
+        virtual void visit(ModelElement * e) {}
+        virtual void visit(ModuleDef * e) {}
+        virtual void visit(NamedElement * e) {}
+        virtual void visit(OperationDef * e) {}
+        virtual void visit(ParameterDef * e) {}
+        virtual void visit(PrimitiveDef * e) {}
+        virtual void visit(SequenceDef * e) {}
+        virtual void visit(StringDef * e) {}
+        virtual void visit(StructDef * e) {}
+        virtual void visit(TranslationUnit * e) {}
+        virtual void visit(TypedefDef * e) {}
+        virtual void visit(Typed * e) {}
+        virtual void visit(UnaryExpression * e) {}
+        virtual void visit(UnionDef * e) {}
+        virtual void visit(UnionField * e) {}
+        virtual void visit(ValueExpression * e) {}
+        virtual void visit(WstringDef * e) {}
     };
 
 } // idlmm
