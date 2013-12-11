@@ -53,7 +53,10 @@ namespace idlmm
         /*PROTECTED REGION END*/
 
         // EObjectImpl
-        /*PROTECTED REGION ID(ExceptionDefImpl) START*/
+        /*PROTECTED REGION ID(ExceptionDefImpl) ENABLED START*/
+
+        void accept(IdlmmVisitor& visitor);
+
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/

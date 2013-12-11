@@ -18,6 +18,7 @@
  */
 
 #include "TypedefDef.hpp"
+#include "IdlmmVisitor.hpp"
 #include <idlmm/IDLType.hpp>
 #include <idlmm/Contained.hpp>
 #include <idlmm/Container.hpp>
@@ -46,7 +47,13 @@ TypedefDef::~TypedefDef()
 {
 }
 
-/*PROTECTED REGION ID(TypedefDef.cpp) START*/
+/*PROTECTED REGION ID(TypedefDef.cpp) ENABLED START*/
+
+void TypedefDef::accept(IdlmmVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/

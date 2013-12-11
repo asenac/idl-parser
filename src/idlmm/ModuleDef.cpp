@@ -18,6 +18,7 @@
  */
 
 #include "ModuleDef.hpp"
+#include "IdlmmVisitor.hpp"
 #include <idlmm/Container.hpp>
 #include <idlmm/Contained.hpp>
 
@@ -45,7 +46,13 @@ ModuleDef::~ModuleDef()
 {
 }
 
-/*PROTECTED REGION ID(ModuleDef.cpp) START*/
+/*PROTECTED REGION ID(ModuleDef.cpp) ENABLED START*/
+
+void ModuleDef::accept(IdlmmVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/

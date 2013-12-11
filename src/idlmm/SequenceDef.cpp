@@ -18,6 +18,7 @@
  */
 
 #include "SequenceDef.hpp"
+#include "IdlmmVisitor.hpp"
 #include <idlmm/Typed.hpp>
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
@@ -52,7 +53,13 @@ SequenceDef::~SequenceDef()
     }
 }
 
-/*PROTECTED REGION ID(SequenceDef.cpp) START*/
+/*PROTECTED REGION ID(SequenceDef.cpp) ENABLED START*/
+
+void SequenceDef::accept(IdlmmVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/

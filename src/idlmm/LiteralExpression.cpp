@@ -18,6 +18,7 @@
  */
 
 #include "LiteralExpression.hpp"
+#include "IdlmmVisitor.hpp"
 #include <idlmm/Expression.hpp>
 
 #ifdef ECORECPP_NOTIFICATION_API
@@ -44,7 +45,13 @@ LiteralExpression::~LiteralExpression()
 {
 }
 
-/*PROTECTED REGION ID(LiteralExpression.cpp) START*/
+/*PROTECTED REGION ID(LiteralExpression.cpp) ENABLED START*/
+
+void LiteralExpression::accept(IdlmmVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/

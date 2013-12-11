@@ -18,6 +18,7 @@
  */
 
 #include "NamedElement.hpp"
+#include "IdlmmVisitor.hpp"
 #include <idlmm/ModelElement.hpp>
 
 #ifdef ECORECPP_NOTIFICATION_API
@@ -44,7 +45,13 @@ NamedElement::~NamedElement()
 {
 }
 
-/*PROTECTED REGION ID(NamedElement.cpp) START*/
+/*PROTECTED REGION ID(NamedElement.cpp) ENABLED START*/
+
+void NamedElement::accept(IdlmmVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/

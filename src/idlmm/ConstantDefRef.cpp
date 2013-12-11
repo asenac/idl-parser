@@ -18,6 +18,7 @@
  */
 
 #include "ConstantDefRef.hpp"
+#include "IdlmmVisitor.hpp"
 #include <idlmm/LiteralExpression.hpp>
 #include <idlmm/Constant.hpp>
 
@@ -46,7 +47,13 @@ ConstantDefRef::~ConstantDefRef()
 {
 }
 
-/*PROTECTED REGION ID(ConstantDefRef.cpp) START*/
+/*PROTECTED REGION ID(ConstantDefRef.cpp) ENABLED START*/
+
+void ConstantDefRef::accept(IdlmmVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/

@@ -23,10 +23,15 @@
 #include <string>
 #include <boost/ptr_container/ptr_vector.hpp>
 
-/*PROTECTED REGION ID(idlmm_forward) START*/
+/*PROTECTED REGION ID(idlmm_forward) ENABLED START*/
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 // Additional headers here
+
+namespace idlmm
+{
+    class IdlmmVisitor;
+} // namespace idlmm
 /*PROTECTED REGION END*/
 
 // EPackage

@@ -18,6 +18,7 @@
  */
 
 #include "TranslationUnit.hpp"
+#include "IdlmmVisitor.hpp"
 #include <idlmm/ModelElement.hpp>
 #include <idlmm/Contained.hpp>
 #include <idlmm/Include.hpp>
@@ -37,7 +38,13 @@ TranslationUnit::~TranslationUnit()
 {
 }
 
-/*PROTECTED REGION ID(TranslationUnit.cpp) START*/
+/*PROTECTED REGION ID(TranslationUnit.cpp) ENABLED START*/
+
+void TranslationUnit::accept(IdlmmVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/

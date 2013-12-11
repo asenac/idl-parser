@@ -18,6 +18,7 @@
  */
 
 #include "ValueExpression.hpp"
+#include "IdlmmVisitor.hpp"
 #include <idlmm/LiteralExpression.hpp>
 
 #ifdef ECORECPP_NOTIFICATION_API
@@ -44,7 +45,13 @@ ValueExpression::~ValueExpression()
 {
 }
 
-/*PROTECTED REGION ID(ValueExpression.cpp) START*/
+/*PROTECTED REGION ID(ValueExpression.cpp) ENABLED START*/
+
+void ValueExpression::accept(IdlmmVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/

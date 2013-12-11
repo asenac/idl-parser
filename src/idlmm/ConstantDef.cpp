@@ -18,6 +18,7 @@
  */
 
 #include "ConstantDef.hpp"
+#include "IdlmmVisitor.hpp"
 #include <idlmm/Contained.hpp>
 #include <idlmm/Typed.hpp>
 #include <idlmm/Constant.hpp>
@@ -55,7 +56,13 @@ ConstantDef::~ConstantDef()
     }
 }
 
-/*PROTECTED REGION ID(ConstantDef.cpp) START*/
+/*PROTECTED REGION ID(ConstantDef.cpp) ENABLED START*/
+
+void ConstantDef::accept(IdlmmVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/

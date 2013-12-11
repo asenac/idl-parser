@@ -18,6 +18,7 @@
  */
 
 #include "ModelElement.hpp"
+#include "IdlmmVisitor.hpp"
 
 #ifdef ECORECPP_NOTIFICATION_API
 
@@ -43,7 +44,13 @@ ModelElement::~ModelElement()
 {
 }
 
-/*PROTECTED REGION ID(ModelElement.cpp) START*/
+/*PROTECTED REGION ID(ModelElement.cpp) ENABLED START*/
+
+void ModelElement::accept(IdlmmVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/

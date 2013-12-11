@@ -18,6 +18,7 @@
  */
 
 #include "Expression.hpp"
+#include "IdlmmVisitor.hpp"
 #include <idlmm/ModelElement.hpp>
 
 #ifdef ECORECPP_NOTIFICATION_API
@@ -44,7 +45,13 @@ Expression::~Expression()
 {
 }
 
-/*PROTECTED REGION ID(Expression.cpp) START*/
+/*PROTECTED REGION ID(Expression.cpp) ENABLED START*/
+
+void Expression::accept(IdlmmVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/

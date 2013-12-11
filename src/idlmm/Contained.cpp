@@ -18,6 +18,7 @@
  */
 
 #include "Contained.hpp"
+#include "IdlmmVisitor.hpp"
 #include <idlmm/NamedElement.hpp>
 #include <idlmm/Container.hpp>
 
@@ -46,7 +47,13 @@ Contained::~Contained()
 {
 }
 
-/*PROTECTED REGION ID(Contained.cpp) START*/
+/*PROTECTED REGION ID(Contained.cpp) ENABLED START*/
+
+void Contained::accept(IdlmmVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/

@@ -18,6 +18,7 @@
  */
 
 #include "EnumDef.hpp"
+#include "IdlmmVisitor.hpp"
 #include <idlmm/TypedefDef.hpp>
 #include <idlmm/Container.hpp>
 #include <idlmm/EnumMember.hpp>
@@ -37,7 +38,13 @@ EnumDef::~EnumDef()
 {
 }
 
-/*PROTECTED REGION ID(EnumDef.cpp) START*/
+/*PROTECTED REGION ID(EnumDef.cpp) ENABLED START*/
+
+void EnumDef::accept(IdlmmVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/

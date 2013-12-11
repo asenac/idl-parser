@@ -18,6 +18,7 @@
  */
 
 #include "Field.hpp"
+#include "IdlmmVisitor.hpp"
 #include <idlmm/Typed.hpp>
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
@@ -46,7 +47,13 @@ Field::~Field()
 {
 }
 
-/*PROTECTED REGION ID(Field.cpp) START*/
+/*PROTECTED REGION ID(Field.cpp) ENABLED START*/
+
+void Field::accept(IdlmmVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/

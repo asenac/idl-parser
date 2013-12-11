@@ -18,6 +18,7 @@
  */
 
 #include "FixedDef.hpp"
+#include "IdlmmVisitor.hpp"
 #include <idlmm/IDLType.hpp>
 #include <idlmm/Expression.hpp>
 
@@ -54,7 +55,13 @@ FixedDef::~FixedDef()
     }
 }
 
-/*PROTECTED REGION ID(FixedDef.cpp) START*/
+/*PROTECTED REGION ID(FixedDef.cpp) ENABLED START*/
+
+void FixedDef::accept(IdlmmVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/

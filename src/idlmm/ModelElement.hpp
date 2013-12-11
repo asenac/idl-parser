@@ -54,7 +54,10 @@ namespace idlmm
             return dynamic_cast< T * >(this);
         }
 
-        /*PROTECTED REGION ID(ModelElementImpl) START*/
+        /*PROTECTED REGION ID(ModelElementImpl) ENABLED START*/
+
+        void accept(IdlmmVisitor& visitor);
+
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
         /*PROTECTED REGION END*/

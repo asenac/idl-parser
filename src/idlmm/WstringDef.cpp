@@ -18,6 +18,7 @@
  */
 
 #include "WstringDef.hpp"
+#include "IdlmmVisitor.hpp"
 #include <idlmm/IDLType.hpp>
 #include <idlmm/Expression.hpp>
 
@@ -50,7 +51,13 @@ WstringDef::~WstringDef()
     }
 }
 
-/*PROTECTED REGION ID(WstringDef.cpp) START*/
+/*PROTECTED REGION ID(WstringDef.cpp) ENABLED START*/
+
+void WstringDef::accept(IdlmmVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/

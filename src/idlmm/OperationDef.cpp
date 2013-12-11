@@ -18,6 +18,7 @@
  */
 
 #include "OperationDef.hpp"
+#include "IdlmmVisitor.hpp"
 #include <idlmm/Contained.hpp>
 #include <idlmm/Typed.hpp>
 #include <idlmm/Container.hpp>
@@ -41,7 +42,13 @@ OperationDef::~OperationDef()
 {
 }
 
-/*PROTECTED REGION ID(OperationDef.cpp) START*/
+/*PROTECTED REGION ID(OperationDef.cpp) ENABLED START*/
+
+void OperationDef::accept(IdlmmVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/

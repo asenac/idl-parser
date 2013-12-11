@@ -18,6 +18,7 @@
  */
 
 #include "UnaryExpression.hpp"
+#include "IdlmmVisitor.hpp"
 #include <idlmm/Expression.hpp>
 
 #ifdef ECORECPP_NOTIFICATION_API
@@ -49,7 +50,13 @@ UnaryExpression::~UnaryExpression()
     }
 }
 
-/*PROTECTED REGION ID(UnaryExpression.cpp) START*/
+/*PROTECTED REGION ID(UnaryExpression.cpp) ENABLED START*/
+
+void UnaryExpression::accept(IdlmmVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/

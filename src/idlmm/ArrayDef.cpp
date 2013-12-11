@@ -18,6 +18,7 @@
  */
 
 #include "ArrayDef.hpp"
+#include "IdlmmVisitor.hpp"
 #include <idlmm/Typed.hpp>
 #include <idlmm/IDLType.hpp>
 #include <idlmm/TypedefDef.hpp>
@@ -34,7 +35,13 @@ ArrayDef::~ArrayDef()
 {
 }
 
-/*PROTECTED REGION ID(ArrayDef.cpp) START*/
+/*PROTECTED REGION ID(ArrayDef.cpp) ENABLED START*/
+
+void ArrayDef::accept(IdlmmVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/

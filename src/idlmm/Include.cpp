@@ -18,6 +18,7 @@
  */
 
 #include "Include.hpp"
+#include "IdlmmVisitor.hpp"
 #include <idlmm/ModelElement.hpp>
 #include <idlmm/TranslationUnit.hpp>
 
@@ -46,7 +47,13 @@ Include::~Include()
 {
 }
 
-/*PROTECTED REGION ID(Include.cpp) START*/
+/*PROTECTED REGION ID(Include.cpp) ENABLED START*/
+
+void Include::accept(IdlmmVisitor& visitor)
+{
+    visitor.visit(this);
+}
+
 // Please, enable the protected region if you add manually written code.
 // To do this, add the keyword ENABLED before START.
 /*PROTECTED REGION END*/
