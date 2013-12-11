@@ -56,7 +56,7 @@ namespace idlmm
         // EObjectImpl
         /*PROTECTED REGION ID(UnaryExpressionImpl) ENABLED START*/
 
-        void accept(IdlmmVisitor& visitor);
+        virtual void accept(IdlmmVisitor& visitor);
 
         // Please, enable the protected region if you add manually written code.
         // To do this, add the keyword ENABLED before START.
