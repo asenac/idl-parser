@@ -177,6 +177,7 @@ struct X_ : char_< 'X' > {};
 struct Y_ : char_< 'Y' > {};
 struct Z_ : char_< 'Z' > {};
 
+struct boolean_t : tok_ < b_, o_, o_, l_, e_, a_, n_ > {};
 struct octet_t : tok_ < o_, c_, t_, e_, t_ > {};
 struct char_t : tok_ < c_, h_, a_, r_ > {};
 struct long_t : tok_ < l_, o_, n_, g_ > {};
@@ -205,8 +206,8 @@ struct void_t : tok_ < v_, o_, i_, d_ > {};
 struct enum_t : tok_ < e_, n_, u_, m_ > {};
 struct sequence_t : tok_ < s_, e_, q_, u_, e_, n_, c_, e_ > {};
 struct const_t : tok_ < c_, o_, n_, s_, t_ > {};
-struct true_t : tok_ < t_, r_, u_, e_ > {};
-struct false_t : tok_ < f_, a_, l_, s_, e_ > {};
+struct true_t : tok_ < T_, R_, U_, E_ > {};
+struct false_t : tok_ < F_, A_, L_, S_, E_ > {};
 struct union_t : tok_ < u_, n_, i_, o_, n_ > {};
 struct case_t : tok_ < c_, a_, s_, e_ > {};
 struct switch_t : tok_ < s_, w_, i_, t_, c_, h_ > {};

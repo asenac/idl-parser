@@ -42,6 +42,8 @@ idlmm::PrimitiveKind get_primitive_kind(idl::grammar::primitive_types t)
 
     switch (t)
     {
+        case PT_BOOLEAN:
+            return PK_BOOLEAN;
         case PT_UNSIGNED_SHORT:
             return PK_USHORT;
         case PT_UNSIGNED_LONG_LONG:

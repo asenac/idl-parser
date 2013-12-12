@@ -14,6 +14,7 @@ using namespace tokens;
 
 enum primitive_types
 {
+    PT_BOOLEAN,
     PT_UNSIGNED_SHORT,
     PT_UNSIGNED_LONG_LONG,
     PT_UNSIGNED_LONG,
@@ -68,7 +69,10 @@ struct primitive_types_rule :
            primitive_type < float_t, PT_FLOAT >,
            primitive_type < double_t, PT_DOUBLE >,
            primitive_type < string_t, PT_STRING >,
-           primitive_type < wstring_t, PT_WSTRING >
+           or_ <
+               primitive_type < wstring_t, PT_WSTRING >,
+               primitive_type < boolean_t, PT_BOOLEAN >
+            >
        >
     >
 {};
@@ -526,7 +530,7 @@ struct context_rule :
 
 struct struct_field :
     semantic_context <
-            seq_ < type_rule, space_, declarators_ >,
+            seq_ < typedef_type_rule, space_, declarators_ >,
             CONTEXT_STRUCT_FIELD
         >
 {};
