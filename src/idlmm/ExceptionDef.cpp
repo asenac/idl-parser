@@ -62,7 +62,7 @@ void ExceptionDef::setTypeCode(::idlmm::ETypeCode _typeCode)
 }
 
 // References
-boost::ptr_vector< ::idlmm::Field >& ExceptionDef::getMembers()
+ExceptionDef::Members_t& ExceptionDef::getMembers()
 {
     return m_members;
 }

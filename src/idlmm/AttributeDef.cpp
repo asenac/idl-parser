@@ -60,12 +60,12 @@ void AttributeDef::setIsReadonly(bool _isReadonly)
 }
 
 // References
-boost::ptr_vector< ::idlmm::ExceptionDef >& AttributeDef::getGetRaises()
+AttributeDef::GetRaises_t& AttributeDef::getGetRaises()
 {
     return m_getRaises;
 }
 
-boost::ptr_vector< ::idlmm::ExceptionDef >& AttributeDef::getSetRaises()
+AttributeDef::SetRaises_t& AttributeDef::getSetRaises()
 {
     return m_setRaises;
 }

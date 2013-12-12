@@ -43,7 +43,8 @@ namespace idlmm
         // Attributes
 
         // References
-        boost::ptr_vector< ::idlmm::UnionField >& getUnionMembers();
+        typedef boost::ptr_vector< ::idlmm::UnionField > UnionMembers_t;
+        UnionMembers_t& getUnionMembers();
 
         ::idlmm::IDLType_ptr getContainedDiscrim();
         void setContainedDiscrim(::idlmm::IDLType_ptr _containedDiscrim);

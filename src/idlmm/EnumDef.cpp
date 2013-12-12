@@ -52,7 +52,7 @@ void EnumDef::accept(IdlmmVisitor& visitor)
 // Attributes
 
 // References
-boost::ptr_vector< ::idlmm::EnumMember >& EnumDef::getMembers()
+EnumDef::Members_t& EnumDef::getMembers()
 {
     return m_members;
 }

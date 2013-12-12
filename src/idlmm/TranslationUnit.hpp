@@ -45,9 +45,11 @@ namespace idlmm
         void setIdentifier(std::string const& _identifier);
 
         // References
-        boost::ptr_vector< ::idlmm::Contained >& getContains();
+        typedef boost::ptr_vector< ::idlmm::Contained > Contains_t;
+        Contains_t& getContains();
 
-        boost::ptr_vector< ::idlmm::Include >& getIncludes();
+        typedef boost::ptr_vector< ::idlmm::Include > Includes_t;
+        Includes_t& getIncludes();
 
         /*PROTECTED REGION ID(TranslationUnit) START*/
         // Please, enable the protected region if you add manually written code.

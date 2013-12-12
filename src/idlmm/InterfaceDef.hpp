@@ -53,7 +53,8 @@ namespace idlmm
         void setIsTruncatable(bool _isTruncatable);
 
         // References
-        boost::ptr_vector< ::idlmm::InterfaceDef >& getDerivesFrom();
+        typedef boost::ptr_vector< ::idlmm::InterfaceDef > DerivesFrom_t;
+        DerivesFrom_t& getDerivesFrom();
 
         ::idlmm::ForwardDef_ptr getForward();
         void setForward(::idlmm::ForwardDef_ptr _forward);

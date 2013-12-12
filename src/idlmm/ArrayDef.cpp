@@ -59,7 +59,7 @@ void ArrayDef::setName(std::string const& _name)
 }
 
 // References
-boost::ptr_vector< ::idlmm::Expression >& ArrayDef::getBounds()
+ArrayDef::Bounds_t& ArrayDef::getBounds()
 {
     return m_bounds;
 }

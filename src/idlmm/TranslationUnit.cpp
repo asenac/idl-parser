@@ -62,12 +62,12 @@ void TranslationUnit::setIdentifier(std::string const& _identifier)
 }
 
 // References
-boost::ptr_vector< ::idlmm::Contained >& TranslationUnit::getContains()
+TranslationUnit::Contains_t& TranslationUnit::getContains()
 {
     return m_contains;
 }
 
-boost::ptr_vector< ::idlmm::Include >& TranslationUnit::getIncludes()
+TranslationUnit::Includes_t& TranslationUnit::getIncludes()
 {
     return m_includes;
 }

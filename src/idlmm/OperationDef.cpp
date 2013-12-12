@@ -66,12 +66,12 @@ void OperationDef::setIsOneway(bool _isOneway)
 }
 
 // References
-boost::ptr_vector< ::idlmm::ParameterDef >& OperationDef::getParameters()
+OperationDef::Parameters_t& OperationDef::getParameters()
 {
     return m_parameters;
 }
 
-boost::ptr_vector< ::idlmm::ExceptionDef >& OperationDef::getCanRaise()
+OperationDef::CanRaise_t& OperationDef::getCanRaise()
 {
     return m_canRaise;
 }

@@ -43,7 +43,8 @@ namespace idlmm
         // Attributes
 
         // References
-        boost::ptr_vector< ::idlmm::Contained >& getContains();
+        typedef boost::ptr_vector< ::idlmm::Contained > Contains_t;
+        Contains_t& getContains();
 
         /*PROTECTED REGION ID(Container) START*/
         // Please, enable the protected region if you add manually written code.

@@ -43,7 +43,8 @@ namespace idlmm
         // Attributes
 
         // References
-        boost::ptr_vector< ::idlmm::EnumMember >& getMembers();
+        typedef boost::ptr_vector< ::idlmm::EnumMember > Members_t;
+        Members_t& getMembers();
 
         /*PROTECTED REGION ID(EnumDef) START*/
         // Please, enable the protected region if you add manually written code.

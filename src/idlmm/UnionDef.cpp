@@ -58,7 +58,7 @@ void UnionDef::accept(IdlmmVisitor& visitor)
 // Attributes
 
 // References
-boost::ptr_vector< ::idlmm::UnionField >& UnionDef::getUnionMembers()
+UnionDef::UnionMembers_t& UnionDef::getUnionMembers()
 {
     return m_unionMembers;
 }

@@ -47,9 +47,11 @@ namespace idlmm
         void setIsOneway(bool _isOneway);
 
         // References
-        boost::ptr_vector< ::idlmm::ParameterDef >& getParameters();
+        typedef boost::ptr_vector< ::idlmm::ParameterDef > Parameters_t;
+        Parameters_t& getParameters();
 
-        boost::ptr_vector< ::idlmm::ExceptionDef >& getCanRaise();
+        typedef boost::ptr_vector< ::idlmm::ExceptionDef > CanRaise_t;
+        CanRaise_t& getCanRaise();
 
         /*PROTECTED REGION ID(OperationDef) START*/
         // Please, enable the protected region if you add manually written code.

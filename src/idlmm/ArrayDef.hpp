@@ -47,7 +47,8 @@ namespace idlmm
         void setName(std::string const& _name);
 
         // References
-        boost::ptr_vector< ::idlmm::Expression >& getBounds();
+        typedef boost::ptr_vector< ::idlmm::Expression > Bounds_t;
+        Bounds_t& getBounds();
 
         /*PROTECTED REGION ID(ArrayDef) START*/
         // Please, enable the protected region if you add manually written code.

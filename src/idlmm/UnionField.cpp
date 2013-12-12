@@ -63,7 +63,7 @@ void UnionField::setIdentifier(std::string const& _identifier)
 }
 
 // References
-boost::ptr_vector< ::idlmm::Expression >& UnionField::getLabel()
+UnionField::Label_t& UnionField::getLabel()
 {
     return m_label;
 }

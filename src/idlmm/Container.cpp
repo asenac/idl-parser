@@ -51,7 +51,7 @@ void Container::accept(IdlmmVisitor& visitor)
 // Attributes
 
 // References
-boost::ptr_vector< ::idlmm::Contained >& Container::getContains()
+Container::Contains_t& Container::getContains()
 {
     return m_contains;
 }

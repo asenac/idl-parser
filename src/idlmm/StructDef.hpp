@@ -43,7 +43,8 @@ namespace idlmm
         // Attributes
 
         // References
-        boost::ptr_vector< ::idlmm::Field >& getMembers();
+        typedef boost::ptr_vector< ::idlmm::Field > Members_t;
+        Members_t& getMembers();
 
         /*PROTECTED REGION ID(StructDef) START*/
         // Please, enable the protected region if you add manually written code.

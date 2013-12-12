@@ -52,7 +52,7 @@ void StructDef::accept(IdlmmVisitor& visitor)
 // Attributes
 
 // References
-boost::ptr_vector< ::idlmm::Field >& StructDef::getMembers()
+StructDef::Members_t& StructDef::getMembers()
 {
     return m_members;
 }

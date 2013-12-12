@@ -45,7 +45,8 @@ namespace idlmm
         void setTypeCode(::idlmm::ETypeCode _typeCode);
 
         // References
-        boost::ptr_vector< ::idlmm::Field >& getMembers();
+        typedef boost::ptr_vector< ::idlmm::Field > Members_t;
+        Members_t& getMembers();
 
         /*PROTECTED REGION ID(ExceptionDef) START*/
         // Please, enable the protected region if you add manually written code.

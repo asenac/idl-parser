@@ -47,9 +47,11 @@ namespace idlmm
         void setIsReadonly(bool _isReadonly);
 
         // References
-        boost::ptr_vector< ::idlmm::ExceptionDef >& getGetRaises();
+        typedef boost::ptr_vector< ::idlmm::ExceptionDef > GetRaises_t;
+        GetRaises_t& getGetRaises();
 
-        boost::ptr_vector< ::idlmm::ExceptionDef >& getSetRaises();
+        typedef boost::ptr_vector< ::idlmm::ExceptionDef > SetRaises_t;
+        SetRaises_t& getSetRaises();
 
         /*PROTECTED REGION ID(AttributeDef) START*/
         // Please, enable the protected region if you add manually written code.

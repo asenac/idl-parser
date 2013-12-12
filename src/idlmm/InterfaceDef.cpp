@@ -85,7 +85,7 @@ void InterfaceDef::setIsTruncatable(bool _isTruncatable)
 }
 
 // References
-boost::ptr_vector< ::idlmm::InterfaceDef >& InterfaceDef::getDerivesFrom()
+InterfaceDef::DerivesFrom_t& InterfaceDef::getDerivesFrom()
 {
     return m_derivesFrom;
 }

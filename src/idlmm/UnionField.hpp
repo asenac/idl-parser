@@ -45,7 +45,8 @@ namespace idlmm
         void setIdentifier(std::string const& _identifier);
 
         // References
-        boost::ptr_vector< ::idlmm::Expression >& getLabel();
+        typedef boost::ptr_vector< ::idlmm::Expression > Label_t;
+        Label_t& getLabel();
 
         /*PROTECTED REGION ID(UnionField) START*/
         // Please, enable the protected region if you add manually written code.
