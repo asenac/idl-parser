@@ -26,11 +26,6 @@
 #include <idlmm/TypedefDef.hpp>
 #include <idlmm/ParameterDef.hpp>
 #include <idlmm/ExceptionDef.hpp>
-
-#ifdef ECORECPP_NOTIFICATION_API
-
-#endif
-
 using namespace ::idlmm;
 
 // Default constructor

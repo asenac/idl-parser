@@ -20,11 +20,6 @@
 #include "UnaryExpression.hpp"
 #include "IdlmmVisitor.hpp"
 #include <idlmm/Expression.hpp>
-
-#ifdef ECORECPP_NOTIFICATION_API
-
-#endif
-
 using namespace ::idlmm;
 
 // Default constructor
@@ -37,9 +32,6 @@ UnaryExpression::UnaryExpression() :
     // To do this, add the keyword ENABLED before START.
     /*PROTECTED REGION END*/
 
-#ifdef ECORECPP_NOTIFICATION_API
-
-#endif
 }
 
 UnaryExpression::~UnaryExpression()

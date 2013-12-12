@@ -22,11 +22,6 @@
 #include <idlmm/ModelElement.hpp>
 #include <idlmm/Contained.hpp>
 #include <idlmm/Include.hpp>
-
-#ifdef ECORECPP_NOTIFICATION_API
-
-#endif
-
 using namespace ::idlmm;
 
 // Default constructor

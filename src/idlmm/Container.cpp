@@ -21,11 +21,6 @@
 #include "IdlmmVisitor.hpp"
 #include <idlmm/Contained.hpp>
 #include <idlmm/Container.hpp>
-
-#ifdef ECORECPP_NOTIFICATION_API
-
-#endif
-
 using namespace ::idlmm;
 
 // Default constructor

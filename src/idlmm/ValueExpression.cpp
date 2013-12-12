@@ -20,11 +20,6 @@
 #include "ValueExpression.hpp"
 #include "IdlmmVisitor.hpp"
 #include <idlmm/LiteralExpression.hpp>
-
-#ifdef ECORECPP_NOTIFICATION_API
-
-#endif
-
 using namespace ::idlmm;
 
 // Default constructor
@@ -36,9 +31,6 @@ ValueExpression::ValueExpression()
     // To do this, add the keyword ENABLED before START.
     /*PROTECTED REGION END*/
 
-#ifdef ECORECPP_NOTIFICATION_API
-
-#endif
 }
 
 ValueExpression::~ValueExpression()

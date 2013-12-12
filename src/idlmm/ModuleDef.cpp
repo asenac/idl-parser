@@ -21,11 +21,6 @@
 #include "IdlmmVisitor.hpp"
 #include <idlmm/Container.hpp>
 #include <idlmm/Contained.hpp>
-
-#ifdef ECORECPP_NOTIFICATION_API
-
-#endif
-
 using namespace ::idlmm;
 
 // Default constructor
@@ -37,9 +32,6 @@ ModuleDef::ModuleDef()
     // To do this, add the keyword ENABLED before START.
     /*PROTECTED REGION END*/
 
-#ifdef ECORECPP_NOTIFICATION_API
-
-#endif
 }
 
 ModuleDef::~ModuleDef()

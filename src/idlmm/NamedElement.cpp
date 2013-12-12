@@ -20,11 +20,6 @@
 #include "NamedElement.hpp"
 #include "IdlmmVisitor.hpp"
 #include <idlmm/ModelElement.hpp>
-
-#ifdef ECORECPP_NOTIFICATION_API
-
-#endif
-
 using namespace ::idlmm;
 
 // Default constructor
@@ -36,9 +31,6 @@ NamedElement::NamedElement()
     // To do this, add the keyword ENABLED before START.
     /*PROTECTED REGION END*/
 
-#ifdef ECORECPP_NOTIFICATION_API
-
-#endif
 }
 
 NamedElement::~NamedElement()

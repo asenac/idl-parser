@@ -23,11 +23,6 @@
 #include <idlmm/Container.hpp>
 #include <idlmm/UnionField.hpp>
 #include <idlmm/IDLType.hpp>
-
-#ifdef ECORECPP_NOTIFICATION_API
-
-#endif
-
 using namespace ::idlmm;
 
 // Default constructor

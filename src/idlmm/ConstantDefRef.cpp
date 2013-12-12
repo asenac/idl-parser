@@ -21,11 +21,6 @@
 #include "IdlmmVisitor.hpp"
 #include <idlmm/LiteralExpression.hpp>
 #include <idlmm/Constant.hpp>
-
-#ifdef ECORECPP_NOTIFICATION_API
-
-#endif
-
 using namespace ::idlmm;
 
 // Default constructor
@@ -38,9 +33,6 @@ ConstantDefRef::ConstantDefRef() :
     // To do this, add the keyword ENABLED before START.
     /*PROTECTED REGION END*/
 
-#ifdef ECORECPP_NOTIFICATION_API
-
-#endif
 }
 
 ConstantDefRef::~ConstantDefRef()
